@@ -246,15 +246,10 @@ facilitator + seller.
 7. *(Bounty, optional)* Nansen provenance filter: exclude payers whose first funder is
    the agent owner; pay Nansen per call over x402 **with our own SDK**.
 
-**Status (Oct 9):** steps 1–4 done. SDK `giveFeedback({ agentId, value, paymentTxHash })`
-posts receipt-backed feedback (feedbackHash = settlement tx, tags `x402`/`paid-call`,
-`feedbackURI` `x402:eip155:<chainId>:<tx>`); `autoFeedback` passes the settlement hash; MCP
-`give_feedback` refuses unless the hash is a tx in which the wallet sent USDC. Indexer ported
-(`services/chainpe-indexer`, 30 tests on pg-mem and real Postgres): NUMERIC values, paid
-verification, capped scoring, `?rank=paid|raw`, `/services/:id/reputation`. Live testnet demo
-scripted (`e2e/monad-reputation-demo.mjs` + `e2e/monad-paid-call.mjs` with `FEEDBACK`); waiting
-on faucet MON for the two fresh demo wallets (the faucet is behind a bot challenge). Envio and the
-farm report (steps 5–7) not started.
+**Status (Oct 9): core DONE.** Steps 1–4 done and proven live on Monad testnet: agent #2099,
+one receipt-backed rating counted as paid (score 95), a no-receipt rating and a stolen-receipt
+rating both excluded (raw 98.33) — tx links in `docs/METROPOLIS.md`. Optional steps 5–7 (Envio
+backfill, farm report, Nansen filter) not started.
 
 **Done when:** an unpaid rating shows in `raw` but not `paid`; a receipt-backed rating
 moves the `paid` ranking; the indexer survives a 1e30 value.
