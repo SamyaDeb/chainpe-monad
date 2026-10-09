@@ -130,6 +130,11 @@ If two people: **Builder A** — Phases 1, 2 (facilitator), 4, 5 (contracts/back
 7. Deploy Registry + PolicyVault to **Monad testnet**; save
    `contracts/deployments/monad-testnet*.json`; verify on the explorer.
 
+**Status (Oct 9):** steps 1–6 done (84 contract tests green, scripts smoke-tested on
+Hardhat). Step 7 (testnet deploy + verify) needs a funded key and RPC access, so it runs
+on a developer machine: `npm run preflight:testnet && npm run deploy:testnet &&
+npm run deploy:policyvault:testnet && npm run postcheck:testnet && npm run verify:testnet`.
+
 **Done when:** contracts verified on Monad testnet, tests green.
 **Commit:** `port contracts to Monad: networks, canonical ERC-8004 owner check, drop ICM`.
 
