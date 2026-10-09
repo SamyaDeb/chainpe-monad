@@ -31,7 +31,11 @@ export interface FacilitatorConfig {
   indexerUrl?: string
   /** Refuse payTo addresses that are neither listed nor registered. */
   requireRegisteredPayTo: boolean
-  /** Warn when the gas key falls below this (Monad keeps a 10 MON reserve). */
+  /**
+   * Warn when the gas key falls below this. Settlements are gas-only (no MON
+   * value), so Monad's 10 MON reserve rule does not apply; ~1 MON covers
+   * hundreds of settlements (~137k gas each).
+   */
   lowGasThresholdWei: bigint
 }
 
@@ -128,6 +132,6 @@ export function loadConfig(env: Env = process.env): FacilitatorConfig {
     payToAllowlist,
     indexerUrl: env.CHAINPE_INDEXER_URL?.replace(/\/$/, '') || undefined,
     requireRegisteredPayTo,
-    lowGasThresholdWei: parseEther(env.LOW_GAS_MON ?? '11')
+    lowGasThresholdWei: parseEther(env.LOW_GAS_MON ?? '1')
   }
 }

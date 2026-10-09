@@ -26,8 +26,8 @@ Anything else is answered with `isValid: false` / `success: false` before any RP
 
 - Settlements are submitted **one at a time** with a local nonce manager, so concurrent
   requests can't collide on a nonce (a reverted tx still pays its full gas limit on Monad).
-- `/health` turns `degraded` below `LOW_GAS_MON` (default 11, i.e. the 10 MON reserve
-  balance plus headroom).
+- `/health` turns `degraded` below `LOW_GAS_MON` (default 1 MON). Settlements send no MON
+  value, so Monad's 10 MON reserve-balance rule does not apply to this key.
 
 ## Endpoints
 

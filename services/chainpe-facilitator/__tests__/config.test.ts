@@ -14,7 +14,7 @@ describe('loadConfig', () => {
     expect(cfg.usdc).toBe('0x534b2f3A21130d7a60830c2Df862319e593943A3')
     expect(cfg.requireRegisteredPayTo).toBe(false)
     expect(cfg.trustProxy).toBe(1)
-    expect(cfg.lowGasThresholdWei).toBe(parseEther('11'))
+    expect(cfg.lowGasThresholdWei).toBe(parseEther('1'))
   })
 
   it('is strict about payTo on mainnet by default', () => {

@@ -130,10 +130,7 @@ If two people: **Builder A** — Phases 1, 2 (facilitator), 4, 5 (contracts/back
 7. Deploy Registry + PolicyVault to **Monad testnet**; save
    `contracts/deployments/monad-testnet*.json`; verify on the explorer.
 
-**Status (Oct 9):** steps 1–6 done (84 contract tests green, scripts smoke-tested on
-Hardhat). Step 7 (testnet deploy + verify) needs a funded key and RPC access, so it runs
-on a developer machine: `npm run preflight:testnet && npm run deploy:testnet &&
-npm run deploy:policyvault:testnet && npm run postcheck:testnet && npm run verify:testnet`.
+**Status (Oct 9): DONE.** Contracts deployed to Monad testnet and Sourcify-verified (addresses in `CLAUDE.md`).
 
 **Done when:** contracts verified on Monad testnet, tests green.
 **Commit:** `port contracts to Monad: networks, canonical ERC-8004 owner check, drop ICM`.
@@ -171,10 +168,9 @@ npm run deploy:policyvault:testnet && npm run postcheck:testnet && npm run verif
 6. **Interop check** — the same seller settles through Monad's facilitator
    (`x402-facilitator.molandak.org`) too.
 
-**Status (Oct 9):** steps 1–4 done. Proven here: a real x402 v2 round trip (backend → proxy →
-SDK) and real on-chain settlement on a local chain (USDC moves, replays refused, concurrent
-settlements OK). Remaining, needs Monad network access: run `e2e/monad-paid-call.mjs` on
-testnet and confirm interop with Monad's public facilitator (steps 5–6).
+**Status (Oct 9): DONE.** Steps 1–6 complete. Real x402 payments settled on Monad testnet
+through both Monad's public facilitator (p50 587 ms) and our own (p50 1012 ms), verified
+on-chain — tx links in `docs/METROPOLIS.md`.
 
 **Done when:** a real testnet x402 payment settles end-to-end and prints a MonadVision link.
 **Commits:** `port facilitator to x402 v2 on Monad (+ hardening)`,
