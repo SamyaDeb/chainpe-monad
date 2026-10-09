@@ -280,6 +280,22 @@ enforced by the contract on every call.
 persisted client-side budget from Phase 3.
 **Commit:** `mandate mode: PolicyVault as an x402 payment scheme`.
 
+**Status (2026-10-09): DONE — proven live on Monad testnet; the fallback was not needed.**
+- [x] Step 1 — custom schemes work on client, resource server and facilitator
+  (`docs/X402-V2-NOTES.md` § Custom schemes; proof in `packages/chainpe-sdk/__tests__/custom-scheme.spike.test.ts`).
+- [x] Step 2 — `chainpe-vault`: facilitator mechanism (`services/chainpe-facilitator/src/vault.ts`:
+  session-key signature, vault nonce, `previewSpend`, payTo policy, dry-run + `spend` on the
+  serialized signer); SDK client mechanism + per-owner nonce lock (`packages/chainpe-sdk/src/vaultScheme.ts`);
+  `ChainPe({ policyVault: { owner, sessionKey, vaultAddress? } })` prefers the vault offer and never
+  falls back to the agent's own wallet unless `fallbackToExact`.
+- [x] Proxy advertises `exact` + `chainpe-vault` when the facilitator supports it.
+- [x] Step 3 — indexer counts `PolicyVault.Spent` as a receipt (rater = owner or the signing session key).
+- [x] Step 4 — live demo `e2e/monad-vault-demo.mjs`: in-cap payment settles via the vault; over-cap and
+  non-allowlisted calls are refused with the contract's reason and the same spends revert on-chain;
+  the daily cap stops the 4th call; `revokeSession` stops the agent; the owner withdraws the rest
+  (tx links in `docs/METROPOLIS.md`).
+- No contract change (the deployed PolicyVault already had everything needed).
+
 ---
 
 ## Phase 6 — Mainnet launch + ecosystem integration (Mon Oct 12)
@@ -376,5 +392,5 @@ marketplace polish.
 - Monad testnet USDC faucet.
 - Contract verification endpoint for Monad (Monadscan API vs Sourcify).
 - Whether Safe is deployed on Monad (for the contract owner).
-- `@x402/core` custom-scheme extensibility (Phase 5).
+- ~~`@x402/core` custom-scheme extensibility (Phase 5).~~ Yes — see `docs/X402-V2-NOTES.md` § Custom schemes.
 - Privy x402 support on Monad (only if attempting the Privy bounty).
