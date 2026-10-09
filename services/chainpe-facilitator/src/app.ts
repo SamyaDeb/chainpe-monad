@@ -21,6 +21,8 @@ export interface AppDeps {
   facilitatorAddress: string
   facilitator: Pick<x402Facilitator, 'verify' | 'settle' | 'getSupported'>
   isPayToAllowed(payTo: string): boolean
+  /** x402 schemes settled here (default `exact`; plus `chainpe-vault` with a PolicyVault). */
+  schemes?: string[]
   /** Latest known gas-key balance (wei), or null if unknown. */
   gasBalance(): bigint | null
   lowGasThresholdWei: bigint
@@ -77,7 +79,8 @@ export function createApp(deps: AppDeps) {
     caip2: deps.caip2,
     usdc: deps.usdc,
     minAmountAtomic: deps.minAmountAtomic,
-    isPayToAllowed: deps.isPayToAllowed
+    isPayToAllowed: deps.isPayToAllowed,
+    schemes: deps.schemes ?? ['exact']
   }
 
   app.get('/', (_req: Request, res: Response) => {
@@ -86,6 +89,7 @@ export function createApp(deps: AppDeps) {
       description: 'Non-custodial x402 v2 verify + settle for USDC on Monad.',
       network: deps.network,
       caip2: deps.caip2,
+      schemes: policyCtx.schemes,
       custodial: false,
       endpoints: ['/health', '/status', '/supported', '/metrics', '/verify', '/settle']
     })

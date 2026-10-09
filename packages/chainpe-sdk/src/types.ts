@@ -10,15 +10,18 @@ export type { ChainPeNetwork }
 export class ChainPePaymentError extends Error {
   readonly txHash?: string
   readonly reason?: string
+  /** The server's / facilitator's own refusal reason, when it gave one. */
+  readonly detail?: string
 
   constructor(
     message: string,
-    { txHash, reason }: { txHash?: string; reason?: string } = {}
+    { txHash, reason, detail }: { txHash?: string; reason?: string; detail?: string } = {}
   ) {
     super(message)
     this.name = 'ChainPePaymentError'
     this.txHash = txHash
     this.reason = reason
+    this.detail = detail
   }
 }
 
@@ -54,6 +57,27 @@ export interface ChainPeOptions {
    * the feedback result; use `.giveFeedback()` for explicit control.
    */
   autoFeedback?: boolean
+  /**
+   * Mandate mode: pay x402 offers through a PolicyVault (`chainpe-vault` scheme).
+   * The session key signs a vault spend and the vault pays the seller, so the
+   * owner's on-chain per-call / daily / total caps and recipient allowlist apply
+   * to every call. `exact` offers are not paid unless `fallbackToExact` is set.
+   */
+  policyVault?: PolicyVaultPaymentConfig
+}
+
+/** {@link ChainPeOptions.policyVault}. */
+export interface PolicyVaultPaymentConfig {
+  /** PolicyVault proxy. Defaults to the deployed vault for the network. */
+  vaultAddress?: string
+  /** Vault owner (the address that deposited and set the policy). */
+  owner: string
+  /** Private key of the policy's session key. Defaults to `privateKey`. */
+  sessionKey?: string
+  /** Also pay `exact` offers from `privateKey` when no vault offer fits (default false). */
+  fallbackToExact?: boolean
+  /** Custom source for the owner's vault nonce (default: read the vault over the network RPC). */
+  readNonce?: () => Promise<bigint>
 }
 
 /** Per-request options for {@link ChainPe.fetch} / {@link ChainPe.pay}. */
@@ -116,6 +140,10 @@ export interface PaymentInfo {
   network: ChainPeNetwork
   /** On-chain settlement tx hash, when the provider reported one. */
   txHash?: string
+  /** x402 scheme paid: `exact` (own wallet) or `chainpe-vault` (PolicyVault). */
+  scheme?: string
+  /** Vault owner whose balance paid (`chainpe-vault` only). */
+  owner?: string
   settlement?: unknown
 }
 

@@ -3,8 +3,9 @@
  *
  * A facilitator that settles any valid authorization is an open gas relay:
  * anyone could make it pay for transfers between their own wallets. We only
- * settle USDC `exact` payments on our network, above a minimum, to a payTo that
- * is allow-listed or registered in the ChainPe registry (via the indexer).
+ * settle USDC payments on our network — `exact`, or `chainpe-vault` when a
+ * PolicyVault is configured — above a minimum, to a payTo that is allow-listed
+ * or registered in the ChainPe registry (via the indexer).
  */
 import type { PaymentPayload, PaymentRequirements } from '@x402/core/types'
 
@@ -15,6 +16,8 @@ export interface PolicyContext {
   usdc: string
   minAmountAtomic: bigint
   isPayToAllowed(payTo: string): boolean
+  /** Schemes we settle (default: `exact` only). */
+  schemes?: readonly string[]
 }
 
 export function checkPayment(
@@ -22,7 +25,7 @@ export function checkPayment(
   requirements: PaymentRequirements,
   ctx: PolicyContext
 ): PolicyResult {
-  if (requirements.scheme !== 'exact') return { ok: false, reason: 'unsupported_scheme' }
+  if (!(ctx.schemes ?? ['exact']).includes(requirements.scheme)) return { ok: false, reason: 'unsupported_scheme' }
   if (requirements.network !== ctx.caip2) return { ok: false, reason: 'unsupported_network' }
   if (requirements.asset?.toLowerCase() !== ctx.usdc.toLowerCase()) {
     return { ok: false, reason: 'unsupported_asset' }

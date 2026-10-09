@@ -37,3 +37,6 @@ contracts/artifacts/
 contracts/cache/
 contracts/typechain-types/
 contracts/coverage/
+
+# Local output of e2e/monad-vault-demo.mjs
+e2e/.vault-demo-result.json

@@ -21,7 +21,12 @@ hash**, tags `x402` / `paid-call`, `feedbackURI` = `x402:eip155:<chainId>:<txHas
 **Verification** (`verifyFeedbackPayment` in `src/core.ts`, worker in `src/verify.ts`):
 a feedback is *paid* only if its `feedbackHash` is a successful tx whose receipt holds
 a USDC `Transfer` **from the feedback's client** **to the payTo of a registered
-ChainPe service linked to that agentId**, of at least `MIN_PAID_AMOUNT`. A receipt
+ChainPe service linked to that agentId**, of at least `MIN_PAID_AMOUNT` — or, for x402
+`chainpe-vault` payments (mandate mode), a `PolicyVault.Spent(owner, to, amount, relayer,
+nonce)` from our vault (`POLICY_VAULT_ADDRESS`) to that payTo, where the client is the
+vault **owner** or the **session key that signed the spend** (recovered from the `spend`
+calldata with the event's nonce; no archive state needed). A vault owned by an insider is
+self-dealing whoever rates. A receipt
 backs at most one feedback (the earliest; also a partial unique index). Payments by
 the service developer, the payTo, the agent owner or the agentWallet are ignored
 (self-dealing). Everything else is stored as `unpaid` with a reason

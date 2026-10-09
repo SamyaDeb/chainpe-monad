@@ -146,9 +146,20 @@ export interface TokenTransfer {
   value: bigint
 }
 
+/** A `PolicyVault.Spent` in the receipt: the vault paid `to` on the owner's behalf (x402 `chainpe-vault`). */
+export interface VaultSpend {
+  vault: string
+  owner: string
+  to: string
+  amount: bigint
+  /** Session key that signed the spend (recovered from the `spend` calldata), when known. */
+  sessionKey: string | null
+}
+
 export interface SettlementReceipt {
   status: 'success' | 'reverted'
   transfers: TokenTransfer[]
+  vaultSpends?: VaultSpend[]
 }
 
 export interface VerifyInput {
@@ -156,6 +167,8 @@ export interface VerifyInput {
   /** Receipt of the tx named by `feedbackHash`; null when there is no such tx. */
   receipt: SettlementReceipt | null
   usdc: string
+  /** The PolicyVault whose `Spent` events count as payments (mandate mode), if any. */
+  vault?: string | null
   /** Registered ChainPe services linked to the feedback's agentId. */
   services: { payTo: string; developer: string }[]
   agentOwner?: string | null
@@ -183,10 +196,13 @@ const lc = (a: string | null | undefined) => (a ?? '').toLowerCase()
 
 /**
  * A feedback is PAID only if its feedbackHash is a successful tx whose receipt
- * holds a USDC Transfer from the feedback's client to the payTo of a registered
- * service linked to that agentId, worth at least the minimum. A receipt backs at
- * most one feedback, and the developer / payTo / agent owner / agentWallet
- * paying themselves does not count.
+ * holds a payment to the payTo of a registered service linked to that agentId,
+ * worth at least the minimum, made by the feedback's client:
+ *   - a USDC Transfer from the client (x402 `exact`), or
+ *   - a `PolicyVault.Spent` from our vault (x402 `chainpe-vault`) whose owner is
+ *     the client, or whose signing session key is the client.
+ * A receipt backs at most one feedback, and the developer / payTo / agent owner
+ * / agentWallet paying themselves (directly or through a vault) does not count.
  */
 export function verifyFeedbackPayment(input: VerifyInput): Verdict {
   const { feedback, receipt } = input
@@ -212,12 +228,23 @@ export function verifyFeedbackPayment(input: VerifyInput): Verdict {
 
   const usdc = lc(input.usdc)
   let amount = 0n
+  let payer = feedback.client
   for (const t of receipt.transfers) {
     if (lc(t.token) === usdc && lc(t.from) === client && payTos.has(lc(t.to))) amount += t.value
   }
+  const vault = lc(input.vault)
+  if (vault) {
+    for (const s of receipt.vaultSpends ?? []) {
+      if (lc(s.vault) !== vault || !payTos.has(lc(s.to))) continue
+      if (lc(s.owner) !== client && lc(s.sessionKey) !== client) continue
+      if (insiders.has(lc(s.owner))) return { paid: false, reason: 'self_dealing' }
+      amount += s.amount
+      payer = s.owner // the vault owner is who paid
+    }
+  }
   if (amount === 0n) return { paid: false, reason: 'no_matching_transfer' }
   if (amount < input.minAmountAtomic) return { paid: false, reason: 'below_minimum' }
-  return { paid: true, amount, payer: feedback.client }
+  return { paid: true, amount, payer }
 }
 
 // ─── Scoring ────────────────────────────────────────────────────────────────

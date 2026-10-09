@@ -130,3 +130,44 @@ export const IDENTITY_READ_ABI = [
     outputs: [{ name: '', type: 'address' }]
   }
 ] as const
+
+/** PolicyVault: the `Spent` receipt of an x402 `chainpe-vault` payment, and `spend` (to recover its signer). */
+export const VAULT_SPENT_EVENT = [
+  {
+    type: 'event',
+    name: 'Spent',
+    inputs: [
+      { name: 'owner', type: 'address', indexed: true },
+      { name: 'to', type: 'address', indexed: true },
+      { name: 'amount', type: 'uint256', indexed: false },
+      { name: 'relayer', type: 'address', indexed: true },
+      { name: 'nonce', type: 'uint256', indexed: false }
+    ]
+  }
+] as const
+
+export const VAULT_SPEND_FN = [
+  {
+    type: 'function',
+    name: 'spend',
+    stateMutability: 'nonpayable',
+    inputs: [
+      { name: 'owner', type: 'address' },
+      { name: 'to', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+      { name: 'deadline', type: 'uint256' },
+      { name: 'sessionSig', type: 'bytes' }
+    ],
+    outputs: []
+  }
+] as const
+
+export const VAULT_SPEND_TYPES = {
+  Spend: [
+    { name: 'owner', type: 'address' },
+    { name: 'to', type: 'address' },
+    { name: 'amount', type: 'uint256' },
+    { name: 'nonce', type: 'uint256' },
+    { name: 'deadline', type: 'uint256' }
+  ]
+} as const

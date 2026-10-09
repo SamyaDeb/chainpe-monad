@@ -46,6 +46,17 @@ export interface ChainPeConfig {
   // x402 facilitator URL (verifies + settles payments, pays gas).
   facilitatorUrl?: string;
 
+  // Mandate mode (`chainpe-vault`): also accept payments made BY a buyer's
+  // PolicyVault, so the buyer's on-chain caps + allowlist apply to every call.
+  // Default: on when the facilitator's /supported lists chainpe-vault.
+  acceptVault?: boolean;
+  // Facilitator for chainpe-vault when it differs from facilitatorUrl
+  // (e.g. exact via Monad's public facilitator, vault via ChainPe's).
+  // Override via CHAINPE_VAULT_FACILITATOR_URL.
+  vaultFacilitatorUrl?: string;
+  // PolicyVault named in vault offers. Default: the one the facilitator advertises.
+  policyVault?: string;
+
   // Optional settings
   logLevel?: "verbose" | "normal" | "quiet";
   adminKey?: string;

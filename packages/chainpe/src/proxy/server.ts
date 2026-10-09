@@ -2,7 +2,9 @@
  * ChainPe proxy server (Monad)
  *
  * x402 v2 payment gateway built on `@x402/express`. Every proxied request is
- * gated by a USDC payment (EIP-3009) on Monad; once the facilitator has verified
+ * gated by a USDC payment on Monad — `exact` (EIP-3009 from the buyer's wallet)
+ * or, when the facilitator supports it, `chainpe-vault` (paid by the buyer's
+ * PolicyVault under its on-chain mandate). Once the facilitator has verified
  * and settled it, the request is forwarded to the provider's backend. The
  * backend never sees keys, USDC or x402 headers.
  */
@@ -15,6 +17,7 @@ import { x402ResourceServer, HTTPFacilitatorClient } from "@x402/core/server";
 import type { FacilitatorClient } from "@x402/core/server";
 import { decodePaymentResponseHeader } from "@x402/core/http";
 import { ExactEvmScheme } from "@x402/evm/exact/server";
+import { VAULT_SCHEME, VaultEvmServerScheme } from "@chainpeavax/sdk";
 
 import type { ChainPeConfig, PaymentEvent, RouteConfig } from "../types.js";
 import { getNetwork } from "../chains.js";
@@ -28,6 +31,13 @@ export interface ProxyServerOptions {
   onPayment?: (event: PaymentEvent) => void;
   /** Override the facilitator client (tests, in-process facilitators). */
   facilitatorClient?: FacilitatorClient;
+  /** Override the chainpe-vault facilitator client (default: vaultFacilitatorUrl, else the main one). */
+  vaultFacilitatorClient?: FacilitatorClient;
+  /**
+   * Offer `chainpe-vault` next to `exact`. The facilitator must support it, or
+   * x402 refuses the routes. `startProxyServer` detects it from /supported.
+   */
+  acceptVault?: boolean;
 }
 
 /** Facilitator to use when none is configured (Monad's public testnet facilitator). */
@@ -39,6 +49,42 @@ export function resolveFacilitatorUrl(config: ChainPeConfig): string | undefined
     process.env.CHAINPE_FACILITATOR_URL ??
     (config.network === "monad-testnet" ? DEFAULT_TESTNET_FACILITATOR : undefined)
   );
+}
+
+export function resolveVaultFacilitatorUrl(config: ChainPeConfig): string | undefined {
+  return config.vaultFacilitatorUrl ?? process.env.CHAINPE_VAULT_FACILITATOR_URL;
+}
+
+/** The facilitator clients the proxy talks to: the main one, plus a separate vault one if configured. */
+export function resolveFacilitatorClients(options: ProxyServerOptions): FacilitatorClient[] {
+  const { config } = options;
+  let main = options.facilitatorClient;
+  if (!main) {
+    const url = resolveFacilitatorUrl(config);
+    if (!url) {
+      throw new Error(
+        `No facilitator configured for ${config.network}. Set facilitatorUrl in the config or CHAINPE_FACILITATOR_URL.`
+      );
+    }
+    main = new HTTPFacilitatorClient({ url });
+  }
+  const vaultUrl = resolveVaultFacilitatorUrl(config);
+  const vault = options.vaultFacilitatorClient ?? (vaultUrl ? new HTTPFacilitatorClient({ url: vaultUrl }) : undefined);
+  // x402 routes each scheme/network to the first client that supports it.
+  return vault ? [vault, main] : [main];
+}
+
+/** True when one of the facilitators advertises `chainpe-vault` on `caip2`. */
+export async function facilitatorSupportsVault(clients: FacilitatorClient[], caip2: string): Promise<boolean> {
+  for (const c of clients) {
+    try {
+      const supported = await c.getSupported();
+      if (supported.kinds.some((k) => k.scheme === VAULT_SCHEME && k.network === caip2)) return true;
+    } catch (err) {
+      logger.warn(`Facilitator /supported failed: ${(err as Error).message}`);
+    }
+  }
+  return false;
 }
 
 export function createProxyServer(options: ProxyServerOptions): Express {
@@ -103,18 +149,12 @@ export function createProxyServer(options: ProxyServerOptions): Express {
   });
   app.use("/chainpe-admin", adminRouter);
 
-  // Resolve the facilitator.
-  const facilitatorUrl = resolveFacilitatorUrl(config);
-  let facilitatorClient = options.facilitatorClient;
-  if (!facilitatorClient) {
-    if (!facilitatorUrl) {
-      throw new Error(
-        `No facilitator configured for ${config.network}. Set facilitatorUrl in the config or CHAINPE_FACILITATOR_URL.`
-      );
-    }
-    facilitatorClient = new HTTPFacilitatorClient({ url: facilitatorUrl });
-    logger.info(`Using facilitator: ${facilitatorUrl}`);
-  }
+  // Resolve the facilitator(s).
+  const facilitatorClients = resolveFacilitatorClients(options);
+  if (!options.facilitatorClient) logger.info(`Using facilitator: ${resolveFacilitatorUrl(config)}`);
+  const vaultUrl = resolveVaultFacilitatorUrl(config);
+  if (vaultUrl && !options.vaultFacilitatorClient) logger.info(`Using vault facilitator: ${vaultUrl}`);
+  const acceptVault = options.acceptVault ?? config.acceptVault ?? false;
 
   // Advertise this provider's ERC-8004 agentId on every response so consumers
   // can leave payment-backed reputation feedback (it is also in each offer's `extra`).
@@ -127,11 +167,12 @@ export function createProxyServer(options: ProxyServerOptions): Express {
   }
 
   // x402 routes.
-  const routesConfig = createRoutesConfig(config, additionalRoutes);
+  const routesConfig = createRoutesConfig(config, additionalRoutes, { vault: acceptVault });
   logger.info("Configured x402 routes:");
   for (const r of formatRoutesForDisplay(routesConfig)) {
     logger.info(`  ${r.path} → ${r.price} ${r.token} (${net.caip2})`);
   }
+  logger.info(acceptVault ? "Accepting: exact + chainpe-vault (PolicyVault mandate)" : "Accepting: exact");
 
   // Payment tracking — record settlements. The middleware sets PAYMENT-RESPONSE
   // on successful paid responses; read it when the response finishes.
@@ -166,7 +207,8 @@ export function createProxyServer(options: ProxyServerOptions): Express {
   });
 
   // Payment middleware (gates everything after it).
-  const resourceServer = new x402ResourceServer(facilitatorClient).register(net.caip2, new ExactEvmScheme());
+  const resourceServer = new x402ResourceServer(facilitatorClients).register(net.caip2, new ExactEvmScheme());
+  if (acceptVault) resourceServer.register(net.caip2, new VaultEvmServerScheme());
   app.use(paymentMiddleware(routesConfig, resourceServer));
 
   // Reverse proxy to the provider backend.
@@ -198,7 +240,11 @@ export async function startProxyServer(
   options: ProxyServerOptions
 ): Promise<{ app: Express; server: ReturnType<Express["listen"]> }> {
   const { config } = options;
-  const app = createProxyServer(options);
+  let acceptVault = options.acceptVault ?? config.acceptVault;
+  if (acceptVault === undefined) {
+    acceptVault = await facilitatorSupportsVault(resolveFacilitatorClients(options), getNetwork(config.network).caip2);
+  }
+  const app = createProxyServer({ ...options, acceptVault });
   return new Promise((resolve) => {
     const server = app.listen(config.proxyPort, () => {
       logServerStart(config.proxyPort, config.serviceName);

@@ -1,7 +1,7 @@
 /**
  * ChainPe — x402 payments + ERC-8004 reputation in a few lines.
  *
- *   const cp = new ChainPe({ privateKey, network: 'fuji' })
+ *   const cp = new ChainPe({ privateKey, network: 'monad-testnet' })
  *   const res = await cp.fetch('https://api.example.com/paid')   // auto-pays a 402
  *   const data = await res.json()
  */
@@ -12,13 +12,14 @@ import {
   getUsdcAddress,
   resolveRegistryAddress,
   resolveReputationRegistry,
+  resolvePolicyVault,
   normalizeKey,
   DEFAULT_NETWORK,
   USDC_DECIMALS
 } from './networks.js'
 import { RegistryClient, filterServices, rankByReputation } from './registry.js'
 import { getReputation, giveFeedback } from './reputation.js'
-import { paidFetch, type PaidRequest } from './payment.js'
+import { paidFetch, type PaidRequest, type VaultPaymentOptions } from './payment.js'
 import type {
   ChainPeNetwork,
   ChainPeOptions,
@@ -41,6 +42,7 @@ export class ChainPe {
   private readonly maxPerCallAtomic: bigint
   private readonly autoFeedback: boolean
   private readonly facilitatorUrl?: string
+  private readonly vault?: VaultPaymentOptions
 
   constructor(options: ChainPeOptions) {
     if (!options.privateKey) {
@@ -64,6 +66,19 @@ export class ChainPe {
     )
     this.autoFeedback = options.autoFeedback ?? false
     this.facilitatorUrl = options.facilitatorUrl
+    if (options.policyVault) {
+      const pv = options.policyVault
+      const vaultAddress = resolvePolicyVault(this.network, pv.vaultAddress)
+      if (!vaultAddress) throw new Error(`ChainPe: no PolicyVault known for ${this.network}; pass policyVault.vaultAddress.`)
+      if (!pv.owner) throw new Error('ChainPe: policyVault.owner is required.')
+      this.vault = {
+        vaultAddress,
+        owner: getAddress(pv.owner),
+        sessionKey: pv.sessionKey ? privateKeyToAccount(normalizeKey(pv.sessionKey)) : this.signerAccount,
+        fallbackToExact: pv.fallbackToExact ?? false,
+        readNonce: pv.readNonce
+      }
+    }
   }
 
   /** Echoes the resolved configuration (no secrets). */
@@ -74,7 +89,15 @@ export class ChainPe {
       registryAddress: this.registryAddress,
       reputationRegistry: this.reputationRegistry,
       facilitatorUrl: this.facilitatorUrl,
-      maxPerCall: formatUnits(this.maxPerCallAtomic, USDC_DECIMALS)
+      maxPerCall: formatUnits(this.maxPerCallAtomic, USDC_DECIMALS),
+      policyVault: this.vault
+        ? {
+            vaultAddress: this.vault.vaultAddress,
+            owner: this.vault.owner,
+            sessionKey: this.vault.sessionKey.address,
+            fallbackToExact: this.vault.fallbackToExact
+          }
+        : undefined
     }
   }
 
@@ -214,7 +237,8 @@ export class ChainPe {
       network: this.network,
       account: this.signerAccount,
       maxPerCallAtomic: this.maxPerCallAtomic,
-      timeoutMs: timeout
+      timeoutMs: timeout,
+      vault: this.vault
     })
     return { result: { ...paid, payTo: paid.accepted?.payTo }, autoFeedback }
   }

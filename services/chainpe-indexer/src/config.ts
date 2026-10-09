@@ -18,6 +18,7 @@ interface NetworkDefaults {
   identity: `0x${string}`
   reputation: `0x${string}`
   registry?: `0x${string}`
+  policyVault?: `0x${string}`
   /** Block the ChainPeRegistry proxy was deployed in (first block worth scanning). */
   registryDeployBlock?: bigint
 }
@@ -39,6 +40,7 @@ const NETWORKS: Record<Network, NetworkDefaults> = {
     identity: '0x8004A818BFB912233c491871b3d84c89A494BD9e',
     reputation: '0x8004B663056A597Dffe9eCcC1965A193B7388713',
     registry: '0xe41CEcC51A61921dDFCeCAa9807856C446867CA4',
+    policyVault: '0x1Eb25cDD00bCCEC89782Aaf12600Ac5eFeEeAB65',
     registryDeployBlock: 69_658_414n
   }
 }
@@ -51,6 +53,8 @@ export interface IndexerConfig {
   registry: `0x${string}`
   reputation: `0x${string}`
   identity: `0x${string}`
+  /** PolicyVault whose `Spent` events count as payments (mandate mode); undefined = exact only. */
+  policyVault?: `0x${string}`
   databaseUrl: string
   port: number
   /** Express `trust proxy` setting (Railway sits behind one proxy hop). */
@@ -100,6 +104,12 @@ export function loadConfig(env: Env = process.env): IndexerConfig {
     registry: address(env.CHAINPE_REGISTRY_ADDRESS, d.registry, 'ChainPeRegistry', network),
     reputation: address(env.ERC8004_REPUTATION_REGISTRY, d.reputation, 'ERC-8004 Reputation Registry', network),
     identity: address(env.ERC8004_IDENTITY_REGISTRY, d.identity, 'ERC-8004 Identity Registry', network),
+    policyVault:
+      env.POLICY_VAULT_ADDRESS?.trim() === 'off'
+        ? undefined
+        : env.POLICY_VAULT_ADDRESS?.trim()
+          ? getAddress(env.POLICY_VAULT_ADDRESS.trim())
+          : d.policyVault,
     databaseUrl: env.DATABASE_URL ?? '',
     port: Number(env.PORT ?? 4600),
     trustProxy: parseTrustProxy(env.TRUST_PROXY),

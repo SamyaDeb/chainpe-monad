@@ -29,6 +29,7 @@ async function main() {
     console.log(`  network:     ${cfg.network}`)
     console.log(`  registry:    ${cfg.registry}`)
     console.log(`  reputation:  ${cfg.reputation}`)
+    console.log(`  vault:       ${cfg.policyVault ?? 'off'} (PolicyVault Spent = payment receipt)`)
     console.log(`  start block: ${cfg.startBlock} (chunk ${cfg.logChunk})`)
     console.log('  endpoints:   GET /health · /stats · /services?rank=paid|raw · /services/:id · /services/:id/reputation')
   })
@@ -40,6 +41,7 @@ async function main() {
     reputation: cfg.reputation,
     identity: cfg.identity,
     usdc: cfg.usdc,
+    vault: cfg.policyVault,
     minPaidAtomic: cfg.minPaidAtomic,
     startBlock: cfg.startBlock,
     chunk: cfg.logChunk,

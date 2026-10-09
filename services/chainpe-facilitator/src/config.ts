@@ -4,7 +4,7 @@
  * Network constants mirror packages/chainpe-sdk/src/networks.ts (this service
  * deploys on its own, so it keeps a copy — keep them in sync, see CLAUDE.md).
  */
-import { defineChain, parseEther, type Chain } from 'viem'
+import { defineChain, getAddress, isAddress, parseEther, type Chain } from 'viem'
 import { monad, monadTestnet } from 'viem/chains'
 
 export type Caip2 = `eip155:${number}`
@@ -37,9 +37,18 @@ export interface FacilitatorConfig {
    * hundreds of settlements (~137k gas each).
    */
   lowGasThresholdWei: bigint
+  /**
+   * PolicyVault proxy for the `chainpe-vault` scheme (mandate mode), or
+   * undefined to settle `exact` only. Defaults to the deployed vault on
+   * testnet; `POLICY_VAULT_ADDRESS=off` disables it.
+   */
+  policyVault?: `0x${string}`
 }
 
-const MONAD_NETWORKS: Record<string, { caip2: Caip2; chain: Chain; rpcUrl: string; rpcEnv: string; usdc: `0x${string}` }> = {
+const MONAD_NETWORKS: Record<
+  string,
+  { caip2: Caip2; chain: Chain; rpcUrl: string; rpcEnv: string; usdc: `0x${string}`; policyVault?: `0x${string}` }
+> = {
   monad: {
     caip2: 'eip155:143',
     chain: monad,
@@ -52,7 +61,8 @@ const MONAD_NETWORKS: Record<string, { caip2: Caip2; chain: Chain; rpcUrl: strin
     chain: monadTestnet,
     rpcUrl: 'https://testnet-rpc.monad.xyz',
     rpcEnv: 'MONAD_TESTNET_RPC_URL',
-    usdc: '0x534b2f3A21130d7a60830c2Df862319e593943A3'
+    usdc: '0x534b2f3A21130d7a60830c2Df862319e593943A3',
+    policyVault: '0x1Eb25cDD00bCCEC89782Aaf12600Ac5eFeEeAB65'
   }
 }
 
@@ -103,6 +113,14 @@ export function loadConfig(env: Env = process.env): FacilitatorConfig {
     throw new Error(`Unsupported NETWORK "${network}" (use monad, monad-testnet or local)`)
   }
 
+  const vaultRaw = env.POLICY_VAULT_ADDRESS?.trim()
+  let policyVault: `0x${string}` | undefined
+  if (vaultRaw === 'off' || vaultRaw === 'false') policyVault = undefined
+  else if (vaultRaw) {
+    if (!isAddress(vaultRaw)) throw new Error(`POLICY_VAULT_ADDRESS is not an address: ${vaultRaw}`)
+    policyVault = getAddress(vaultRaw)
+  } else policyVault = known?.policyVault
+
   const payToAllowlist = new Set(
     (env.PAYTO_ALLOWLIST ?? '')
       .split(',')
@@ -132,6 +150,7 @@ export function loadConfig(env: Env = process.env): FacilitatorConfig {
     payToAllowlist,
     indexerUrl: env.CHAINPE_INDEXER_URL?.replace(/\/$/, '') || undefined,
     requireRegisteredPayTo,
-    lowGasThresholdWei: parseEther(env.LOW_GAS_MON ?? '1')
+    lowGasThresholdWei: parseEther(env.LOW_GAS_MON ?? '1'),
+    policyVault
   }
 }

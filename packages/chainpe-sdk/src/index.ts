@@ -14,7 +14,21 @@
 export { ChainPe } from './chainpe.js'
 
 export { paidFetch, checkOffer } from './payment.js'
-export type { PaidRequest, PaidFetchOptions, OfferCheck } from './payment.js'
+export type { PaidRequest, PaidFetchOptions, OfferCheck, VaultPaymentOptions } from './payment.js'
+
+export {
+  VAULT_SCHEME,
+  VAULT_EIP712_NAME,
+  VAULT_EIP712_VERSION,
+  SPEND_TYPES,
+  MAX_VAULT_AUTH_SECONDS,
+  vaultDomain,
+  withVaultLock,
+  resetVaultNonces,
+  VaultEvmClientScheme,
+  VaultEvmServerScheme
+} from './vaultScheme.js'
+export type { VaultSpendPayload, VaultClientSchemeOptions } from './vaultScheme.js'
 
 export { RegistryClient, RegistryWriter, filterServices, rankByReputation, decodeService } from './registry.js'
 export type { RawService, ServiceInput, RegisterResult } from './registry.js'
@@ -61,6 +75,7 @@ export { ChainPePaymentError } from './types.js'
 export type {
   ChainPeNetwork,
   ChainPeOptions,
+  PolicyVaultPaymentConfig,
   FetchOptions,
   ChainPeService,
   DiscoverOptions,

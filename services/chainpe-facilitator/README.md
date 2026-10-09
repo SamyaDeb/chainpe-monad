@@ -7,13 +7,38 @@ providers don't have to run their own.
 ## Non-custodial by design
 
 The facilitator key only pays gas and relays the payer's already-signed EIP-3009
-`transferWithAuthorization`. It never holds user funds and cannot move money the payer did
-not authorize. Worst case if the key leaks: an attacker can waste its MON.
+`transferWithAuthorization` (or, in mandate mode, a session-key-signed PolicyVault spend).
+It never holds user funds and cannot move money the payer did not authorize. Worst case if
+the key leaks: an attacker can waste its MON.
+
+## Mandate mode: `chainpe-vault`
+
+With a PolicyVault configured (`POLICY_VAULT_ADDRESS`; the deployed testnet vault by
+default, off on mainnet until one is deployed) the facilitator also settles the
+`chainpe-vault` scheme: the payment is a PolicyVault EIP-712 `Spend {owner, to, amount,
+nonce, deadline}` signed by the owner's policy **session key**, and settlement is
+`PolicyVault.spend(...)`, which pays the seller from the owner's vault balance. The
+contract enforces per-call / daily / total caps, expiry, revocation and the recipient
+allowlist on every call.
+
+- **verify**: offer = our network + vault + USDC; payload matches the offer (`to` = payTo,
+  amount); deadline ≥ now + 5 s; `nonce` = `vault.nonces(owner)`; signer =
+  `policyOf(owner).sessionKey`; `vault.previewSpend(owner, to, amount)` is ok. A refusal
+  carries the contract's reason as the x402 error code (`vault_over_per_call_cap`,
+  `vault_over_daily_cap`, `vault_recipient_not_allowlisted`, `vault_session_inactive`, …)
+  and the exact string in `invalidMessage`.
+- **settle**: re-verify, dry-run (`estimateGas`), then `spend` with gas limit = estimate +
+  10% through the same serialized signer as `exact`. Nothing is sent when it would revert.
+- `/supported` advertises `chainpe-vault` with `extra: { vault, name, version }`; ChainPe
+  proxies copy the vault into their offers.
+- Gas: ~229k–281k per vault settlement on Monad testnet (a first spend touches cold
+  slots), vs ~137k for `exact`.
 
 ## Not an open gas relay
 
 It only pays gas for payments that are:
-- scheme `exact` on its own network (`eip155:143` or `eip155:10143`),
+- scheme `exact` (or `chainpe-vault`, see above) on its own network (`eip155:143` or
+  `eip155:10143`),
 - in Monad **USDC**,
 - at least `MIN_AMOUNT_ATOMIC` (default 0.001 USDC),
 - to a **payTo registered in the ChainPe registry** (read from the indexer every 60 s) or
@@ -35,7 +60,7 @@ Anything else is answered with `isValid: false` / `success: false` before any RP
 |---|---|---|
 | GET | `/health` | Liveness (no RPC) + facilitator address; `degraded` on low gas |
 | GET | `/status` | Cached gas balance in MON |
-| GET | `/supported` | x402 v2 supported kinds (`exact` on this network) |
+| GET | `/supported` | x402 v2 supported kinds (`exact`, plus `chainpe-vault` with a vault) |
 | GET | `/metrics` | Prometheus counters |
 | POST | `/verify` | `{ x402Version, paymentPayload, paymentRequirements }` → `VerifyResponse` |
 | POST | `/settle` | same body → `SettleResponse` (`transaction` = settlement tx hash) |
