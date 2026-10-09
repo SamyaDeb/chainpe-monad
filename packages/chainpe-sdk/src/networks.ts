@@ -85,7 +85,7 @@ export const NETWORKS: Record<ChainPeNetwork, NetworkInfo> = {
       eip712Version: '2'
     },
     // CREATE2 testnet addresses of the canonical ERC-8004 deployment.
-    // TODO(verify): confirm these have code on Monad testnet.
+    // Verified 2026-10-09: both addresses have contract code on Monad testnet.
     erc8004: {
       identityRegistry: '0x8004A818BFB912233c491871b3d84c89A494BD9e',
       reputationRegistry: '0x8004B663056A597Dffe9eCcC1965A193B7388713'

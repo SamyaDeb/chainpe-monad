@@ -161,9 +161,9 @@ first. **Recompute this ourselves before using it in the demo.**
 | `@x402/core`, `@x402/evm`, `@x402/express`, `@x402/fetch` **v2.28.0** support `monad` / `monad-testnet`; `@x402/evm` ships `exact` (EIP-3009 + Permit2 proxy fallback), `upto`, `batch-settlement`, `auth-capture`, and a v1-compat `ExactEvmSchemeV1` | verified |
 | viem **2.57.4** ships `monad` and `monadTestnet` chains | verified |
 | Canonical **ERC-8004** mainnet: Identity `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432`, Reputation `0x8004BAa17C55a88189AE136b182e5fdA19dE9b63` | likely |
-| ERC-8004 testnets (CREATE2): Identity `0x8004A818BFB912233c491871b3d84c89A494BD9e`, Reputation `0x8004B663056A597Dffe9eCcC1965A193B7388713` — not confirmed on Monad testnet | unverified |
+| ERC-8004 testnets (CREATE2): Identity `0x8004A818BFB912233c491871b3d84c89A494BD9e`, Reputation `0x8004B663056A597Dffe9eCcC1965A193B7388713` — contract code present on Monad testnet (eth_getCode, 2026-10-09) | verified |
 | ERC-8004 **Validation** Registry not canonically deployed on Monad ("coming soon") | likely |
-| Monad x402 facilitator `https://x402-facilitator.molandak.org` (v2; exact, upto, batch-settlement; 143 + 10143) | likely |
+| Monad x402 facilitator `https://x402-facilitator.molandak.org` (v2; exact, upto, batch-settlement; 143 + 10143) — `/supported` and a `/verify` of a ChainPe-signed payment checked 2026-10-09 | verified |
 | **Gas is charged on the gas LIMIT, not gas used** → set tight explicit limits | likely (official docs, status wording varies) |
 | Reserve balance: default **10 MON**; txs that dip below can be included and still revert (and pay gas) | likely |
 | No global mempool; `eth_maxPriorityFeePerGas` returns hardcoded 2 gwei; max contract size 128 KB; no blob txs; EIP-7702 supported | likely |
