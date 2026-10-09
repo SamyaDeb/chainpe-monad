@@ -57,13 +57,15 @@ describe('discoverServices', () => {
 
   it('falls back to the chain, and says so, when the indexer fails', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('boom', { status: 503 }))
-    // No registry deployed/configured → the chain path reports that clearly.
-    await expect(discoverServices(config({ indexerUrl: 'https://idx.example' }), {})).rejects.toThrow(/No ChainPe registry address/)
+    // Mainnet has no registry deployed yet → the chain path reports that clearly.
+    await expect(
+      discoverServices(config({ network: 'monad', indexerUrl: 'https://idx.example' }), {})
+    ).rejects.toThrow(/No ChainPe registry address/)
   })
 
   it('reads the chain (not the indexer) when no indexer is configured', async () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch')
-    await expect(discoverServices(config(), {})).rejects.toThrow(/CHAINPE_REGISTRY_ADDRESS/)
+    await expect(discoverServices(config({ network: 'monad' }), {})).rejects.toThrow(/CHAINPE_REGISTRY_ADDRESS/)
     expect(fetchSpy).not.toHaveBeenCalled()
   })
 })

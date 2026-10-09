@@ -47,8 +47,9 @@ export interface ChainPeOptions {
    */
   maxPerCall?: string
   /**
-   * When true, `.fetch()`/`.pay()` post positive ERC-8004 feedback to the
-   * provider's agent after a successful paid call. Defaults to `false`
+   * When true, `.fetch()`/`.pay()` post positive, receipt-backed ERC-8004
+   * feedback (feedbackHash = settlement tx) to the provider's agent after a
+   * successful paid call. Defaults to `false`
    * (opt-in, since resolving the agent scans the registry). `.pay()` returns
    * the feedback result; use `.giveFeedback()` for explicit control.
    */

@@ -29,19 +29,23 @@ export async function getReputation(
   return sdkGetReputation(network, resolveReputationRegistry(network, reputationRegistry), agentId);
 }
 
-/** Posts an on-chain feedback score (0–100, valueDecimals 0) for an agent. Returns the tx hash. */
+/**
+ * Posts receipt-backed feedback (0–100, valueDecimals 0) for an agent:
+ * `paymentTxHash` is the x402 settlement tx being rated and becomes the
+ * ERC-8004 feedbackHash. Returns the tx hash.
+ */
 export async function giveFeedback(
   privateKey: string,
   network: ChainPeNetwork,
   agentId: string,
   value: number,
-  opts: { endpoint?: string; tag?: string; reputationRegistry?: string; waitConfirm?: boolean } = {}
+  opts: { paymentTxHash: string; endpoint?: string; reputationRegistry?: string; waitConfirm?: boolean }
 ): Promise<string> {
   return sdkGiveFeedback(network, resolveReputationRegistry(network, opts.reputationRegistry), privateKey, {
     agentId,
     value,
+    paymentTxHash: opts.paymentTxHash,
     endpoint: opts.endpoint,
-    tag: opts.tag,
     waitConfirm: opts.waitConfirm,
   });
 }

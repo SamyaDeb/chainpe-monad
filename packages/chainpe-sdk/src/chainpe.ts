@@ -111,7 +111,7 @@ export class ChainPe {
   async fetch(url: string, opts: FetchOptions = {}): Promise<Response> {
     const { result, autoFeedback } = await this.execute(url, opts)
     if (result.payment && (autoFeedback ?? this.autoFeedback)) {
-      await this.tryAutoFeedback(url, result.payTo, result.agentId)
+      await this.tryAutoFeedback(url, result.payment.txHash, result.payTo, result.agentId)
     }
     return result.response
   }
@@ -129,7 +129,7 @@ export class ChainPe {
 
     let reputation: PaidResult<T>['reputation']
     if (result.payment && (autoFeedback ?? this.autoFeedback)) {
-      reputation = await this.tryAutoFeedback(url, result.payTo, result.agentId)
+      reputation = await this.tryAutoFeedback(url, result.payment.txHash, result.payTo, result.agentId)
     }
 
     const data = (await this.parseBody(response)) as T
@@ -175,17 +175,25 @@ export class ChainPe {
     return getReputation(this.network, this.reputationRegistry, agentId)
   }
 
-  /** Posts ERC-8004 feedback (0–100) for a provider agent. Returns the tx hash. */
-  async giveFeedback(
-    agentId: string,
-    score: number,
-    opts: { endpoint?: string; tag?: string; waitConfirm?: boolean } = {}
-  ): Promise<string> {
+  /**
+   * Posts receipt-backed ERC-8004 feedback (0–100) for a provider agent on the
+   * canonical Reputation Registry. `paymentTxHash` is the x402 settlement tx of
+   * the call being rated (`PaidResult.payment.txHash`); it becomes the
+   * `feedbackHash`, so indexers can prove the rating came from a paying client.
+   * Returns the feedback tx hash.
+   */
+  async giveFeedback(params: {
+    agentId: string
+    value: number
+    paymentTxHash: string
+    endpoint?: string
+    waitConfirm?: boolean
+  }): Promise<string> {
     return giveFeedback(
       this.network,
       this.reputationRegistry,
       this.privateKey,
-      { agentId, value: score, ...opts }
+      params
     )
   }
 
@@ -214,16 +222,20 @@ export class ChainPe {
   /**
    * Best-effort positive feedback for the provider's agent after a paid call.
    * Prefers the agent id advertised on the 402 (3b); otherwise resolves it by
-   * matching `payTo` (then URL prefix) against the registry. Never throws
+   * matching `payTo` (then URL prefix) against the registry. Skipped when the
+   * provider reported no settlement tx (nothing to back the rating). Never throws
    * (self-feedback, no agentId, etc. are swallowed).
    */
   private async tryAutoFeedback(
     url: string,
+    paymentTxHash: string | undefined,
     payTo?: string,
     advertisedAgentId?: string
   ): Promise<{ agentId: string; score: number; txHash: string } | undefined> {
     try {
       if (!this.reputationRegistry) return undefined
+      // No settlement tx → no receipt → no rating.
+      if (!paymentTxHash) return undefined
 
       let agentId = advertisedAgentId
       let endpoint: string | undefined
@@ -252,8 +264,8 @@ export class ChainPe {
         {
           agentId,
           value: 100,
-          endpoint: endpoint ?? new URL(url).origin,
-          tag: 'x402-success'
+          paymentTxHash,
+          endpoint: endpoint ?? new URL(url).origin
         }
       )
       return { agentId, score: 100, txHash }

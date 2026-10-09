@@ -152,7 +152,7 @@ describe('MCP server', () => {
       ['transfer_mon', { to: SELLER, amount: '1' }],
       ['transfer_usdc', { to: SELLER, amount: '1' }],
       ['request_funding', { amount: '1' }],
-      ['give_feedback', { agentId: '5', score: 90 }]
+      ['give_feedback', { agentId: '5', score: 90, paymentTxHash: TX }]
     ] as const) {
       const r = await call(name, args)
       expect(r.isError, name).toBe(true)
@@ -330,9 +330,105 @@ describe('give_feedback', () => {
   it('rejects a missing / zero agent id before touching the chain', async () => {
     const { call } = await connect()
     for (const agentId of ['0', 'abc', '']) {
-      const r = await call('give_feedback', { agentId, score: 90 })
+      const r = await call('give_feedback', { agentId, score: 90, paymentTxHash: TX })
       expect(r.isError).toBe(true)
       expect(r.text).toContain('no valid ERC-8004 agent id')
+    }
+  })
+
+  it('refuses to post without a payment receipt', async () => {
+    const rpc = vi.spyOn(globalThis, 'fetch')
+    try {
+      const { call } = await connect()
+      for (const args of [{ agentId: '7', score: 90 }, { agentId: '7', score: 90, paymentTxHash: '0x1234' }]) {
+        const r = await call('give_feedback', args)
+        expect(r.isError).toBe(true)
+        expect(r.text).toContain('No payment receipt')
+      }
+      expect(rpc).not.toHaveBeenCalled()
+    } finally {
+      rpc.mockRestore()
+    }
+  })
+
+  // A JSON-RPC stub: the receipt of TX holds `logs`; any tx send is recorded.
+  function stubChain(logs: unknown[]) {
+    const sent: string[] = []
+    const rpc = vi.spyOn(globalThis, 'fetch').mockImplementation(async (_input, init) => {
+      const req = JSON.parse(String(init?.body))
+      const one = (r: { id: number; method: string }) => {
+        const results: Record<string, unknown> = {
+          eth_chainId: '0x279f',
+          eth_getTransactionReceipt: {
+            transactionHash: TX,
+            blockHash: '0x' + '01'.repeat(32),
+            blockNumber: '0x10',
+            transactionIndex: '0x0',
+            from: account.address,
+            to: net.usdc.address,
+            status: '0x1',
+            logs,
+            logsBloom: '0x' + '00'.repeat(256),
+            gasUsed: '0x1',
+            cumulativeGasUsed: '0x1',
+            effectiveGasPrice: '0x1',
+            type: '0x2',
+            contractAddress: null
+          },
+          eth_getTransactionCount: '0x0',
+          eth_estimateGas: '0x30000',
+          eth_gasPrice: '0x1',
+          eth_maxPriorityFeePerGas: '0x1',
+          eth_getBlockByNumber: { baseFeePerGas: '0x1', number: '0x10', timestamp: '0x1', transactions: [] },
+          eth_sendRawTransaction: '0x' + 'fe'.repeat(32)
+        }
+        if (r.method === 'eth_sendRawTransaction') sent.push(r.method)
+        return { jsonrpc: '2.0', id: r.id, result: results[r.method] ?? null }
+      }
+      const body = Array.isArray(req) ? req.map(one) : one(req)
+      return new Response(JSON.stringify(body), { headers: { 'content-type': 'application/json' } })
+    })
+    return { rpc, sent }
+  }
+  const pad = (a: string) => '0x' + a.slice(2).toLowerCase().padStart(64, '0')
+  const TRANSFER = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+  const usdcLog = (from: string, address: string = net.usdc.address) => ({
+    address,
+    topics: [TRANSFER, pad(from), pad(SELLER)],
+    data: '0x' + (10_000).toString(16).padStart(64, '0'),
+    blockNumber: '0x10',
+    blockHash: '0x' + '01'.repeat(32),
+    transactionHash: TX,
+    transactionIndex: '0x0',
+    logIndex: '0x0',
+    removed: false
+  })
+
+  it('refuses a tx in which this wallet sent no USDC', async () => {
+    for (const logs of [[], [usdcLog(SELLER)], [usdcLog(account.address, OTHER_TOKEN)]]) {
+      const { rpc, sent } = stubChain(logs)
+      try {
+        const { call } = await connect()
+        const r = await call('give_feedback', { agentId: '7', score: 90, paymentTxHash: TX })
+        expect(r.isError).toBe(true)
+        expect(r.text).toContain('Payment receipt not accepted')
+        expect(sent).toHaveLength(0)
+      } finally {
+        rpc.mockRestore()
+      }
+    }
+  })
+
+  it('posts receipt-backed feedback when the wallet paid in that tx', async () => {
+    const { rpc, sent } = stubChain([usdcLog(account.address)])
+    try {
+      const { call } = await connect()
+      const r = await call('give_feedback', { agentId: '7', score: 90, paymentTxHash: TX })
+      expect(r.isError).toBeFalsy()
+      expect(r.json()).toMatchObject({ success: true, agentId: '7', paymentTxHash: TX })
+      expect(sent).toHaveLength(1)
+    } finally {
+      rpc.mockRestore()
     }
   })
 })

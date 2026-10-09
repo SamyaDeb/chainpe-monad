@@ -19,8 +19,17 @@ export type { PaidRequest, PaidFetchOptions, OfferCheck } from './payment.js'
 export { RegistryClient, RegistryWriter, filterServices, rankByReputation, decodeService } from './registry.js'
 export type { RawService, ServiceInput, RegisterResult } from './registry.js'
 
-export { getReputation, giveFeedback, summaryToScore } from './reputation.js'
-export type { GiveFeedbackParams } from './reputation.js'
+export {
+  getReputation,
+  giveFeedback,
+  summaryToScore,
+  buildFeedbackArgs,
+  paymentFeedbackUri,
+  verifyPaymentReceipt,
+  FEEDBACK_TAG1,
+  FEEDBACK_TAG2
+} from './reputation.js'
+export type { GiveFeedbackParams, PaymentReceiptCheck } from './reputation.js'
 
 export { PolicyVaultClient } from './policyvault.js'
 export type { PolicyVaultOptions, PolicyParams, SpendAuthorization } from './policyvault.js'

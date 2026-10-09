@@ -51,7 +51,10 @@ export function registerPay(server: McpServer, config: AppConfig, spending: Spen
           data: await parseBody(response),
           payment: payment ? { ...payment, amount: `${payment.amount} USDC` } : null,
           agentId: agentId ?? null,
-          hint: payment && agentId ? 'Use give_feedback with this agentId to rate the provider.' : undefined
+          hint:
+            payment && agentId && payment.txHash
+              ? `Use give_feedback with agentId ${agentId} and paymentTxHash ${payment.txHash} to rate the provider.`
+              : undefined
         })
       } catch (err) {
         const hint = err instanceof ChainPePaymentError && err.reason === 'settlement_rejected' ? fundingHint(config) : ''

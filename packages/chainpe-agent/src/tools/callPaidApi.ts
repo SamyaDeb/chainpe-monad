@@ -187,13 +187,14 @@ export function createCallPaidApiTool(options: CallPaidApiToolOptions) {
           paid: response.paid ?? false,
         });
 
-        // On-chain reputation: leave a positive ERC-8004 score for the
-        // provider's agent after a successful paid call. Best-effort.
+        // On-chain reputation: leave a positive, receipt-backed ERC-8004 score
+        // (feedbackHash = settlement tx) after a successful paid call. Best-effort.
         let reputation: { agentId: string; score: number; txHash: string } | undefined;
         // Opt-in (CHAINPE_AUTO_FEEDBACK=1): it is an on-chain tx that costs MON gas.
         if (
           process.env.CHAINPE_AUTO_FEEDBACK === "1" &&
           response.paid &&
+          response.paymentReceipt?.txId &&
           privateKey &&
           network &&
           service.agentId &&
@@ -201,8 +202,8 @@ export function createCallPaidApiTool(options: CallPaidApiToolOptions) {
         ) {
           try {
             const txHash = await giveFeedback(privateKey, network, service.agentId, 100, {
+              paymentTxHash: response.paymentReceipt.txId,
               endpoint: service.endpoint,
-              tag: "x402-success",
               reputationRegistry,
             });
             reputation = { agentId: service.agentId, score: 100, txHash };

@@ -40,18 +40,19 @@ export function fundingHint(config: AppConfig): string {
 
 /**
  * Opt-in (CHAINPE_AUTO_FEEDBACK=1): leave a positive ERC-8004 score for the
- * provider advertised on the 402. Costs gas, so off by default. Best effort.
+ * provider advertised on the 402, backed by the settlement tx (no settlement
+ * tx, no rating). Costs gas, so off by default. Best effort.
  */
-async function autoFeedback(config: AppConfig, url: string, agentId: string | undefined) {
+async function autoFeedback(config: AppConfig, url: string, agentId: string | undefined, paymentTxHash: string | undefined) {
   if (process.env.CHAINPE_AUTO_FEEDBACK !== '1' || !config.privateKey) return undefined
-  if (!agentId || agentId === '0') return undefined
+  if (!agentId || agentId === '0' || !paymentTxHash) return undefined
   try {
     const registry = resolveReputationRegistry(config.network, config.reputationRegistry)
     const txHash = await giveFeedback(config.network, registry, config.privateKey, {
       agentId,
       value: 100,
-      endpoint: new URL(url).origin,
-      tag: 'x402-success'
+      paymentTxHash,
+      endpoint: new URL(url).origin
     })
     return { agentId, score: 100, txHash }
   } catch {
@@ -77,7 +78,7 @@ export function registerX402Fetch(server: McpServer, config: AppConfig, spending
       try {
         const { response, payment, agentId } = await makePaidRequest(config, spending, { url, method, headers, body })
         const payload = await formatResponseBody(response)
-        const reputation = payment ? await autoFeedback(config, url, agentId) : undefined
+        const reputation = payment ? await autoFeedback(config, url, agentId, payment.txHash) : undefined
         return text({
           status: response.status,
           statusText: response.statusText,

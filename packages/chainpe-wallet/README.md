@@ -20,7 +20,7 @@ settlement transaction on MonadVision.
 | `transfer_mon` | Native MON transfer. |
 | `spending_report` | Spent today (UTC) / this session, remaining budget, recent payments with tx hashes. |
 | `request_funding` | EIP-681 top-up URI; on testnet also the MON faucet (https://faucet.monad.xyz) and the Circle USDC faucet (https://faucet.circle.com, choose Monad Testnet). |
-| `give_feedback` | Posts a 0–100 score to the canonical ERC-8004 Reputation Registry (costs a little MON gas). |
+| `give_feedback` | Posts a 0–100 score to the canonical ERC-8004 Reputation Registry (costs a little MON gas). Needs `paymentTxHash`, the settlement tx of a USDC payment this wallet made — no receipt, no rating; the hash becomes the feedback's `feedbackHash`. |
 
 ## Payment safety
 
