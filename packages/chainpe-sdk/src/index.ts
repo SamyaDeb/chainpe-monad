@@ -16,8 +16,8 @@ export { ChainPe } from './chainpe.js'
 export { paidFetch, checkOffer } from './payment.js'
 export type { PaidRequest, PaidFetchOptions, OfferCheck } from './payment.js'
 
-export { RegistryClient, filterServices, rankByReputation, decodeService } from './registry.js'
-export type { RawService } from './registry.js'
+export { RegistryClient, RegistryWriter, filterServices, rankByReputation, decodeService } from './registry.js'
+export type { RawService, ServiceInput, RegisterResult } from './registry.js'
 
 export { getReputation, giveFeedback, summaryToScore } from './reputation.js'
 export type { GiveFeedbackParams } from './reputation.js'
