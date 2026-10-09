@@ -196,6 +196,15 @@ testnet and confirm interop with Monad's public facilitator (steps 5–6).
    agentic Track 4 winners).
 3. **AI tools** (`packages/chainpe-ai-tools`): network types, README examples.
 
+**Status (Oct 9):** steps 1–3 done; all three packages build, typecheck and test in the root
+workspace (wallet 49, agent 17, ai-tools 10 tests). The MCP wallet serves the 9 tools over stdio
+(also from the packed `.mcpb`). `x402_fetch`/`pay`/agent/ai-tools all pay through the SDK, and
+tests against a real x402 v2 server prove it refuses over-cap, non-USDC and wrong-network
+offers. The budget persists in `~/.chainpe/spending.json` across restarts. Still open: the
+receipt requirement on `give_feedback` (Phase 4). The done-criterion (Claude Desktop paying a
+**testnet** service) needs the Phase 1 step 7 registry deploy, a funded wallet and a running
+facilitator + seller.
+
 **Done when:** Claude Desktop (MCP) pays a testnet ChainPe service and shows the tx link.
 **Commits:** one `port … to Monad` commit per package.
 

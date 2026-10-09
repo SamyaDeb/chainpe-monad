@@ -1,0 +1,88 @@
+{
+  "name": "@chainpeavax/ai-tools",
+  "version": "0.3.0-monad.0",
+  "description": "ChainPe agent tools \u2014 drop-in x402 v2 pay + discover tools for the Vercel AI SDK and LangChain, paying USDC on Monad.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./vercel": {
+      "types": "./dist/vercel.d.ts",
+      "import": "./dist/vercel.js"
+    },
+    "./langchain": {
+      "types": "./dist/langchain.d.ts",
+      "import": "./dist/langchain.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@chainpeavax/sdk": "*"
+  },
+  "peerDependencies": {
+    "@langchain/core": ">=0.3.0",
+    "ai": ">=4.0.0",
+    "zod": "^3.23.0"
+  },
+  "peerDependenciesMeta": {
+    "ai": {
+      "optional": true
+    },
+    "@langchain/core": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@langchain/core": "^0.3.0",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.15.21",
+    "@x402/core": "2.28.0",
+    "@x402/evm": "2.28.0",
+    "@x402/express": "2.28.0",
+    "ai": "^6.0.0",
+    "express": "^4.22.3",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "viem": "^2.57.4",
+    "vitest": "^3.2.1",
+    "zod": "^3.23.0"
+  },
+  "keywords": [
+    "x402",
+    "ai-agents",
+    "vercel-ai-sdk",
+    "langchain",
+    "tools",
+    "usdc",
+    "monad",
+    "erc-8004",
+    "payments",
+    "chainpe"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamyaDeb/chainpe-monad.git",
+    "directory": "packages/chainpe-ai-tools"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
