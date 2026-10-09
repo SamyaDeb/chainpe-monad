@@ -171,6 +171,11 @@ npm run deploy:policyvault:testnet && npm run postcheck:testnet && npm run verif
 6. **Interop check** — the same seller settles through Monad's facilitator
    (`x402-facilitator.molandak.org`) too.
 
+**Status (Oct 9):** steps 1–4 done. Proven here: a real x402 v2 round trip (backend → proxy →
+SDK) and real on-chain settlement on a local chain (USDC moves, replays refused, concurrent
+settlements OK). Remaining, needs Monad network access: run `e2e/monad-paid-call.mjs` on
+testnet and confirm interop with Monad's public facilitator (steps 5–6).
+
 **Done when:** a real testnet x402 payment settles end-to-end and prints a MonadVision link.
 **Commits:** `port facilitator to x402 v2 on Monad (+ hardening)`,
 `port payment proxy to x402 v2 on Monad`, `port SDK to Monad + x402 v2`.
