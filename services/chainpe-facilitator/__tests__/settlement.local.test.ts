@@ -75,7 +75,7 @@ async function waitForRpc() {
 
 describe.skipIf(!haveArtifact)('real on-chain settlement (local chain)', () => {
   beforeAll(async () => {
-    node = spawn('npx', ['hardhat', 'node', '--port', String(PORT)], { cwd: CONTRACTS_DIR, stdio: 'ignore' })
+    node = spawn('npx', ['hardhat', 'node', '--port', String(PORT)], { cwd: CONTRACTS_DIR, stdio: 'ignore', detached: true })
     await waitForRpc()
 
     // Deploy MockUSDC and fund the payer.
@@ -132,7 +132,8 @@ describe.skipIf(!haveArtifact)('real on-chain settlement (local chain)', () => {
 
   afterAll(() => {
     server?.close()
-    node?.kill('SIGKILL')
+    // Kill the whole process group: `npx` spawns the real node as a child.
+    if (node?.pid) process.kill(-node.pid, 'SIGKILL')
   })
 
   const requirements = (): PaymentRequirements => ({
