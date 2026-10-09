@@ -96,6 +96,13 @@ const config: HardhatUserConfig = {
       },
     ],
   },
+  // MonadVision verifies through Sourcify — no API key needed (docs.monad.xyz,
+  // guides/verify-smart-contract/hardhat).
+  sourcify: {
+    enabled: true,
+    apiUrl: "https://sourcify-api-monad.blockvision.org",
+    browserUrl: "https://monadvision.com",
+  },
   typechain: {
     outDir: "typechain-types",
     target: "ethers-v6",

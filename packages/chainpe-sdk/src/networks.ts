@@ -92,7 +92,10 @@ export const NETWORKS: Record<ChainPeNetwork, NetworkInfo> = {
     },
     explorer: 'https://testnet.monadvision.com',
     nativeSymbol: 'MON',
-    faucet: 'https://faucet.monad.xyz'
+    faucet: 'https://faucet.monad.xyz',
+    // contracts/deployments/monadTestnet*.json (deployed + Sourcify-verified 2026-10-09)
+    chainPeRegistry: '0xe41CEcC51A61921dDFCeCAa9807856C446867CA4',
+    policyVault: '0x1Eb25cDD00bCCEC89782Aaf12600Ac5eFeEeAB65'
   }
 }
 

@@ -3,7 +3,8 @@
  * Monad explorer, reading addresses from deployments/<network>*.json.
  *
  * Usage:
- *   ETHERSCAN_API_KEY=... npx hardhat run scripts/verify.ts --network monadTestnet
+ *   npx hardhat run scripts/verify.ts --network monadTestnet
+ *   (MonadVision via Sourcify always; Monadscan too when ETHERSCAN_API_KEY is set)
  *
  * Implementations have no constructor args. Each proxy is an ERC1967Proxy whose
  * constructor args are (implementation, initData); initData is rebuilt from the
@@ -21,13 +22,26 @@ function load(file: string): Record<string, string> | undefined {
 }
 
 async function verify(label: string, address: string, args: unknown[], contract?: string) {
-  console.log(`\n  Verifying ${label} at ${address}...`);
-  try {
-    await run("verify:verify", { address, constructorArguments: args, ...(contract ? { contract } : {}) });
-  } catch (err) {
-    const msg = (err as Error).message ?? String(err);
-    if (/already verified/i.test(msg)) console.log("  already verified ✓");
-    else console.error(`  ✗ ${msg}`);
+  // MonadVision (Sourcify) needs no API key; Monadscan (Etherscan v2) only runs
+  // when ETHERSCAN_API_KEY is set.
+  const targets: [string, () => Promise<unknown>][] = [
+    ["MonadVision (Sourcify)", () => run("verify:sourcify", { address, ...(contract ? { contract } : {}) })],
+  ];
+  if (process.env.ETHERSCAN_API_KEY) {
+    targets.push([
+      "Monadscan (Etherscan)",
+      () => run("verify:etherscan", { address, constructorArgsParams: [], constructorArguments: args, ...(contract ? { contract } : {}) }),
+    ]);
+  }
+  for (const [where, go] of targets) {
+    console.log(`\n  Verifying ${label} at ${address} on ${where}...`);
+    try {
+      await go();
+    } catch (err) {
+      const msg = (err as Error).message ?? String(err);
+      if (/already verified/i.test(msg)) console.log("  already verified ✓");
+      else console.error(`  ✗ ${msg.split("\n")[0]}`);
+    }
   }
 }
 

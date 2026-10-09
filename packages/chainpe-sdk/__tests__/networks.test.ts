@@ -87,6 +87,7 @@ describe('env overrides', () => {
 
   it('requires a registry address until one is deployed', () => {
     expect(() => resolveRegistryAddress('monad')).toThrow(/No ChainPe registry address/)
+    expect(resolveRegistryAddress('monad-testnet')).toBe('0xe41CEcC51A61921dDFCeCAa9807856C446867CA4')
     process.env.CHAINPE_REGISTRY_ADDRESS = '0x000000000000000000000000000000000000dead'
     expect(resolveRegistryAddress('monad')).toBe('0x000000000000000000000000000000000000dEaD')
     expect(resolveRegistryAddress('monad', '0x0000000000000000000000000000000000000001')).toBe(
@@ -103,6 +104,7 @@ describe('env overrides', () => {
 
   it('treats the PolicyVault as optional', () => {
     expect(resolvePolicyVault('monad')).toBeUndefined()
+    expect(resolvePolicyVault('monad-testnet')).toBe('0x1Eb25cDD00bCCEC89782Aaf12600Ac5eFeEeAB65')
     process.env.POLICY_VAULT_ADDRESS = '0x000000000000000000000000000000000000dead'
     expect(resolvePolicyVault('monad')).toBe('0x000000000000000000000000000000000000dEaD')
   })

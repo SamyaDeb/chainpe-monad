@@ -1,0 +1,14 @@
+{
+  "network": "monadTestnet",
+  "chainId": 10143,
+  "chainPeRegistryProxy": "0xe41CEcC51A61921dDFCeCAa9807856C446867CA4",
+  "chainPeRegistryImpl": "0x996A3FA1EC7A323EF173cd7DC8e076BA6358885C",
+  "feeToken": "0x534b2f3A21130d7a60830c2Df862319e593943A3",
+  "feeRecipient": "0xB7fD722846D0373203Cc90c734C62256dBA91a83",
+  "registrationFee": "0",
+  "identityRegistry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+  "owner": "0xB7fD722846D0373203Cc90c734C62256dBA91a83",
+  "deployer": "0xB7fD722846D0373203Cc90c734C62256dBA91a83",
+  "deployedAt": "2026-10-09T22:28:32.406Z",
+  "upgradeable": true
+}

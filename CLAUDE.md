@@ -40,14 +40,16 @@ git -C /tmp/chainpeavax archive cb3904ead82e6e5442e9bda53b49f9ca8d9dfe2c | tar -
 | USDC (6 dp, EIP-712 `"USDC"` v`"2"`) | `0x754704Bc059F8C67012fEd69BC8A327a5aafb603` | `0x534b2f3A21130d7a60830c2Df862319e593943A3` |
 | ERC-8004 Identity | `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432` | `0x8004A818BFB912233c491871b3d84c89A494BD9e` (has code ✓) |
 | ERC-8004 Reputation | `0x8004BAa17C55a88189AE136b182e5fdA19dE9b63` | `0x8004B663056A597Dffe9eCcC1965A193B7388713` (has code ✓) |
-| ChainPeRegistry / PolicyVault | not deployed yet → `contracts/deployments/` | not deployed yet |
+| ChainPeRegistry (proxy) | not deployed yet | `0xe41CEcC51A61921dDFCeCAa9807856C446867CA4` (verified) |
+| PolicyVault (proxy) | not deployed yet | `0x1Eb25cDD00bCCEC89782Aaf12600Ac5eFeEeAB65` (verified) |
 | Explorer | `https://monadvision.com` | `https://testnet.monadvision.com` |
 | Native token | MON (18 dp) | MON |
 | x402 facilitator | ours (`CHAINPE_FACILITATOR_URL`) | ours, or `https://x402-facilitator.molandak.org` (supports `exact` on 143 + 10143 ✓) |
 
 Monad behaviour to respect: gas is billed on the **gas limit** (set tight limits);
-keep gas-paying keys above the **10 MON reserve balance**; public RPC caps `eth_getLogs`
-at ~100 blocks; no global mempool.
+the **10 MON reserve balance** only makes transactions that send MON *value* revert when the
+sender would end below 10 MON (gas-only txs such as deploys and USDC settlements are fine);
+public RPC caps `eth_getLogs` at ~100 blocks; no global mempool.
 
 ## Target layout (mirrors `legacy/` so modules port 1:1)
 ```
@@ -72,7 +74,9 @@ e2e/                          monad-testnet / mainnet end-to-end scripts
 ## Environment notes (Claude Code cloud sandbox)
 The sandbox's network access can be widened in the cloud-environment settings; with
 **Full** access, Monad RPCs, the facilitator and the solc download all work (verified
-2026-10-09). Node's `fetch` ignores the sandbox proxy unless `NODE_USE_ENV_PROXY=1` is set.
+2026-10-09). Node's `fetch` ignores the sandbox proxy unless `NODE_USE_ENV_PROXY=1` is set,
+and Hardhat only reads lowercase `http_proxy` — run Hardhat with
+`export http_proxy="$https_proxy" NODE_USE_ENV_PROXY=1`.
 Deploys and payments additionally need a funded throwaway key as the `DEPLOYER_PRIVATE_KEY`
 environment secret — never paste keys into chat. If access is restricted, Hardhat falls back
 to the npm `solc` build for compiling.

@@ -6,15 +6,15 @@
  * Usage:
  *   EXPECTED_DEPLOYER=0x... npx hardhat run scripts/preflight.ts --network monadTestnet
  *
- * Monad bills gas on the gas LIMIT (not gas used) and keeps a reserve balance
- * (default 10 MON) on every account, so the deployer needs headroom above both.
+ * Monad bills gas on the gas LIMIT (not gas used). Its 10 MON reserve balance
+ * only makes transactions that send MON *value* revert below 10 MON — gas-only
+ * transactions such as deploys are unaffected (docs: developer-essentials/reserve-balance).
  */
 import { ethers, network } from "hardhat";
 import { formatMon, monadDefaults } from "./lib/monad";
 
 // Registry impl + proxy, PolicyVault impl + proxy, generous.
 const TOTAL_GAS_EST = 12_000_000n;
-const RESERVE_BALANCE = ethers.parseEther("10");
 
 async function main() {
   const [signer] = await ethers.getSigners();
@@ -23,14 +23,13 @@ async function main() {
   const bal = await ethers.provider.getBalance(addr);
   const gasPrice = (await ethers.provider.getFeeData()).gasPrice ?? 0n;
   const estCost = TOTAL_GAS_EST * gasPrice;
-  const needed = estCost + RESERVE_BALANCE;
 
   console.log(`\n  Network:     ${network.name} (chainId ${chainId}) ${monadDefaults(chainId) ? "✓ Monad" : "✗ not a Monad chain"}`);
   console.log(`  Signer:      ${addr}`);
   console.log(`  Balance:     ${formatMon(bal)}`);
   console.log(`  Gas price:   ${ethers.formatUnits(gasPrice, 9)} gwei`);
-  console.log(`  Est. deploy: ${formatMon(estCost)} (+ ${formatMon(RESERVE_BALANCE)} reserve balance)`);
-  console.log(`  Sufficient:  ${bal > needed ? "YES ✓" : "NO ✗"}\n`);
+  console.log(`  Est. deploy: ${formatMon(estCost)} (generous upper bound)`);
+  console.log(`  Sufficient:  ${bal > estCost ? "YES ✓" : "NO ✗"}\n`);
 
   const expected = process.env.EXPECTED_DEPLOYER;
   if (expected && addr.toLowerCase() !== expected.toLowerCase()) {

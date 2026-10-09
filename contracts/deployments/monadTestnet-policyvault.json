@@ -1,0 +1,11 @@
+{
+  "network": "monadTestnet",
+  "chainId": 10143,
+  "policyVaultProxy": "0x1Eb25cDD00bCCEC89782Aaf12600Ac5eFeEeAB65",
+  "policyVaultImpl": "0xa4120C7C6b74CF20dc39979919687Cb9396C458f",
+  "token": "0x534b2f3A21130d7a60830c2Df862319e593943A3",
+  "owner": "0xB7fD722846D0373203Cc90c734C62256dBA91a83",
+  "deployer": "0xB7fD722846D0373203Cc90c734C62256dBA91a83",
+  "deployedAt": "2026-10-09T22:28:40.539Z",
+  "upgradeable": true
+}
