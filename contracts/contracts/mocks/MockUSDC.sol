@@ -21,7 +21,7 @@ contract MockUSDC is ERC20, EIP712 {
 
     mapping(address => mapping(bytes32 => bool)) private _authorizationStates;
 
-    constructor() ERC20("USD Coin", "USDC") EIP712("USD Coin", "2") {}
+    constructor() ERC20("USDC", "USDC") EIP712("USDC", "2") {}
 
     function decimals() public pure override returns (uint8) {
         return 6;
