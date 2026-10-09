@@ -2,14 +2,18 @@
   "name": "chainpe-monad",
   "version": "0.1.0",
   "private": true,
-  "description": "ChainPe on Monad — the trust layer for x402: USDC agent payments + payment-backed ERC-8004 reputation",
+  "description": "ChainPe on Monad \u2014 the trust layer for x402: USDC agent payments + payment-backed ERC-8004 reputation",
   "type": "module",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
+    "bootstrap": "npm run build -w @chainpeavax/sdk",
+    "prebuild": "npm run bootstrap",
     "build": "npm run build --workspaces --if-present",
+    "pretypecheck": "npm run bootstrap",
     "typecheck": "npm run typecheck --workspaces --if-present",
+    "pretest": "npm run bootstrap",
     "test": "npm run test --workspaces --if-present",
     "clean": "npm run clean --workspaces --if-present",
     "test:contracts": "npm test --prefix contracts"

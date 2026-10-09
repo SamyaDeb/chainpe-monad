@@ -1,0 +1,54 @@
+import { z } from 'zod'
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
+import { explorerTxUrl, giveFeedback, resolveReputationRegistry } from '@chainpeavax/sdk'
+import type { AppConfig } from '../types.js'
+import { NO_WALLET_MESSAGE } from '../clients.js'
+import { errMsg, fail, text } from './util.js'
+
+/**
+ * give_feedback — post an on-chain reputation score for a provider's agent to
+ * the canonical ERC-8004 Reputation Registry on Monad (a real transaction,
+ * paid in MON gas). The registry rejects self-feedback.
+ */
+export function registerGiveFeedback(server: McpServer, config: AppConfig): void {
+  server.tool(
+    'give_feedback',
+    'Leave on-chain reputation feedback for a service provider (ERC-8004). Submits a real transaction to ' +
+      'the Reputation Registry on Monad (needs a little MON for gas) with a 0–100 score. Use after calling a ' +
+      'paid service; pass the agentId shown by search_bazaar or pay.',
+    {
+      agentId: z.string().describe("The provider service's ERC-8004 agent id (from search_bazaar)"),
+      score: z.number().min(0).max(100).describe('Score 0–100 (e.g. 100 = excellent, 0 = bad)'),
+      endpoint: z.string().optional().describe('The service endpoint the feedback is about'),
+      tag: z.string().optional().describe('Optional short tag, e.g. "weather" or "accuracy"')
+    },
+    async ({ agentId, score, endpoint, tag }) => {
+      if (!config.privateKey) return fail(NO_WALLET_MESSAGE)
+      if (!agentId || agentId === '0' || !/^\d+$/.test(agentId)) {
+        return fail('This provider has no valid ERC-8004 agent id, so it cannot be scored.')
+      }
+      try {
+        const registry = resolveReputationRegistry(config.network, config.reputationRegistry)
+        const txHash = await giveFeedback(config.network, registry, config.privateKey, {
+          agentId,
+          value: score,
+          endpoint,
+          tag,
+          waitConfirm: true
+        })
+        return text({
+          success: true,
+          agentId,
+          score,
+          txHash,
+          explorer: explorerTxUrl(config.network, txHash),
+          note: 'Feedback recorded on-chain in the ERC-8004 Reputation Registry.'
+        })
+      } catch (err) {
+        const msg = errMsg(err)
+        const hint = /self-feedback/i.test(msg) ? ' (you cannot rate your own agent)' : ''
+        return fail(`Feedback failed: ${msg}${hint}`)
+      }
+    }
+  )
+}

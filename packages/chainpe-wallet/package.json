@@ -1,0 +1,61 @@
+{
+  "name": "chainpe-wallet-mcp",
+  "version": "0.4.0-monad.0",
+  "description": "ChainPe Wallet \u2014 MCP server giving Claude a Monad x402 v2 wallet that discovers and pays for services in the ChainPe registry",
+  "type": "module",
+  "bin": {
+    "chainpe-wallet-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "manifest.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf dist",
+    "build:mcpb": "bash scripts/build-mcpb.sh",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@chainpeavax/sdk": "*",
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "@x402/core": "2.28.0",
+    "@x402/evm": "2.28.0",
+    "viem": "^2.57.4",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.15.21",
+    "@x402/express": "2.28.0",
+    "express": "^4.22.3",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.1"
+  },
+  "keywords": [
+    "x402",
+    "wallet",
+    "mcp",
+    "usdc",
+    "monad",
+    "erc-8004",
+    "payments",
+    "chainpe",
+    "agent-commerce"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamyaDeb/chainpe-monad.git",
+    "directory": "packages/chainpe-wallet"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

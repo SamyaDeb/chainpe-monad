@@ -1,0 +1,16 @@
+// ─── CRITICAL: Redirect all console output to stderr ─────────────────────────
+// MCP servers communicate via stdin/stdout (JSON-RPC). Any console.log that
+// reaches stdout corrupts the protocol. Web3 libraries can emit console output,
+// so we redirect it to stderr before anything else runs.
+const _write = (msg: unknown, ...args: unknown[]) => process.stderr.write(`${[msg, ...args].join(' ')}\n`)
+console.log = _write
+console.info = _write
+console.debug = _write
+
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
+import { loadConfig } from './config.js'
+import { createMcpServer } from './server.js'
+
+const config = loadConfig()
+const server = createMcpServer(config)
+await server.connect(new StdioServerTransport())
