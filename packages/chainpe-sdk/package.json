@@ -26,15 +26,31 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "@x402/core": "^2.28.0",
+    "@x402/evm": "^2.28.0",
+    "@x402/fetch": "^2.28.0",
     "viem": "^2.57.4"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^22.15.21",
+    "@x402/express": "^2.28.0",
+    "express": "^4.22.3",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
     "vitest": "^3.2.1"
   },
-  "keywords": ["x402", "sdk", "usdc", "monad", "payments", "ai-agents", "erc-8004", "reputation", "chainpe"],
+  "keywords": [
+    "x402",
+    "sdk",
+    "usdc",
+    "monad",
+    "payments",
+    "ai-agents",
+    "erc-8004",
+    "reputation",
+    "chainpe"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
