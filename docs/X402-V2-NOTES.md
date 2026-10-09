@@ -68,3 +68,56 @@ app.use(paymentMiddleware({ 'GET /data': { accepts: { scheme: 'exact', network: 
 ```
 `price` as a money string resolves through the library's default-asset table (Monad USDC is
 in it); an `AssetAmount` works on any EVM chain (we use it for local Hardhat tests).
+
+## Custom schemes (Phase 5 spike, 2026-10-09) — **works**
+
+`@x402/core` 2.28 dispatches by `(network, scheme)` on all three sides, so a scheme of our
+own (`chainpe-vault`) plugs in without forking anything. Proof:
+`packages/chainpe-sdk/__tests__/custom-scheme.spike.test.ts` (client signs → `@x402/express`
+middleware → `x402Facilitator` with a custom mechanism → 200 + `PAYMENT-RESPONSE`).
+
+```ts
+// client — x402Client.register(network, impl); several schemes per network are fine
+interface SchemeNetworkClient { scheme; createPaymentPayload(x402Version, requirements, ctx?) → { x402Version, payload } }
+// resource server — x402ResourceServer.register(network, impl)
+interface SchemeNetworkServer {
+  scheme
+  defaultAssetTransferMethod   // "default" when the scheme has no on-wire ATM
+  paymentFlows                 // { [atm]: { supported: PaymentFlowName[], default } }
+  parsePrice(price, network) → AssetAmount
+  enhancePaymentRequirements(req, supportedKind, extensions) → req   // gets the facilitator's kind.extra
+}
+// facilitator — x402Facilitator.register(network, impl)
+interface SchemeNetworkFacilitator { scheme; caipFamily; getExtra(network); getSigners(network); verify(p, r); settle(p, r) }
+```
+
+Payment flows (from `@x402/core`): `authorization` = verify before the handler, settle after
+it succeeds (what `exact` uses by default); `upfront` = settle before the handler; `escrow` =
+both. `chainpe-vault` uses `authorization`, like `exact`.
+
+Gotchas found in the spike:
+- **A route may only offer schemes its facilitator lists in `/supported`.** Otherwise the
+  middleware's lazy `initialize()` throws `RouteConfigurationError … missing_facilitator`, the
+  request gets a 500 and the route stays broken. The ChainPe proxy therefore offers
+  `chainpe-vault` only when the facilitator advertises it (`startProxyServer` checks
+  `/supported`; Monad's public facilitator does not, ours does).
+- `x402ResourceServer` takes an **array** of facilitator clients and routes each
+  scheme/network to the first that supports it — so `exact` can go to one facilitator and
+  `chainpe-vault` to another (`vaultFacilitatorUrl` / `CHAINPE_VAULT_FACILITATOR_URL`).
+- The server matches the payer's `accepted` against its own requirements by deep equality
+  (scheme-declared `dynamicExtraFields` excepted), so `extra` must be deterministic.
+- On a failed verify only `invalidReason` reaches the client (the 402's `error`);
+  `invalidMessage` does not. Our facilitator puts the contract's reason into the code
+  (`vault_over_per_call_cap`, …).
+- `setSpendControls(false)` on the client is still needed: the library's USD caps only know
+  default assets.
+
+### `chainpe-vault` wire format
+
+| | |
+|---|---|
+| `scheme` / `network` | `chainpe-vault` / `eip155:143` or `eip155:10143` |
+| `asset`, `amount`, `payTo` | Monad USDC (= the vault's token), atomic amount, the seller |
+| `extra` | `{ vault, name: "ChainPePolicyVault", version: "1", agentId? }` (vault + domain from the facilitator's `/supported`) |
+| `payload` | `{ owner, to, amount, nonce, deadline, signature }` — the PolicyVault EIP-712 `Spend`, signed by `policyOf(owner).sessionKey`; deadline ≤ 5 min |
+| settlement | `PolicyVault.spend(owner, to, amount, deadline, signature)`; `SettleResponse.payer` = owner |
