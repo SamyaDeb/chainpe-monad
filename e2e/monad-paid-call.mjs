@@ -14,6 +14,10 @@
  *                       required on mainnet (run services/chainpe-facilitator)
  *   PRICE               USDC per call (default 0.01)
  *   CALLS               number of paid calls (default 1) — reports p50/p95
+ *   AGENT_ID            seller's ERC-8004 agent id (advertised on the 402)
+ *   FEEDBACK            0–100: after paying, post receipt-backed ERC-8004 feedback for
+ *                       AGENT_ID on the canonical Reputation Registry, with the first
+ *                       settlement tx as feedbackHash (the buyer needs a little MON for gas)
  *
  * Build first:  npm run build
  */
@@ -38,7 +42,8 @@ const config = {
   paymentToken: 'USDC',
   walletAddress: seller,
   proxyPort: 0,
-  network
+  network,
+  ...(process.env.AGENT_ID ? { agentId: process.env.AGENT_ID } : {})
 }
 if (!resolveFacilitatorUrl(config)) {
   console.error(`No facilitator for ${network}: set CHAINPE_FACILITATOR_URL`)
@@ -59,17 +64,33 @@ console.log(`buyer ${cp.getAddress()} on ${network}`)
 console.log('balances', await cp.balance())
 
 const times = []
+let firstTx
 for (let i = 0; i < calls; i++) {
   const t0 = performance.now()
   const r = await cp.pay(`${px.url}/hello`)
   const ms = Math.round(performance.now() - t0)
   times.push(ms)
   console.log(`#${i + 1} HTTP ${r.status} in ${ms} ms`, r.data)
+  firstTx ??= r.payment?.txHash
   if (r.payment?.txHash) console.log(`   paid ${r.payment.amount} USDC → ${explorerTxUrl(network, r.payment.txHash)}`)
   else console.log('   (no settlement tx reported)')
 }
 times.sort((a, b) => a - b)
 const q = p => times[Math.min(times.length - 1, Math.floor(p * times.length))]
 console.log(`\n${calls} paid call(s): p50 ${q(0.5)} ms, p95 ${q(0.95)} ms`)
+
+if (process.env.FEEDBACK !== undefined) {
+  const agentId = need('AGENT_ID')
+  if (!firstTx) (console.error('No settlement tx — no receipt, no rating.'), process.exit(1))
+  const feedbackTx = await cp.giveFeedback({
+    agentId,
+    value: Number(process.env.FEEDBACK),
+    paymentTxHash: firstTx,
+    endpoint: `${px.url}/hello`,
+    waitConfirm: true
+  })
+  console.log(`receipt-backed feedback ${process.env.FEEDBACK}/100 for agent ${agentId} (feedbackHash = ${firstTx})`)
+  console.log(`   → ${explorerTxUrl(network, feedbackTx)}`)
+}
 be.s.close()
 px.s.close()
