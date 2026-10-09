@@ -1,0 +1,60 @@
+{
+  "name": "@chainpeavax/sdk",
+  "version": "0.2.0",
+  "description": "ChainPe SDK \u2014 add x402 USDC payments + on-chain ERC-8004 reputation to any app in 3 lines, on Avalanche C-Chain.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "viem": "^2.21.0",
+    "x402": "^1.2.0",
+    "x402-fetch": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.1"
+  },
+  "keywords": [
+    "x402",
+    "sdk",
+    "usdc",
+    "avalanche",
+    "c-chain",
+    "payments",
+    "micropayments",
+    "ai-agents",
+    "erc-8004",
+    "reputation",
+    "chainpe"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SamyaDeb/ChainPe"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

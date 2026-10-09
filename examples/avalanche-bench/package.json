@@ -1,0 +1,13 @@
+{
+  "name": "chainpe-avalanche-bench",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Live, reproducible Avalanche C-Chain benchmark for ChainPe (finality + fees).",
+  "scripts": {
+    "bench": "node bench.mjs"
+  },
+  "dependencies": {
+    "viem": "^2.21.0"
+  }
+}

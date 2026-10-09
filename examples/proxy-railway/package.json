@@ -1,0 +1,19 @@
+{
+  "name": "chainpe-proxy",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "ChainPe x402 payment proxy — reads config from environment variables",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "http-proxy-middleware": "^3.0.5",
+    "x402": "^1.2.0",
+    "x402-express": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

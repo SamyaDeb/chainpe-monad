@@ -1,0 +1,31 @@
+{
+  "name": "chainpe-seller-agents-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Agent-to-agent marketplace demo: two LLM-backed seller agents (paid in USDC) + a buyer orchestrator that hires both, on Avalanche Fuji.",
+  "scripts": {
+    "research": "node research-agent.mjs",
+    "digest": "node news-digest-agent.mjs",
+    "orchestrate": "node orchestrator.mjs",
+    "price": "node avax-price-agent.mjs",
+    "news": "node avax-news-agent.mjs",
+    "analysis": "node avax-analysis-agent.mjs",
+    "dex": "node avax-dex-agent.mjs",
+    "invest": "node investment-orchestrator.mjs",
+    "invest:sim": "node investment-orchestrator.mjs --sim",
+    "invest:cycles": "node investment-orchestrator.mjs --cycles 3",
+    "mint": "node mint-identity.mjs",
+    "register": "node register-seller.mjs"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^2.0.0",
+    "@chainpe/cli": "file:../../packages/chainpe",
+    "@chainpe/sdk": "file:../../packages/chainpe-sdk",
+    "ai": "^6.0.0",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "viem": "^2.21.0",
+    "zod": "^3.23.0"
+  }
+}
