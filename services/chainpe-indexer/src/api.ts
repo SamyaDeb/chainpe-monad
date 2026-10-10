@@ -165,26 +165,53 @@ export function createApi(db: Db, opts: ApiOptions) {
     }
   }
 
-  /** Parses `paid` / `limit` / `offset`; null = bad `paid` value. */
-  function feedbackQuery(req: Request): { paid?: boolean; limit: number; offset: number } | null {
-    const MAX_PAGE = 100
-    const p = req.query.paid as string | undefined
-    if (p !== undefined && p !== 'true' && p !== 'false') return null
-    const offset = Math.max(0, parseInt((req.query.offset as string) ?? '0', 10) || 0)
-    const limit = Math.min(MAX_PAGE, Math.max(1, parseInt((req.query.limit as string) ?? '50', 10) || 50))
-    return { paid: p === undefined ? undefined : p === 'true', limit, offset }
+  interface FeedbackParams {
+    paid?: boolean
+    registered?: boolean
+    limit: number
+    offset: number
   }
 
-  async function feedbackPage(res: Response, q: { paid?: boolean; limit: number; offset: number }, agentIds?: string[]) {
+  /** Parses `paid` / `registered` / `limit` / `offset`; a string = the 400 message. */
+  function feedbackQuery(req: Request): FeedbackParams | string {
+    const MAX_PAGE = 100
+    const bool = (name: string): boolean | undefined | string => {
+      const v = req.query[name] as string | undefined
+      if (v === undefined) return undefined
+      if (v !== 'true' && v !== 'false') return `${name} must be "true" or "false"`
+      return v === 'true'
+    }
+    const paid = bool('paid')
+    if (typeof paid === 'string') return paid
+    const registered = bool('registered')
+    if (typeof registered === 'string') return registered
+    const offset = Math.max(0, parseInt((req.query.offset as string) ?? '0', 10) || 0)
+    const limit = Math.min(MAX_PAGE, Math.max(1, parseInt((req.query.limit as string) ?? '50', 10) || 50))
+    return { paid, registered, limit, offset }
+  }
+
+  async function feedbackPage(res: Response, q: FeedbackParams, agentIds?: string[]) {
     const records = await listActiveServices(db)
     const byAgent = new Map<string, ServiceRecord>()
     for (const s of records) if (s.agentId && !byAgent.has(s.agentId)) byAgent.set(s.agentId, s)
-    const { total, rows } = await listFeedback(db, { ...q, agentIds })
+    const registeredIds = [...byAgent.keys()]
+    let ids = agentIds
+    let exclude: string[] | undefined
+    if (q.registered === true) ids = (ids ?? registeredIds).filter(id => byAgent.has(id))
+    if (q.registered === false) exclude = registeredIds
+    const { total, rows } = await listFeedback(db, {
+      agentIds: ids,
+      excludeAgentIds: exclude,
+      paid: q.paid,
+      limit: q.limit,
+      offset: q.offset
+    })
     res.json({
       total,
       offset: q.offset,
       limit: q.limit,
       paid: q.paid ?? null,
+      registered: q.registered ?? null,
       network: opts.network,
       items: rows.map(r => feedbackDto(r, byAgent))
     })
@@ -282,7 +309,7 @@ export function createApi(db: Db, opts: ApiOptions) {
     '/feedback',
     route(async (req, res) => {
       const q = feedbackQuery(req)
-      if (!q) return res.status(400).json({ error: 'paid must be "true" or "false"' })
+      if (typeof q === 'string') return res.status(400).json({ error: q })
       const agentId = req.query.agentId as string | undefined
       if (agentId !== undefined && !/^\d+$/.test(agentId)) return res.status(400).json({ error: 'agentId must be a number' })
       await feedbackPage(res, q, agentId !== undefined ? [agentId] : undefined)
@@ -293,7 +320,7 @@ export function createApi(db: Db, opts: ApiOptions) {
     '/services/:id/feedback',
     route(async (req, res) => {
       const q = feedbackQuery(req)
-      if (!q) return res.status(400).json({ error: 'paid must be "true" or "false"' })
+      if (typeof q === 'string') return res.status(400).json({ error: q })
       const match = await findService(String(req.params.id))
       if (!match) return res.status(404).json({ error: 'service not found' })
       await feedbackPage(res, q, match.agentId ? [match.agentId] : [])

@@ -201,7 +201,7 @@ describe('feedback feed', () => {
 
   it('lists every rating newest first, each marked paid or excluded with its reason', async () => {
     const body = await (await fetch(`${base}/feedback`)).json()
-    expect(body).toMatchObject({ total: 7, offset: 0, limit: 50, paid: null, network: 'monad-testnet' })
+    expect(body).toMatchObject({ total: 7, offset: 0, limit: 50, paid: null, registered: null, network: 'monad-testnet' })
     const items = body.items as Item[]
     expect(items.map(i => `${i.agentId}:${i.rater}`)).toEqual([
       `6:${STRANGER2}`, `6:${OWNER}`, `6:${STRANGER}`, `6:${STRANGER}`, `5:${STRANGER2}`, `5:${STRANGER}`, `5:${BUYER}`
@@ -244,6 +244,23 @@ describe('feedback feed', () => {
     expect((await (await fetch(`${base}/feedback?agentId=999`)).json()).total).toBe(0)
     expect((await fetch(`${base}/feedback?paid=maybe`)).status).toBe(400)
     expect((await fetch(`${base}/feedback?agentId=abc`)).status).toBe(400)
+  })
+
+  it('keeps ratings for agents without a ChainPe service apart (registered=true|false)', async () => {
+    // Agent 7 is on the canonical registry but has no service registered with ChainPe.
+    await insertFeedback(db, feedbackRowFromArgs({ agentId: 7n, clientAddress: STRANGER, feedbackIndex: 1n, value: 100n, valueDecimals: 0, tag1: '', tag2: '' }, 11n, { logIndex: 0 }))
+    const all = await (await fetch(`${base}/feedback`)).json()
+    expect(all.total).toBe(8)
+    expect(all.items[0]).toMatchObject({ agentId: '7', service: null, status: 'pending', paid: false, blockTime: null })
+    const reg = await (await fetch(`${base}/feedback?registered=true`)).json()
+    expect(reg).toMatchObject({ total: 7, registered: true })
+    expect((reg.items as Item[]).every(i => i.agentId !== '7')).toBe(true)
+    const other = await (await fetch(`${base}/feedback?registered=false`)).json()
+    expect(other.total).toBe(1)
+    expect(other.items[0].agentId).toBe('7')
+    expect((await (await fetch(`${base}/feedback?registered=true&agentId=7`)).json()).total).toBe(0)
+    expect((await (await fetch(`${base}/feedback?registered=true&agentId=5&paid=true`)).json()).total).toBe(1)
+    expect((await fetch(`${base}/feedback?registered=yes`)).status).toBe(400)
   })
 
   it('serves one service\'s ratings by key or developer:name', async () => {

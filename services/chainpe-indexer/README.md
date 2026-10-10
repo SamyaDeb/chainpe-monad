@@ -69,7 +69,7 @@ curl 'localhost:4600/services/<key or developer:name>/reputation'
 | `GET /services?rank=paid\|raw&query=&tag=&maxPrice=&limit=&offset=` | active services, each with `reputation` (`{count, score}` of the chosen rank) and `reputationDetail` (`{paid, raw}`), ranked best-first (default `paid`) |
 | `GET /services/:id` | one service (`:id` = `key` or `developer:name`) |
 | `GET /services/:id/reputation` | `{ agentId, paid: {score, count, volume}, raw: {score, count} }` |
-| `GET /feedback?agentId=&paid=true\|false&limit=&offset=` | the ratings feed, newest first (block, log index): `{ total, offset, limit, paid, network, items }`. Default `limit` 50, max 100. `paid=true` = receipt-backed only, `paid=false` = everything else |
+| `GET /feedback?agentId=&paid=true\|false&registered=true\|false&limit=&offset=` | the ratings feed, newest first (block, log index): `{ total, offset, limit, paid, registered, network, items }`. Default `limit` 50, max 100. `paid=true` = receipt-backed only, `paid=false` = everything else. The canonical Reputation Registry is shared by every ERC-8004 agent, so `registered=true` keeps only agents linked to an active ChainPe service (`false` = only the others) |
 | `GET /services/:id/feedback?paid=&limit=&offset=` | the same feed for one service's agentId (404 if the service is unknown) |
 | `GET /stats` | `{ services, feedback, paidFeedback }` |
 | `GET /health` | liveness + `lastIndexedBlock` / `chainHead` |

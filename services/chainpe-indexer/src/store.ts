@@ -1,5 +1,5 @@
 /** Database operations (writes from the indexer + verifier, reads for the API). */
-import { and, asc, desc, eq, inArray, ne, sql, type SQL } from 'drizzle-orm'
+import { and, asc, desc, eq, inArray, ne, notInArray, sql, type SQL } from 'drizzle-orm'
 import type { Db } from './db.js'
 import { services, feedback, indexerState } from './schema.js'
 import type { ServiceRow, FeedbackRow, Verdict } from './core.js'
@@ -124,6 +124,8 @@ export async function getFeedbackForAgents(db: Db, agentIds: string[]): Promise<
 
 export interface FeedbackQuery {
   agentIds?: string[]
+  /** Leave these agentIds out (e.g. to list agents without a ChainPe service). */
+  excludeAgentIds?: string[]
   /** true = receipt-backed only; false = everything not (yet) receipt-backed. */
   paid?: boolean
   limit: number
@@ -137,6 +139,7 @@ export async function listFeedback(db: Db, q: FeedbackQuery): Promise<{ total: n
     if (q.agentIds.length === 0) return { total: 0, rows: [] }
     conds.push(inArray(feedback.agentId, q.agentIds))
   }
+  if (q.excludeAgentIds?.length) conds.push(notInArray(feedback.agentId, q.excludeAgentIds))
   if (q.paid !== undefined) conds.push(eq(feedback.paidVerified, q.paid))
   const where = conds.length ? and(...conds) : undefined
   const [t] = await db
