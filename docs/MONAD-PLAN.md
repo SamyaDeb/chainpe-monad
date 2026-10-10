@@ -326,8 +326,20 @@ persisted client-side budget from Phase 3.
 - [x] Step 5 tooling: `e2e/pay-external.mjs` pays any x402 v2 service (default Nansen on `eip155:143`) through the SDK and verifies the settlement on-chain. `DRY_RUN=1` only decodes and checks the offer.
 - [ ] Still needs mainnet funds + keys: step 1 deploy, step 2 Railway deploy, steps 3–6 on mainnet.
 
-**Done when:** ≥10 real mainnet paid calls with receipts (labelled demo traffic), ≥1
+**Done when (mainnet, deferred):** ≥10 real mainnet paid calls with receipts (labelled demo traffic), ≥1
 external x402 service paid, latency measured.
+
+**Testnet scope (owner decision 2026-10-10: no mainnet yet).** Phase 6 on testnet is done when:
+- [x] ≥10 testnet paid calls with receipt-backed ratings: 17, through Monad's public facilitator.
+- [x] Latency measured on testnet: 30 calls, p50 591 ms / p95 755 ms.
+- [x] Interop with infrastructure we don't run: payments settled through Monad's public facilitator (Phase 2 + seller run).
+- [x] Hosting artefacts: compose stack + Dockerfiles verified locally.
+- [ ] **Own stack live on testnet:** sellers settle through *our* facilitator (strict payTo from *our* indexer), and the indexer ranks the 4 agents by paid reputation.
+- [ ] **Claude MCP wallet pays + rates live** (step 4).
+- [ ] **A stock x402 client pays a ChainPe seller** (`@x402/fetch`, no ChainPe SDK). This is the testnet stand-in for step 5, since Nansen only accepts mainnet.
+- [ ] Facilitator refuses an unregistered payTo live; latency measured through our own facilitator.
+
+The open boxes are one command: `bash e2e/testnet-phase6.sh`. It is built and smoke-tested offline: the MCP buyer and the stock client paid a real ChainPe proxy backed by a stub facilitator, and the runner starts Postgres + indexer and cleans up. It needs Monad testnet RPC access plus the seller wallets (`examples/seller-agents/.env.sellers`, or `DEPLOYER_PRIVATE_KEY` to recreate them). Hosting on Railway stays optional on testnet.
 
 ---
 
