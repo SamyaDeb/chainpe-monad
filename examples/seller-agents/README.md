@@ -11,7 +11,7 @@ npm run build                                   # repo root
 cd examples/seller-agents
 node gen-wallets.mjs                            # keys → .env.sellers (git-ignored), prints addresses only
 DEPLOYER_PRIVATE_KEY=0x… node fund.mjs          # testnet MON for gas
-# get testnet USDC for the BUYER address from the Circle faucet
+# (fund.mjs also sends the BUYER 1 testnet USDC from the deployer)
 node setup.mjs                                  # mint agentIds + register services
 CHAINPE_FACILITATOR_URL=… node run-sellers.mjs  # defaults to Monad's public testnet facilitator
 ROUNDS=3 node orchestrator.mjs                  # pay + receipt-backed feedback → receipts-<network>.json

@@ -10,7 +10,7 @@
 #   examples/seller-agents/.env.sellers  BUYER/FACILITATOR/STATS/PRICE/DIGEST/TRUST keys and
 #     *_AGENT_ID from an earlier gen-wallets + setup run. If it is missing and
 #     DEPLOYER_PRIVATE_KEY is set (a testnet deployer with MON), the script creates and funds the
-#     wallets and registers the agents. The BUYER still needs testnet USDC (Circle faucet).
+#     wallets (MON for gas + 1 testnet USDC for the buyer) and registers the agents.
 #   Postgres: DATABASE_URL, or Docker (a postgres:16 container is started).
 # Env: ROUNDS (orchestrator rounds, default 3 → 12 calls), BENCH_N (default 20), MONAD_TESTNET_RPC_URL.
 # Writes: examples/seller-agents/receipts-monad-testnet.json (appended),
