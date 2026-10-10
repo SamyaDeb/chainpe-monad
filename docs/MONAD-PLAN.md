@@ -341,7 +341,12 @@ external x402 service paid, latency measured.
 - [x] **A stock x402 client pays a ChainPe seller** (`@x402/fetch`, no ChainPe SDK): HTTP 200, settled on-chain. This is the testnet stand-in for step 5, since Nansen only accepts mainnet.
 - [x] Latency through our own facilitator: 20 calls, 402 → settled → 200 p50 897 ms (one 3.98 s outlier = p95/max); request → 402 p50 2 ms.
 
-**Phase 6 (testnet scope): DONE 2026-10-10.** Run with `bash e2e/testnet-phase6.sh`; all 35 settlements were verified on-chain as sent by our facilitator's key with a USDC transfer. Mainnet steps remain deferred by the owner. It is built and smoke-tested offline: the MCP buyer and the stock client paid a real ChainPe proxy backed by a stub facilitator, and the runner starts Postgres + indexer and cleans up. It needs Monad testnet RPC access plus the seller wallets (`examples/seller-agents/.env.sellers`, or `DEPLOYER_PRIVATE_KEY` to recreate them). Hosting on Railway stays optional on testnet.
+**Phase 6 (testnet scope): DONE 2026-10-10.** Run with `bash e2e/testnet-phase6.sh`; all 35 settlements were verified on-chain as sent by our facilitator's key with a USDC transfer. Mainnet steps remain deferred by the owner.
+
+**Still open after the testnet scope (not blocking it):**
+- Mainnet: contracts, real-USDC calls, paying Nansen (owner decision: deferred).
+- Public hosting: the facilitator + indexer ran inside the build session, not on Railway. `deploy/docker-compose.yml` and both Dockerfiles are ready, and the steps are in `docs/MAINNET-RUNBOOK.md` §2. Needed for a judge-facing URL.
+- Ecosystem outreach (step 5): drafts in `docs/OUTREACH-DRAFTS.md`, not sent yet. It is built and smoke-tested offline: the MCP buyer and the stock client paid a real ChainPe proxy backed by a stub facilitator, and the runner starts Postgres + indexer and cleans up. It needs Monad testnet RPC access plus the seller wallets (`examples/seller-agents/.env.sellers`, or `DEPLOYER_PRIVATE_KEY` to recreate them). Hosting on Railway stays optional on testnet.
 
 ---
 
