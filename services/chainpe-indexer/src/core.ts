@@ -37,6 +37,7 @@ export interface FeedbackRow {
   feedbackHash: string | null
   revoked: boolean
   block: bigint
+  blockTime: Date | null
   logIndex: number
   txHash: string | null
 }
@@ -95,7 +96,7 @@ export function serviceRowFromArgs(
 export function feedbackRowFromArgs(
   args: FeedbackEventArgs,
   block: bigint,
-  meta: { logIndex?: number; txHash?: string | null } = {}
+  meta: { logIndex?: number; txHash?: string | null; blockTime?: Date | null } = {}
 ): FeedbackRow {
   const hash = args.feedbackHash?.toLowerCase()
   return {
@@ -111,6 +112,7 @@ export function feedbackRowFromArgs(
     feedbackHash: hash && hash !== ZERO_HASH ? hash : null,
     revoked: false,
     block,
+    blockTime: meta.blockTime ?? null,
     logIndex: meta.logIndex ?? 0,
     txHash: meta.txHash ?? null
   }

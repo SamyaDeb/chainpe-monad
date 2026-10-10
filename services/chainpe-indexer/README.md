@@ -8,8 +8,8 @@ serves discovery ranked by **paid** reputation — "no receipt, no rating".
 ChainPeRegistry ──┐                                   ┌─ GET /services?rank=paid|raw
                   ├─ getLogs (100-block chunks) ─► PG ─┼─ GET /services/:id
 ERC-8004 Rep ─────┘        │                          ├─ GET /services/:id/reputation
-                           └─ verifier: feedbackHash  └─ GET /stats · /health
-                              → settlement receipt
+                           └─ verifier: feedbackHash  ├─ GET /feedback · /services/:id/feedback
+                              → settlement receipt    └─ GET /stats · /health
 ```
 
 ## Paid reputation
@@ -69,8 +69,42 @@ curl 'localhost:4600/services/<key or developer:name>/reputation'
 | `GET /services?rank=paid\|raw&query=&tag=&maxPrice=&limit=&offset=` | active services, each with `reputation` (`{count, score}` of the chosen rank) and `reputationDetail` (`{paid, raw}`), ranked best-first (default `paid`) |
 | `GET /services/:id` | one service (`:id` = `key` or `developer:name`) |
 | `GET /services/:id/reputation` | `{ agentId, paid: {score, count, volume}, raw: {score, count} }` |
+| `GET /feedback?agentId=&paid=true\|false&limit=&offset=` | the ratings feed, newest first (block, log index): `{ total, offset, limit, paid, network, items }`. Default `limit` 50, max 100. `paid=true` = receipt-backed only, `paid=false` = everything else |
+| `GET /services/:id/feedback?paid=&limit=&offset=` | the same feed for one service's agentId (404 if the service is unknown) |
 | `GET /stats` | `{ services, feedback, paidFeedback }` |
 | `GET /health` | liveness + `lastIndexedBlock` / `chainHead` |
+
+### Feedback items
+
+Each rating in `/feedback` says whether a payment backs it ("no receipt, no rating"):
+
+```jsonc
+{
+  "agentId": "2099",
+  "service": { "id": "0x5e45…:monad-weather-demo", "name": "monad-weather-demo" }, // null if no service links the agentId
+  "rater": "0x…",              // the ERC-8004 clientAddress
+  "value": 95,                 // clamped to 0–100, as scoring uses it
+  "rawValue": "95", "valueDecimals": 0,
+  "status": "paid",            // paid | unpaid (excluded) | pending (not verified yet)
+  "paid": true,
+  "unpaidReason": null,        // no_receipt, receipt_reused, self_dealing, tx_not_found, tx_reverted,
+                               // no_matching_transfer, below_minimum, no_registered_service
+  "revoked": false,            // revoked ratings stay listed but no longer count
+  "paidAmount": "0.01",        // USDC the rater paid in the settlement (paid only)
+  "payer": "0x…",
+  "feedbackTxHash": "0x…",     // the NewFeedback tx
+  "receiptTxHash": "0x…",      // the x402 settlement that backs it (paid only)
+  "citedHash": "0x…",          // the feedbackHash the rater cited, whatever it is
+  "feedbackUri": "x402:eip155:10143:0x…",
+  "tags": ["x402", "paid-call"],
+  "endpoint": "…",
+  "block": "69700000",
+  "blockTime": "2026-10-09T…Z" // block timestamp; null if the block read failed
+}
+```
+
+`blockTime` is read once per block while indexing (new column `feedback.block_time`,
+added in place on existing databases; rows indexed before it stay `null`).
 
 ## Tests
 

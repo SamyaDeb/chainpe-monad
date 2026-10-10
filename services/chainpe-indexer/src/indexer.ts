@@ -76,6 +76,20 @@ export async function processRange(
     toBlock
   })
 
+  // Block timestamps for feedback rows (one read per block, best-effort).
+  const times = new Map<bigint, Date | null>()
+  const blockTime = async (n: bigint): Promise<Date | null> => {
+    if (!times.has(n)) {
+      try {
+        const b = await deps.client.getBlock({ blockNumber: n })
+        times.set(n, new Date(Number(b.timestamp) * 1000))
+      } catch {
+        times.set(n, null)
+      }
+    }
+    return times.get(n) ?? null
+  }
+
   for (const log of logs) {
     const block = log.blockNumber ?? toBlock
     switch (log.eventName) {
@@ -99,7 +113,8 @@ export async function processRange(
           deps.db,
           feedbackRowFromArgs(log.args as unknown as FeedbackEventArgs, block, {
             logIndex: log.logIndex ?? 0,
-            txHash: log.transactionHash
+            txHash: log.transactionHash,
+            blockTime: await blockTime(block)
           })
         )
         break

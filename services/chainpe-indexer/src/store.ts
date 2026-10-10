@@ -1,5 +1,5 @@
 /** Database operations (writes from the indexer + verifier, reads for the API). */
-import { and, asc, eq, inArray, ne, sql } from 'drizzle-orm'
+import { and, asc, desc, eq, inArray, ne, sql, type SQL } from 'drizzle-orm'
 import type { Db } from './db.js'
 import { services, feedback, indexerState } from './schema.js'
 import type { ServiceRow, FeedbackRow, Verdict } from './core.js'
@@ -120,6 +120,37 @@ export async function listActiveServices(db: Db): Promise<ServiceRecord[]> {
 export async function getFeedbackForAgents(db: Db, agentIds: string[]): Promise<FeedbackRecord[]> {
   if (agentIds.length === 0) return []
   return db.select().from(feedback).where(inArray(feedback.agentId, agentIds))
+}
+
+export interface FeedbackQuery {
+  agentIds?: string[]
+  /** true = receipt-backed only; false = everything not (yet) receipt-backed. */
+  paid?: boolean
+  limit: number
+  offset: number
+}
+
+/** Ratings newest first (block, then log index), with the total for paging. */
+export async function listFeedback(db: Db, q: FeedbackQuery): Promise<{ total: number; rows: FeedbackRecord[] }> {
+  const conds: SQL[] = []
+  if (q.agentIds) {
+    if (q.agentIds.length === 0) return { total: 0, rows: [] }
+    conds.push(inArray(feedback.agentId, q.agentIds))
+  }
+  if (q.paid !== undefined) conds.push(eq(feedback.paidVerified, q.paid))
+  const where = conds.length ? and(...conds) : undefined
+  const [t] = await db
+    .select({ n: sql<number>`count(*)::int` })
+    .from(feedback)
+    .where(where)
+  const rows = await db
+    .select()
+    .from(feedback)
+    .where(where)
+    .orderBy(desc(feedback.block), desc(feedback.logIndex), desc(feedback.id))
+    .limit(q.limit)
+    .offset(q.offset)
+  return { total: Number(t?.n ?? 0), rows }
 }
 
 export async function counts(db: Db): Promise<{ services: number; feedback: number; paidFeedback: number }> {

@@ -31,7 +31,7 @@ async function main() {
     console.log(`  reputation:  ${cfg.reputation}`)
     console.log(`  vault:       ${cfg.policyVault ?? 'off'} (PolicyVault Spent = payment receipt)`)
     console.log(`  start block: ${cfg.startBlock} (chunk ${cfg.logChunk})`)
-    console.log('  endpoints:   GET /health · /stats · /services?rank=paid|raw · /services/:id · /services/:id/reputation')
+    console.log('  endpoints:   GET /health · /stats · /services?rank=paid|raw · /services/:id · /services/:id/reputation · /services/:id/feedback · /feedback')
   })
 
   runIndexer({

@@ -6,12 +6,14 @@ import type { Db } from './db.js'
 import {
   listActiveServices,
   getFeedbackForAgents,
+  listFeedback,
   getCursor,
   counts,
   type ServiceRecord,
   type FeedbackRecord
 } from './store.js'
-import { rankServices, scoreReputation, type RankMode, type ReputationDetail, type ScoringOptions } from './core.js'
+import { normalizeValue, rankServices, scoreReputation, type RankMode, type ReputationDetail, type ScoringOptions } from './core.js'
+import { formatUnits } from 'viem'
 import { getIndexerHead } from './indexer.js'
 
 export interface ApiOptions extends ScoringOptions {
@@ -37,6 +39,47 @@ interface ServiceDto {
   /** `{count, score}` of the ranking in use (paid by default) — what SDK clients read. */
   reputation: { count: number; score: number | null } | null
   reputationDetail: ReputationDetail | null
+}
+
+/** One rating as the feed shows it: who rated, how much, and whether a payment backs it. */
+interface FeedbackDto {
+  agentId: string
+  /** The registered service linked to this agentId, if any. */
+  service: { id: string; name: string } | null
+  rater: string
+  /** Rating clamped to 0–100 (what scoring uses). */
+  value: number
+  /** On-chain int128 value + decimals, as posted. */
+  rawValue: string
+  valueDecimals: number
+  /** `paid` = backed by a verified x402 settlement; `unpaid` = excluded (see `unpaidReason`); `pending` = not verified yet. */
+  status: 'paid' | 'unpaid' | 'pending'
+  paid: boolean
+  unpaidReason: string | null
+  revoked: boolean
+  /** USDC paid by the rater in the settlement (decimal string), when paid. */
+  paidAmount: string | null
+  payer: string | null
+  /** The `NewFeedback` tx. */
+  feedbackTxHash: string | null
+  /** The settlement (x402 receipt) tx that backs this rating — only when paid. */
+  receiptTxHash: string | null
+  /** The `feedbackHash` the rater cited (may be reused / missing / not a payment). */
+  citedHash: string | null
+  feedbackUri: string | null
+  tags: string[]
+  endpoint: string | null
+  block: string
+  blockTime: string | null
+}
+
+function usdc(atomic: string | number | null): string | null {
+  if (atomic == null) return null
+  try {
+    return formatUnits(BigInt(String(atomic)), 6)
+  } catch {
+    return null
+  }
 }
 
 function tagsToArray(tags: string): string[] {
@@ -93,6 +136,58 @@ export function createApi(db: Db, opts: ApiOptions) {
       reputation: pick ? { count: pick.count, score: pick.score } : null,
       reputationDetail: detail
     }
+  }
+
+  function feedbackDto(r: FeedbackRecord, byAgent: Map<string, ServiceRecord>): FeedbackDto {
+    const svc = byAgent.get(r.agentId)
+    const status = r.paidStatus === 'paid' || r.paidStatus === 'unpaid' ? r.paidStatus : 'pending'
+    return {
+      agentId: r.agentId,
+      service: svc ? { id: `${svc.developer}:${svc.name}`, name: svc.name } : null,
+      rater: r.client,
+      value: normalizeValue(r.value, r.valueDecimals),
+      rawValue: String(r.value),
+      valueDecimals: r.valueDecimals,
+      status,
+      paid: r.paidVerified,
+      unpaidReason: r.paidReason,
+      revoked: r.revoked,
+      paidAmount: r.paidVerified ? usdc(r.paidAmount) : null,
+      payer: r.payer,
+      feedbackTxHash: r.txHash,
+      receiptTxHash: r.paidVerified ? r.feedbackHash : null,
+      citedHash: r.feedbackHash,
+      feedbackUri: r.feedbackUri,
+      tags: [r.tag1, r.tag2].filter((t): t is string => !!t),
+      endpoint: r.endpoint,
+      block: String(r.block),
+      blockTime: r.blockTime ? new Date(r.blockTime).toISOString() : null
+    }
+  }
+
+  /** Parses `paid` / `limit` / `offset`; null = bad `paid` value. */
+  function feedbackQuery(req: Request): { paid?: boolean; limit: number; offset: number } | null {
+    const MAX_PAGE = 100
+    const p = req.query.paid as string | undefined
+    if (p !== undefined && p !== 'true' && p !== 'false') return null
+    const offset = Math.max(0, parseInt((req.query.offset as string) ?? '0', 10) || 0)
+    const limit = Math.min(MAX_PAGE, Math.max(1, parseInt((req.query.limit as string) ?? '50', 10) || 50))
+    return { paid: p === undefined ? undefined : p === 'true', limit, offset }
+  }
+
+  async function feedbackPage(res: Response, q: { paid?: boolean; limit: number; offset: number }, agentIds?: string[]) {
+    const records = await listActiveServices(db)
+    const byAgent = new Map<string, ServiceRecord>()
+    for (const s of records) if (s.agentId && !byAgent.has(s.agentId)) byAgent.set(s.agentId, s)
+    const { total, rows } = await listFeedback(db, { ...q, agentIds })
+    res.json({
+      total,
+      offset: q.offset,
+      limit: q.limit,
+      paid: q.paid ?? null,
+      network: opts.network,
+      items: rows.map(r => feedbackDto(r, byAgent))
+    })
   }
 
   async function findService(id: string): Promise<ServiceRecord | undefined> {
@@ -180,6 +275,28 @@ export function createApi(db: Db, opts: ApiOptions) {
       if (!match.agentId) return res.json({ agentId: null, ...empty })
       const rows = await getFeedbackForAgents(db, [match.agentId])
       res.json({ agentId: match.agentId, ...scoreReputation(rows, opts) })
+    })
+  )
+
+  app.get(
+    '/feedback',
+    route(async (req, res) => {
+      const q = feedbackQuery(req)
+      if (!q) return res.status(400).json({ error: 'paid must be "true" or "false"' })
+      const agentId = req.query.agentId as string | undefined
+      if (agentId !== undefined && !/^\d+$/.test(agentId)) return res.status(400).json({ error: 'agentId must be a number' })
+      await feedbackPage(res, q, agentId !== undefined ? [agentId] : undefined)
+    })
+  )
+
+  app.get(
+    '/services/:id/feedback',
+    route(async (req, res) => {
+      const q = feedbackQuery(req)
+      if (!q) return res.status(400).json({ error: 'paid must be "true" or "false"' })
+      const match = await findService(String(req.params.id))
+      if (!match) return res.status(404).json({ error: 'service not found' })
+      await feedbackPage(res, q, match.agentId ? [match.agentId] : [])
     })
   )
 

@@ -40,6 +40,8 @@ export const feedback = pgTable(
     feedbackHash: text('feedback_hash'),
     revoked: boolean('revoked').notNull().default(false),
     block: bigint('block', { mode: 'bigint' }).notNull(),
+    /** Timestamp of `block` (best-effort; null if the block read failed). */
+    blockTime: timestamp('block_time'),
     logIndex: integer('log_index').notNull().default(0),
     txHash: text('tx_hash'),
     paidStatus: text('paid_status').notNull().default('pending'),
@@ -90,6 +92,7 @@ CREATE TABLE IF NOT EXISTS feedback (
   feedback_hash TEXT,
   revoked BOOLEAN NOT NULL DEFAULT FALSE,
   block BIGINT NOT NULL,
+  block_time TIMESTAMP,
   log_index INTEGER NOT NULL DEFAULT 0,
   tx_hash TEXT,
   paid_status TEXT NOT NULL DEFAULT 'pending',
@@ -103,6 +106,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS feedback_agent_client_index
 CREATE INDEX IF NOT EXISTS feedback_agent_id ON feedback (agent_id);
 CREATE INDEX IF NOT EXISTS feedback_hash ON feedback (feedback_hash);
 CREATE INDEX IF NOT EXISTS feedback_paid_status ON feedback (paid_status);
+ALTER TABLE feedback ADD COLUMN IF NOT EXISTS block_time TIMESTAMP;
+CREATE INDEX IF NOT EXISTS feedback_block ON feedback (block, log_index);
 CREATE TABLE IF NOT EXISTS indexer_state (
   id INTEGER PRIMARY KEY,
   last_block BIGINT NOT NULL

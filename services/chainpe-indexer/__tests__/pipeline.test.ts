@@ -30,6 +30,7 @@ const STRANGER = '0xc000000000000000000000000000000000000006'
 const STRANGER2 = '0xc000000000000000000000000000000000000007'
 const tx = (n: number) => `0x${n.toString(16).padStart(64, '0')}` as const
 const INT128_MAX = (1n << 127n) - 1n
+const FEEDBACK_TIME = new Date('2026-10-10T12:00:00Z')
 
 function transferLog(from: string, to: string, value: bigint, token: string = USDC) {
   return {
@@ -104,7 +105,7 @@ beforeAll(async () => {
   await upsertService(db, serviceRowFromArgs({ key: '0x02', developer: DEV, name: 'farmed', endpoint: 'https://f', pricePerRequest: '0.01', paymentToken: 'USDC', payTo: PAYTO2, agentId: 6n }, 1n))
 
   const fb = (agentId: bigint, client: string, index: bigint, value: bigint, hash: string | undefined, logIndex: number) =>
-    insertFeedback(db, feedbackRowFromArgs({ agentId, clientAddress: client, feedbackIndex: index, value, valueDecimals: 0, tag1: 'x402', tag2: 'paid-call', feedbackHash: hash }, 10n, { logIndex }))
+    insertFeedback(db, feedbackRowFromArgs({ agentId, clientAddress: client, feedbackIndex: index, value, valueDecimals: 0, tag1: 'x402', tag2: 'paid-call', feedbackHash: hash }, 10n, { logIndex, txHash: tx(100 + logIndex), blockTime: FEEDBACK_TIME }))
 
   await fb(5n, BUYER, 1n, 80n, tx(1), 0) // paid, 80
   await fb(5n, STRANGER, 1n, 10n ** 30n, undefined, 1) // 1e30, no receipt
@@ -184,7 +185,7 @@ describe('API', () => {
     const s = createApi(broken, { network: 'monad-testnet', trustProxy: 1, weightCapAtomic: 1n, payerShareCap: 0.25 }).listen(0)
     const url = `http://127.0.0.1:${(s.address() as AddressInfo).port}`
     try {
-      for (const p of ['/services', '/services/x', '/services/x/reputation', '/stats']) {
+      for (const p of ['/services', '/services/x', '/services/x/reputation', '/stats', '/feedback', '/services/x/feedback']) {
         const res = await fetch(url + p)
         expect(res.status, p).toBe(500)
         expect(await res.json()).toEqual({ error: 'internal_error' })
@@ -192,5 +193,67 @@ describe('API', () => {
     } finally {
       s.close()
     }
+  })
+})
+
+describe('feedback feed', () => {
+  type Item = Record<string, unknown> & { agentId: string; rater: string; status: string; paid: boolean }
+
+  it('lists every rating newest first, each marked paid or excluded with its reason', async () => {
+    const body = await (await fetch(`${base}/feedback`)).json()
+    expect(body).toMatchObject({ total: 7, offset: 0, limit: 50, paid: null, network: 'monad-testnet' })
+    const items = body.items as Item[]
+    expect(items.map(i => `${i.agentId}:${i.rater}`)).toEqual([
+      `6:${STRANGER2}`, `6:${OWNER}`, `6:${STRANGER}`, `6:${STRANGER}`, `5:${STRANGER2}`, `5:${STRANGER}`, `5:${BUYER}`
+    ])
+    // Receipt-backed rating: settlement tx, payer, USDC amount, block time, service name.
+    expect(items[0]).toMatchObject({
+      service: { id: `${DEV}:farmed`, name: 'farmed' },
+      value: 30,
+      status: 'paid',
+      paid: true,
+      unpaidReason: null,
+      paidAmount: '0.05',
+      payer: STRANGER2,
+      receiptTxHash: tx(2),
+      citedHash: tx(2),
+      feedbackTxHash: tx(106),
+      tags: ['x402', 'paid-call'],
+      block: '10',
+      blockTime: FEEDBACK_TIME.toISOString()
+    })
+    // Excluded ratings carry the reason and no receipt.
+    expect(items[1]).toMatchObject({ status: 'unpaid', paid: false, unpaidReason: 'self_dealing', receiptTxHash: null, citedHash: tx(3), paidAmount: null })
+    expect(items[2]).toMatchObject({ unpaidReason: 'tx_not_found', receiptTxHash: null })
+    expect(items[3]).toMatchObject({ unpaidReason: 'no_receipt', value: 100, citedHash: null })
+    expect(items[4]).toMatchObject({ unpaidReason: 'receipt_reused', receiptTxHash: null, citedHash: tx(1) })
+    // The revoked paid rating stays listed, flagged.
+    expect(items[6]).toMatchObject({ paid: true, revoked: true, receiptTxHash: tx(1), paidAmount: '0.01' })
+  })
+
+  it('filters by paid and agentId, and pages', async () => {
+    const paid = await (await fetch(`${base}/feedback?paid=true`)).json()
+    expect(paid.total).toBe(2)
+    expect((paid.items as Item[]).every(i => i.paid)).toBe(true)
+    const unpaid = await (await fetch(`${base}/feedback?paid=false&agentId=6`)).json()
+    expect(unpaid.total).toBe(3)
+    expect((unpaid.items as Item[]).map(i => i.unpaidReason)).toEqual(['self_dealing', 'tx_not_found', 'no_receipt'])
+    const page = await (await fetch(`${base}/feedback?limit=2&offset=1`)).json()
+    expect(page).toMatchObject({ total: 7, offset: 1, limit: 2 })
+    expect((page.items as Item[]).map(i => i.rater)).toEqual([OWNER, STRANGER])
+    expect((await (await fetch(`${base}/feedback?agentId=999`)).json()).total).toBe(0)
+    expect((await fetch(`${base}/feedback?paid=maybe`)).status).toBe(400)
+    expect((await fetch(`${base}/feedback?agentId=abc`)).status).toBe(400)
+  })
+
+  it('serves one service\'s ratings by key or developer:name', async () => {
+    const byKey = await (await fetch(`${base}/services/0x01/feedback`)).json()
+    expect(byKey.total).toBe(3)
+    expect((byKey.items as Item[]).every(i => i.agentId === '5')).toBe(true)
+    const byName = await (await fetch(`${base}/services/${DEV}:farmed/feedback?paid=true`)).json()
+    expect(byName.total).toBe(1)
+    expect(byName.items[0]).toMatchObject({ rater: STRANGER2, receiptTxHash: tx(2) })
+    expect((await fetch(`${base}/services/nope/feedback`)).status).toBe(404)
+    expect((await fetch(`${base}/services/0x01/feedback?paid=1`)).status).toBe(400)
   })
 })
