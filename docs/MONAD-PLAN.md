@@ -334,12 +334,14 @@ external x402 service paid, latency measured.
 - [x] Latency measured on testnet: 30 calls, p50 591 ms / p95 755 ms.
 - [x] Interop with infrastructure we don't run: payments settled through Monad's public facilitator (Phase 2 + seller run).
 - [x] Hosting artefacts: compose stack + Dockerfiles verified locally.
-- [ ] **Own stack live on testnet:** sellers settle through *our* facilitator (strict payTo from *our* indexer), and the indexer ranks the 4 agents by paid reputation.
+- [x] **Our indexer live on testnet** (2026-10-10): caught up from the registry deploy block to the head with no RPC errors. It ranks all 5 registered agents by payment-backed reputation from on-chain data (82 ratings indexed, 18 receipt-backed; #2099 paid 95 vs raw 98.33). Snapshot: `examples/seller-agents/indexer-snapshot-monad-testnet.json`.
+- [x] **Our facilitator live on testnet, strict policy** (2026-10-10): it loaded the 5 registered payTo addresses from our indexer and confirmed the PolicyVault on-chain. A payment to a registered seller passed the payTo policy and reached the on-chain balance check; one to a random address was refused with `payto_not_registered` before any gas.
+- [ ] **Sellers settle through our facilitator with real USDC** (needs a funded facilitator gas key + buyer).
 - [ ] **Claude MCP wallet pays + rates live** (step 4).
 - [ ] **A stock x402 client pays a ChainPe seller** (`@x402/fetch`, no ChainPe SDK). This is the testnet stand-in for step 5, since Nansen only accepts mainnet.
-- [ ] Facilitator refuses an unregistered payTo live; latency measured through our own facilitator.
+- [ ] Latency measured through our own facilitator (needs funds).
 
-The open boxes are one command: `bash e2e/testnet-phase6.sh`. It is built and smoke-tested offline: the MCP buyer and the stock client paid a real ChainPe proxy backed by a stub facilitator, and the runner starts Postgres + indexer and cleans up. It needs Monad testnet RPC access plus the seller wallets (`examples/seller-agents/.env.sellers`, or `DEPLOYER_PRIVATE_KEY` to recreate them). Hosting on Railway stays optional on testnet.
+The remaining open boxes all need funded wallets and are one command: `bash e2e/testnet-phase6.sh`. It is built and smoke-tested offline: the MCP buyer and the stock client paid a real ChainPe proxy backed by a stub facilitator, and the runner starts Postgres + indexer and cleans up. It needs Monad testnet RPC access plus the seller wallets (`examples/seller-agents/.env.sellers`, or `DEPLOYER_PRIVATE_KEY` to recreate them). Hosting on Railway stays optional on testnet.
 
 ---
 
