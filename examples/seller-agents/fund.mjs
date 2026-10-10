@@ -33,7 +33,11 @@ const want = parseUnits(process.env.AMOUNT_BUYER_USDC ?? '1', 6)
 const have = await pub.readContract({ address: usdc, abi: erc20Abi, functionName: 'balanceOf', args: [buyer] })
 if (have >= want) console.log('BUYER       ', buyer, 'already has', formatUnits(have, 6), 'USDC')
 else {
-  const hash = await wallet.writeContract({ address: usdc, abi: erc20Abi, functionName: 'transfer', args: [buyer, want - have], gas: 80000n })
-  await pub.waitForTransactionReceipt({ hash })
+  const args = [buyer, want - have]
+  // Monad bills the gas limit, so estimate (cold slots on a fresh recipient cost more) + 20% headroom.
+  const gas = (await pub.estimateContractGas({ account, address: usdc, abi: erc20Abi, functionName: 'transfer', args })) * 12n / 10n
+  const hash = await wallet.writeContract({ address: usdc, abi: erc20Abi, functionName: 'transfer', args, gas })
+  const receipt = await pub.waitForTransactionReceipt({ hash })
+  if (receipt.status !== 'success') throw new Error(`USDC transfer reverted: ${explorerTxUrl(network, hash)}`)
   console.log('BUYER       ', buyer, formatUnits(want - have, 6), 'USDC', explorerTxUrl(network, hash))
 }
