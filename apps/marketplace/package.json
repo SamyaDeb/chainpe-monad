@@ -1,0 +1,31 @@
+{
+  "name": "@chainpeavax/marketplace",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "ChainPe on Monad — x402 services ranked by payment-backed ERC-8004 reputation, with the ratings and receipts behind each score (Monad testnet).",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "snapshot": "node scripts/snapshot.mjs"
+  },
+  "dependencies": {
+    "@chainpeavax/sdk": "*",
+    "next": "15.5.26",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,1564 @@
+{
+  "at": "2026-10-10T14:12:19.306Z",
+  "network": "monad-testnet",
+  "label": "demo traffic from team wallets, not traction",
+  "lastIndexedBlock": "69845886",
+  "stats": {
+    "services": 9,
+    "ratings": 34,
+    "paid": 32,
+    "otherAgents": 75
+  },
+  "services": {
+    "paid": [
+      {
+        "id": "0x5e45B6025Dc9621ed3eef4BFEAD2041D7E475227:monad-weather-demo",
+        "key": "0x3f0eaf523bbdeb762a10efde5e2085297217658ca125d3e84357402d315ad13a",
+        "name": "monad-weather-demo",
+        "description": "Phase 4 demo seller: x402 paid weather on Monad testnet (test traffic only)",
+        "tags": [
+          "weather",
+          "demo"
+        ],
+        "endpoint": "https://chainpe.example/monad-weather",
+        "pricePerRequest": "0.01",
+        "paymentToken": "USDC",
+        "walletAddress": "0x5e45B6025Dc9621ed3eef4BFEAD2041D7E475227",
+        "developer": "0x5e45B6025Dc9621ed3eef4BFEAD2041D7E475227",
+        "network": "monad-testnet",
+        "agentId": "2099",
+        "reputation": {
+          "count": 1,
+          "score": 95
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 95,
+            "count": 1,
+            "volume": "0.01"
+          },
+          "raw": {
+            "score": 98.33,
+            "count": 2
+          }
+        }
+      },
+      {
+        "id": "0x5eA6f4b950D006Ebe3c26A6BB606B65C54f0CFaE:monad-network-stats",
+        "key": "0x95d0b1fab8697b214194243ab3760ee53f77cb2a7fa64a295897f43f577398c7",
+        "name": "monad-network-stats",
+        "description": "Live Monad network stats: head block, block time, gas price, recent tx throughput. [demo seller]",
+        "tags": [
+          "monad",
+          "stats",
+          "data"
+        ],
+        "endpoint": "http://localhost:4601",
+        "pricePerRequest": "0.001",
+        "paymentToken": "USDC",
+        "walletAddress": "0x5eA6f4b950D006Ebe3c26A6BB606B65C54f0CFaE",
+        "developer": "0x5eA6f4b950D006Ebe3c26A6BB606B65C54f0CFaE",
+        "network": "monad-testnet",
+        "agentId": "2107",
+        "reputation": {
+          "count": 1,
+          "score": 90.5
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90.5,
+            "count": 1,
+            "volume": "0.004"
+          },
+          "raw": {
+            "score": 90.5,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0x0aF5ae75f0D4686358e7DdbC81d5BBB39d4Dc5b5:agent-trust-report",
+        "key": "0xcbb9db0553d7d4c99efdaa2601de1cb6d14e37198efe012ba570aa0fcd2abe59",
+        "name": "agent-trust-report",
+        "description": "ERC-8004 agent trust report: raw vs payment-backed reputation (paid-reputation data from ChainPe). [demo seller]",
+        "tags": [
+          "erc-8004",
+          "reputation",
+          "trust"
+        ],
+        "endpoint": "http://localhost:4604",
+        "pricePerRequest": "0.005",
+        "paymentToken": "USDC",
+        "walletAddress": "0x0aF5ae75f0D4686358e7DdbC81d5BBB39d4Dc5b5",
+        "developer": "0x0aF5ae75f0D4686358e7DdbC81d5BBB39d4Dc5b5",
+        "network": "monad-testnet",
+        "agentId": "2110",
+        "reputation": {
+          "count": 1,
+          "score": 90.5
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90.5,
+            "count": 1,
+            "volume": "0.02"
+          },
+          "raw": {
+            "score": 90.5,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0xFD436350e6D54d366a8AFa8c0622390ab9DE49Fb:monad-network-stats",
+        "key": "0x9401b810a85f3d6d9f335a51862db66da9a210e3d881c4c4caf26e5969593ebc",
+        "name": "monad-network-stats",
+        "description": "Live Monad network stats: head block, block time, gas price, recent tx throughput. [demo seller]",
+        "tags": [
+          "monad",
+          "stats",
+          "data"
+        ],
+        "endpoint": "http://localhost:4601",
+        "pricePerRequest": "0.001",
+        "paymentToken": "USDC",
+        "walletAddress": "0xFD436350e6D54d366a8AFa8c0622390ab9DE49Fb",
+        "developer": "0xFD436350e6D54d366a8AFa8c0622390ab9DE49Fb",
+        "network": "monad-testnet",
+        "agentId": "2101",
+        "reputation": {
+          "count": 1,
+          "score": 90
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90,
+            "count": 1,
+            "volume": "0.005"
+          },
+          "raw": {
+            "score": 90,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0x47433e9423b6CC897A002Ac605B829fe06401E1D:mon-price-quote",
+        "key": "0x3ee44de85cf7fc2977316cf3c684399f9c33b0cf9d34f4132cbc50767a2495d0",
+        "name": "mon-price-quote",
+        "description": "MON/USD spot price and an indicative USDC→MON quote (reference price, not an on-chain swap). [demo seller]",
+        "tags": [
+          "monad",
+          "price",
+          "dex"
+        ],
+        "endpoint": "http://localhost:4602",
+        "pricePerRequest": "0.001",
+        "paymentToken": "USDC",
+        "walletAddress": "0x47433e9423b6CC897A002Ac605B829fe06401E1D",
+        "developer": "0x47433e9423b6CC897A002Ac605B829fe06401E1D",
+        "network": "monad-testnet",
+        "agentId": "2102",
+        "reputation": {
+          "count": 1,
+          "score": 90
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90,
+            "count": 1,
+            "volume": "0.002"
+          },
+          "raw": {
+            "score": 90,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0x7eD695d591f9e5a1000c21992220beb387649C54:mon-price-quote",
+        "key": "0x85417c6e828e00042893b083a041feb195f11bc9a3daad64b427372945611fa5",
+        "name": "mon-price-quote",
+        "description": "MON/USD spot price and an indicative USDC→MON quote (reference price, not an on-chain swap). [demo seller]",
+        "tags": [
+          "monad",
+          "price",
+          "dex"
+        ],
+        "endpoint": "http://localhost:4602",
+        "pricePerRequest": "0.001",
+        "paymentToken": "USDC",
+        "walletAddress": "0x7eD695d591f9e5a1000c21992220beb387649C54",
+        "developer": "0x7eD695d591f9e5a1000c21992220beb387649C54",
+        "network": "monad-testnet",
+        "agentId": "2108",
+        "reputation": {
+          "count": 1,
+          "score": 90
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90,
+            "count": 1,
+            "volume": "0.003"
+          },
+          "raw": {
+            "score": 90,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0xad87dABfef335653c5b93F7882aA8ACF98135D8b:monad-ecosystem-digest",
+        "key": "0xaa6ead626769c43e6bf7d2406fe921b94cba6f2af55c7e2adbc7580894692799",
+        "name": "monad-ecosystem-digest",
+        "description": "Digest of what is live on Monad: x402 services registered in ChainPe, ranked by paid reputation. [demo seller]",
+        "tags": [
+          "monad",
+          "ecosystem",
+          "news"
+        ],
+        "endpoint": "http://localhost:4603",
+        "pricePerRequest": "0.002",
+        "paymentToken": "USDC",
+        "walletAddress": "0xad87dABfef335653c5b93F7882aA8ACF98135D8b",
+        "developer": "0xad87dABfef335653c5b93F7882aA8ACF98135D8b",
+        "network": "monad-testnet",
+        "agentId": "2103",
+        "reputation": {
+          "count": 1,
+          "score": 90
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90,
+            "count": 1,
+            "volume": "0.01"
+          },
+          "raw": {
+            "score": 90,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0x55746b5CD861d25292fbCFc8A931facf90186D86:monad-ecosystem-digest",
+        "key": "0x436004de9ccf452c61eeabe71de957682c3539d24cb2853112eb30c646985069",
+        "name": "monad-ecosystem-digest",
+        "description": "Digest of what is live on Monad: x402 services registered in ChainPe, ranked by paid reputation. [demo seller]",
+        "tags": [
+          "monad",
+          "ecosystem",
+          "news"
+        ],
+        "endpoint": "http://localhost:4603",
+        "pricePerRequest": "0.002",
+        "paymentToken": "USDC",
+        "walletAddress": "0x55746b5CD861d25292fbCFc8A931facf90186D86",
+        "developer": "0x55746b5CD861d25292fbCFc8A931facf90186D86",
+        "network": "monad-testnet",
+        "agentId": "2109",
+        "reputation": {
+          "count": 1,
+          "score": 90
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90,
+            "count": 1,
+            "volume": "0.006"
+          },
+          "raw": {
+            "score": 90,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0xF383E3F3f8B54cc139fa1545146F84a94B533d4e:agent-trust-report",
+        "key": "0x46c1e2986a8b2699ee79741b0e51f5d8c804f0f285e273b43afe54af0d5fb122",
+        "name": "agent-trust-report",
+        "description": "ERC-8004 agent trust report: raw vs payment-backed reputation (paid-reputation data from ChainPe). [demo seller]",
+        "tags": [
+          "erc-8004",
+          "reputation",
+          "trust"
+        ],
+        "endpoint": "http://localhost:4604",
+        "pricePerRequest": "0.005",
+        "paymentToken": "USDC",
+        "walletAddress": "0xF383E3F3f8B54cc139fa1545146F84a94B533d4e",
+        "developer": "0xF383E3F3f8B54cc139fa1545146F84a94B533d4e",
+        "network": "monad-testnet",
+        "agentId": "2104",
+        "reputation": {
+          "count": 1,
+          "score": 90
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90,
+            "count": 1,
+            "volume": "0.025"
+          },
+          "raw": {
+            "score": 90,
+            "count": 1
+          }
+        }
+      }
+    ],
+    "raw": [
+      {
+        "id": "0x5e45B6025Dc9621ed3eef4BFEAD2041D7E475227:monad-weather-demo",
+        "key": "0x3f0eaf523bbdeb762a10efde5e2085297217658ca125d3e84357402d315ad13a",
+        "name": "monad-weather-demo",
+        "description": "Phase 4 demo seller: x402 paid weather on Monad testnet (test traffic only)",
+        "tags": [
+          "weather",
+          "demo"
+        ],
+        "endpoint": "https://chainpe.example/monad-weather",
+        "pricePerRequest": "0.01",
+        "paymentToken": "USDC",
+        "walletAddress": "0x5e45B6025Dc9621ed3eef4BFEAD2041D7E475227",
+        "developer": "0x5e45B6025Dc9621ed3eef4BFEAD2041D7E475227",
+        "network": "monad-testnet",
+        "agentId": "2099",
+        "reputation": {
+          "count": 2,
+          "score": 98.33
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 95,
+            "count": 1,
+            "volume": "0.01"
+          },
+          "raw": {
+            "score": 98.33,
+            "count": 2
+          }
+        }
+      },
+      {
+        "id": "0x5eA6f4b950D006Ebe3c26A6BB606B65C54f0CFaE:monad-network-stats",
+        "key": "0x95d0b1fab8697b214194243ab3760ee53f77cb2a7fa64a295897f43f577398c7",
+        "name": "monad-network-stats",
+        "description": "Live Monad network stats: head block, block time, gas price, recent tx throughput. [demo seller]",
+        "tags": [
+          "monad",
+          "stats",
+          "data"
+        ],
+        "endpoint": "http://localhost:4601",
+        "pricePerRequest": "0.001",
+        "paymentToken": "USDC",
+        "walletAddress": "0x5eA6f4b950D006Ebe3c26A6BB606B65C54f0CFaE",
+        "developer": "0x5eA6f4b950D006Ebe3c26A6BB606B65C54f0CFaE",
+        "network": "monad-testnet",
+        "agentId": "2107",
+        "reputation": {
+          "count": 1,
+          "score": 90.5
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90.5,
+            "count": 1,
+            "volume": "0.004"
+          },
+          "raw": {
+            "score": 90.5,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0x0aF5ae75f0D4686358e7DdbC81d5BBB39d4Dc5b5:agent-trust-report",
+        "key": "0xcbb9db0553d7d4c99efdaa2601de1cb6d14e37198efe012ba570aa0fcd2abe59",
+        "name": "agent-trust-report",
+        "description": "ERC-8004 agent trust report: raw vs payment-backed reputation (paid-reputation data from ChainPe). [demo seller]",
+        "tags": [
+          "erc-8004",
+          "reputation",
+          "trust"
+        ],
+        "endpoint": "http://localhost:4604",
+        "pricePerRequest": "0.005",
+        "paymentToken": "USDC",
+        "walletAddress": "0x0aF5ae75f0D4686358e7DdbC81d5BBB39d4Dc5b5",
+        "developer": "0x0aF5ae75f0D4686358e7DdbC81d5BBB39d4Dc5b5",
+        "network": "monad-testnet",
+        "agentId": "2110",
+        "reputation": {
+          "count": 1,
+          "score": 90.5
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90.5,
+            "count": 1,
+            "volume": "0.02"
+          },
+          "raw": {
+            "score": 90.5,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0xFD436350e6D54d366a8AFa8c0622390ab9DE49Fb:monad-network-stats",
+        "key": "0x9401b810a85f3d6d9f335a51862db66da9a210e3d881c4c4caf26e5969593ebc",
+        "name": "monad-network-stats",
+        "description": "Live Monad network stats: head block, block time, gas price, recent tx throughput. [demo seller]",
+        "tags": [
+          "monad",
+          "stats",
+          "data"
+        ],
+        "endpoint": "http://localhost:4601",
+        "pricePerRequest": "0.001",
+        "paymentToken": "USDC",
+        "walletAddress": "0xFD436350e6D54d366a8AFa8c0622390ab9DE49Fb",
+        "developer": "0xFD436350e6D54d366a8AFa8c0622390ab9DE49Fb",
+        "network": "monad-testnet",
+        "agentId": "2101",
+        "reputation": {
+          "count": 1,
+          "score": 90
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90,
+            "count": 1,
+            "volume": "0.005"
+          },
+          "raw": {
+            "score": 90,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0x47433e9423b6CC897A002Ac605B829fe06401E1D:mon-price-quote",
+        "key": "0x3ee44de85cf7fc2977316cf3c684399f9c33b0cf9d34f4132cbc50767a2495d0",
+        "name": "mon-price-quote",
+        "description": "MON/USD spot price and an indicative USDC→MON quote (reference price, not an on-chain swap). [demo seller]",
+        "tags": [
+          "monad",
+          "price",
+          "dex"
+        ],
+        "endpoint": "http://localhost:4602",
+        "pricePerRequest": "0.001",
+        "paymentToken": "USDC",
+        "walletAddress": "0x47433e9423b6CC897A002Ac605B829fe06401E1D",
+        "developer": "0x47433e9423b6CC897A002Ac605B829fe06401E1D",
+        "network": "monad-testnet",
+        "agentId": "2102",
+        "reputation": {
+          "count": 1,
+          "score": 90
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90,
+            "count": 1,
+            "volume": "0.002"
+          },
+          "raw": {
+            "score": 90,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0x7eD695d591f9e5a1000c21992220beb387649C54:mon-price-quote",
+        "key": "0x85417c6e828e00042893b083a041feb195f11bc9a3daad64b427372945611fa5",
+        "name": "mon-price-quote",
+        "description": "MON/USD spot price and an indicative USDC→MON quote (reference price, not an on-chain swap). [demo seller]",
+        "tags": [
+          "monad",
+          "price",
+          "dex"
+        ],
+        "endpoint": "http://localhost:4602",
+        "pricePerRequest": "0.001",
+        "paymentToken": "USDC",
+        "walletAddress": "0x7eD695d591f9e5a1000c21992220beb387649C54",
+        "developer": "0x7eD695d591f9e5a1000c21992220beb387649C54",
+        "network": "monad-testnet",
+        "agentId": "2108",
+        "reputation": {
+          "count": 1,
+          "score": 90
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90,
+            "count": 1,
+            "volume": "0.003"
+          },
+          "raw": {
+            "score": 90,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0xad87dABfef335653c5b93F7882aA8ACF98135D8b:monad-ecosystem-digest",
+        "key": "0xaa6ead626769c43e6bf7d2406fe921b94cba6f2af55c7e2adbc7580894692799",
+        "name": "monad-ecosystem-digest",
+        "description": "Digest of what is live on Monad: x402 services registered in ChainPe, ranked by paid reputation. [demo seller]",
+        "tags": [
+          "monad",
+          "ecosystem",
+          "news"
+        ],
+        "endpoint": "http://localhost:4603",
+        "pricePerRequest": "0.002",
+        "paymentToken": "USDC",
+        "walletAddress": "0xad87dABfef335653c5b93F7882aA8ACF98135D8b",
+        "developer": "0xad87dABfef335653c5b93F7882aA8ACF98135D8b",
+        "network": "monad-testnet",
+        "agentId": "2103",
+        "reputation": {
+          "count": 1,
+          "score": 90
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90,
+            "count": 1,
+            "volume": "0.01"
+          },
+          "raw": {
+            "score": 90,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0x55746b5CD861d25292fbCFc8A931facf90186D86:monad-ecosystem-digest",
+        "key": "0x436004de9ccf452c61eeabe71de957682c3539d24cb2853112eb30c646985069",
+        "name": "monad-ecosystem-digest",
+        "description": "Digest of what is live on Monad: x402 services registered in ChainPe, ranked by paid reputation. [demo seller]",
+        "tags": [
+          "monad",
+          "ecosystem",
+          "news"
+        ],
+        "endpoint": "http://localhost:4603",
+        "pricePerRequest": "0.002",
+        "paymentToken": "USDC",
+        "walletAddress": "0x55746b5CD861d25292fbCFc8A931facf90186D86",
+        "developer": "0x55746b5CD861d25292fbCFc8A931facf90186D86",
+        "network": "monad-testnet",
+        "agentId": "2109",
+        "reputation": {
+          "count": 1,
+          "score": 90
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90,
+            "count": 1,
+            "volume": "0.006"
+          },
+          "raw": {
+            "score": 90,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0xF383E3F3f8B54cc139fa1545146F84a94B533d4e:agent-trust-report",
+        "key": "0x46c1e2986a8b2699ee79741b0e51f5d8c804f0f285e273b43afe54af0d5fb122",
+        "name": "agent-trust-report",
+        "description": "ERC-8004 agent trust report: raw vs payment-backed reputation (paid-reputation data from ChainPe). [demo seller]",
+        "tags": [
+          "erc-8004",
+          "reputation",
+          "trust"
+        ],
+        "endpoint": "http://localhost:4604",
+        "pricePerRequest": "0.005",
+        "paymentToken": "USDC",
+        "walletAddress": "0xF383E3F3f8B54cc139fa1545146F84a94B533d4e",
+        "developer": "0xF383E3F3f8B54cc139fa1545146F84a94B533d4e",
+        "network": "monad-testnet",
+        "agentId": "2104",
+        "reputation": {
+          "count": 1,
+          "score": 90
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 90,
+            "count": 1,
+            "volume": "0.025"
+          },
+          "raw": {
+            "score": 90,
+            "count": 1
+          }
+        }
+      }
+    ]
+  },
+  "feedback": [
+    {
+      "agentId": "2110",
+      "service": {
+        "id": "0x0aF5ae75f0D4686358e7DdbC81d5BBB39d4Dc5b5:agent-trust-report",
+        "name": "agent-trust-report"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 92,
+      "rawValue": "92",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.005",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0xa9b495031c06b0e5aa8a6521b32027b35624709322366dfff20caa418ff8309f",
+      "receiptTxHash": "0x3c1459156161416cc4446d2be407ef93a657378a48b27d228208cd5ee41a88ca",
+      "citedHash": "0x3c1459156161416cc4446d2be407ef93a657378a48b27d228208cd5ee41a88ca",
+      "feedbackUri": "x402:eip155:10143:0x3c1459156161416cc4446d2be407ef93a657378a48b27d228208cd5ee41a88ca",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": "http://localhost:4604/report?agentId=1",
+      "block": "69819368",
+      "blockTime": "2026-10-10T11:58:47.000Z"
+    },
+    {
+      "agentId": "2107",
+      "service": {
+        "id": "0x5eA6f4b950D006Ebe3c26A6BB606B65C54f0CFaE:monad-network-stats",
+        "name": "monad-network-stats"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 92,
+      "rawValue": "92",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0xaca4946c4eda5fb62518722e7a342634d78bbc112a9e0202b15b997fc29d6829",
+      "receiptTxHash": "0xc5e5280f95d8e4c66e7e534f4b8f5fb21974964855d12725be238d879853b137",
+      "citedHash": "0xc5e5280f95d8e4c66e7e534f4b8f5fb21974964855d12725be238d879853b137",
+      "feedbackUri": "x402:eip155:10143:0xc5e5280f95d8e4c66e7e534f4b8f5fb21974964855d12725be238d879853b137",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": "http://localhost:4601/stats",
+      "block": "69819362",
+      "blockTime": "2026-10-10T11:58:45.000Z"
+    },
+    {
+      "agentId": "2110",
+      "service": {
+        "id": "0x0aF5ae75f0D4686358e7DdbC81d5BBB39d4Dc5b5:agent-trust-report",
+        "name": "agent-trust-report"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.005",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0x2fcaf6b7bc05d0320d071283c0ea0f4a0b84a6bee0dfeae0e2ef6cf208041fd7",
+      "receiptTxHash": "0x8c5b040822fa4f8495908ebc4a35006eaa96ef0088f94bd6b240e7ac1038b0df",
+      "citedHash": "0x8c5b040822fa4f8495908ebc4a35006eaa96ef0088f94bd6b240e7ac1038b0df",
+      "feedbackUri": "x402:eip155:10143:0x8c5b040822fa4f8495908ebc4a35006eaa96ef0088f94bd6b240e7ac1038b0df",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69819349",
+      "blockTime": "2026-10-10T11:58:41.000Z"
+    },
+    {
+      "agentId": "2109",
+      "service": {
+        "id": "0x55746b5CD861d25292fbCFc8A931facf90186D86:monad-ecosystem-digest",
+        "name": "monad-ecosystem-digest"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.002",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0x46be2251b2797bfb758c01c4faaa361fd09587f66177d69b78ccecb4c0d7bb3b",
+      "receiptTxHash": "0xf290e5aa3f04e36b7170049803c05537f29d8774468648141356a4f3dc3d4d50",
+      "citedHash": "0xf290e5aa3f04e36b7170049803c05537f29d8774468648141356a4f3dc3d4d50",
+      "feedbackUri": "x402:eip155:10143:0xf290e5aa3f04e36b7170049803c05537f29d8774468648141356a4f3dc3d4d50",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69819345",
+      "blockTime": "2026-10-10T11:58:40.000Z"
+    },
+    {
+      "agentId": "2108",
+      "service": {
+        "id": "0x7eD695d591f9e5a1000c21992220beb387649C54:mon-price-quote",
+        "name": "mon-price-quote"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0x59330f98e802963279dbed063c9143b5bf2ca8742b0027e7eb4a32a2e149c125",
+      "receiptTxHash": "0x8d45c2bea7e6eda7bc1c4f8dfe4fce86d747e125aa196d2d62a7b17077c90107",
+      "citedHash": "0x8d45c2bea7e6eda7bc1c4f8dfe4fce86d747e125aa196d2d62a7b17077c90107",
+      "feedbackUri": "x402:eip155:10143:0x8d45c2bea7e6eda7bc1c4f8dfe4fce86d747e125aa196d2d62a7b17077c90107",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69819339",
+      "blockTime": "2026-10-10T11:58:38.000Z"
+    },
+    {
+      "agentId": "2107",
+      "service": {
+        "id": "0x5eA6f4b950D006Ebe3c26A6BB606B65C54f0CFaE:monad-network-stats",
+        "name": "monad-network-stats"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0xab7770a094809d85977103963a0e282c01f311c2d00d8dac8385dacafe3dff71",
+      "receiptTxHash": "0x60223cc30e5c2dc6bc179cb54df01cfcf7852ff8a109233450ca18b0ac6e4b88",
+      "citedHash": "0x60223cc30e5c2dc6bc179cb54df01cfcf7852ff8a109233450ca18b0ac6e4b88",
+      "feedbackUri": "x402:eip155:10143:0x60223cc30e5c2dc6bc179cb54df01cfcf7852ff8a109233450ca18b0ac6e4b88",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69819337",
+      "blockTime": "2026-10-10T11:58:38.000Z"
+    },
+    {
+      "agentId": "2110",
+      "service": {
+        "id": "0x0aF5ae75f0D4686358e7DdbC81d5BBB39d4Dc5b5:agent-trust-report",
+        "name": "agent-trust-report"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.005",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0x75ddf2078db84c352d72b468bb9b8bd210049f971a1c4429f7bfad8f65545bf2",
+      "receiptTxHash": "0xb9d958ac8794d4d797365ccc1958b1b60ccd833d630df736339aec1e62efdfd0",
+      "citedHash": "0xb9d958ac8794d4d797365ccc1958b1b60ccd833d630df736339aec1e62efdfd0",
+      "feedbackUri": "x402:eip155:10143:0xb9d958ac8794d4d797365ccc1958b1b60ccd833d630df736339aec1e62efdfd0",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69819333",
+      "blockTime": "2026-10-10T11:58:37.000Z"
+    },
+    {
+      "agentId": "2109",
+      "service": {
+        "id": "0x55746b5CD861d25292fbCFc8A931facf90186D86:monad-ecosystem-digest",
+        "name": "monad-ecosystem-digest"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.002",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0x102b932ecd5c471edafe51976e6f59776fef6385fe39b810c575fb7c60425781",
+      "receiptTxHash": "0xfe6828990b691a417997dc477d10348f5b3067409784c196bd9107db7adc9b29",
+      "citedHash": "0xfe6828990b691a417997dc477d10348f5b3067409784c196bd9107db7adc9b29",
+      "feedbackUri": "x402:eip155:10143:0xfe6828990b691a417997dc477d10348f5b3067409784c196bd9107db7adc9b29",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69819328",
+      "blockTime": "2026-10-10T11:58:35.000Z"
+    },
+    {
+      "agentId": "2108",
+      "service": {
+        "id": "0x7eD695d591f9e5a1000c21992220beb387649C54:mon-price-quote",
+        "name": "mon-price-quote"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0x3a26ed400a97a3a7339487f58c539bfcbfbb1a4b29e223a98a38ae209ffdacde",
+      "receiptTxHash": "0xcec37e607079d4e53e28427cc890cc738273ceb5bd111a6967a265465cfad309",
+      "citedHash": "0xcec37e607079d4e53e28427cc890cc738273ceb5bd111a6967a265465cfad309",
+      "feedbackUri": "x402:eip155:10143:0xcec37e607079d4e53e28427cc890cc738273ceb5bd111a6967a265465cfad309",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69819323",
+      "blockTime": "2026-10-10T11:58:34.000Z"
+    },
+    {
+      "agentId": "2107",
+      "service": {
+        "id": "0x5eA6f4b950D006Ebe3c26A6BB606B65C54f0CFaE:monad-network-stats",
+        "name": "monad-network-stats"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0x0bebf6c67316f22ccf3af5a8ee388e42e639475022fe9e7e3eb0495b1aee76eb",
+      "receiptTxHash": "0xf7e2a0af7ea0ee145700349e4ab17e1559c7ca79b3120efcff3cdf51fcf9ce7b",
+      "citedHash": "0xf7e2a0af7ea0ee145700349e4ab17e1559c7ca79b3120efcff3cdf51fcf9ce7b",
+      "feedbackUri": "x402:eip155:10143:0xf7e2a0af7ea0ee145700349e4ab17e1559c7ca79b3120efcff3cdf51fcf9ce7b",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69819319",
+      "blockTime": "2026-10-10T11:58:32.000Z"
+    },
+    {
+      "agentId": "2110",
+      "service": {
+        "id": "0x0aF5ae75f0D4686358e7DdbC81d5BBB39d4Dc5b5:agent-trust-report",
+        "name": "agent-trust-report"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.005",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0xb50213365106bdd3f130099efe6ff29d7b5c2f62a1bcb6c466570db1458907cc",
+      "receiptTxHash": "0xc81a02f1a231d25a53f2c427ab67ba801306255198e4764299d8fe157bf8d025",
+      "citedHash": "0xc81a02f1a231d25a53f2c427ab67ba801306255198e4764299d8fe157bf8d025",
+      "feedbackUri": "x402:eip155:10143:0xc81a02f1a231d25a53f2c427ab67ba801306255198e4764299d8fe157bf8d025",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69819314",
+      "blockTime": "2026-10-10T11:58:31.000Z"
+    },
+    {
+      "agentId": "2109",
+      "service": {
+        "id": "0x55746b5CD861d25292fbCFc8A931facf90186D86:monad-ecosystem-digest",
+        "name": "monad-ecosystem-digest"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.002",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0xd15e264145476c5cbba8b954798f1d1076b4995a882cbcfaa3127ea0b75358f0",
+      "receiptTxHash": "0x6b7a4f17d1128f995b129bc13d7b6b845e1929ec99b610478c01c993dbdba157",
+      "citedHash": "0x6b7a4f17d1128f995b129bc13d7b6b845e1929ec99b610478c01c993dbdba157",
+      "feedbackUri": "x402:eip155:10143:0x6b7a4f17d1128f995b129bc13d7b6b845e1929ec99b610478c01c993dbdba157",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69819312",
+      "blockTime": "2026-10-10T11:58:30.000Z"
+    },
+    {
+      "agentId": "2108",
+      "service": {
+        "id": "0x7eD695d591f9e5a1000c21992220beb387649C54:mon-price-quote",
+        "name": "mon-price-quote"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0xde0b11620da13422b7d9537eb91c2cef65cc08cdc64dd3f9ce8413f3c9d8e634",
+      "receiptTxHash": "0x27b1d0a9ae2eedc96c411639a0f660e902c1df10097b4129a96785534f1a4d5d",
+      "citedHash": "0x27b1d0a9ae2eedc96c411639a0f660e902c1df10097b4129a96785534f1a4d5d",
+      "feedbackUri": "x402:eip155:10143:0x27b1d0a9ae2eedc96c411639a0f660e902c1df10097b4129a96785534f1a4d5d",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69819306",
+      "blockTime": "2026-10-10T11:58:28.000Z"
+    },
+    {
+      "agentId": "2107",
+      "service": {
+        "id": "0x5eA6f4b950D006Ebe3c26A6BB606B65C54f0CFaE:monad-network-stats",
+        "name": "monad-network-stats"
+      },
+      "rater": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x0a5c6a5f64fea58eb2b1b2696558694532327350",
+      "feedbackTxHash": "0x318684ecff4de8bac1700a43e8871cdf163e6b08a47f1d61da47db60e78c2e90",
+      "receiptTxHash": "0x0e20c24595d8af1ff590fd73e77babb2fd84ffc9915f73489220cf5b1e0c5e28",
+      "citedHash": "0x0e20c24595d8af1ff590fd73e77babb2fd84ffc9915f73489220cf5b1e0c5e28",
+      "feedbackUri": "x402:eip155:10143:0x0e20c24595d8af1ff590fd73e77babb2fd84ffc9915f73489220cf5b1e0c5e28",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69819301",
+      "blockTime": "2026-10-10T11:58:27.000Z"
+    },
+    {
+      "agentId": "2104",
+      "service": {
+        "id": "0xF383E3F3f8B54cc139fa1545146F84a94B533d4e:agent-trust-report",
+        "name": "agent-trust-report"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.005",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0x5600f2cc1efba843adbf06f1ecd1b3c85af9aca08468f7552474723237331e50",
+      "receiptTxHash": "0x9df2fabef422c52808447008213497b38551b97e3a02ed31dc7f4507090a69e6",
+      "citedHash": "0x9df2fabef422c52808447008213497b38551b97e3a02ed31dc7f4507090a69e6",
+      "feedbackUri": "x402:eip155:10143:0x9df2fabef422c52808447008213497b38551b97e3a02ed31dc7f4507090a69e6",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69780096",
+      "blockTime": "2026-10-10T08:41:04.000Z"
+    },
+    {
+      "agentId": "2103",
+      "service": {
+        "id": "0xad87dABfef335653c5b93F7882aA8ACF98135D8b:monad-ecosystem-digest",
+        "name": "monad-ecosystem-digest"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.002",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0x632a4e8a73f1f6fff9aa93e3d1f6159a049de8b9c531d10341986d317cd54728",
+      "receiptTxHash": "0x2d55ee95342e90972579bb1933448d2a08dd499302c0f0acb2befa875db09b4b",
+      "citedHash": "0x2d55ee95342e90972579bb1933448d2a08dd499302c0f0acb2befa875db09b4b",
+      "feedbackUri": "x402:eip155:10143:0x2d55ee95342e90972579bb1933448d2a08dd499302c0f0acb2befa875db09b4b",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69780093",
+      "blockTime": "2026-10-10T08:41:04.000Z"
+    },
+    {
+      "agentId": "2102",
+      "service": {
+        "id": "0x47433e9423b6CC897A002Ac605B829fe06401E1D:mon-price-quote",
+        "name": "mon-price-quote"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0xc97b103a60ea514dfd35d938a7b1ace6b96d811fbc7a3fdaf9d531f3f1d0ce63",
+      "receiptTxHash": "0x1ae7981fd8bb48181b2cc27be39f8a0ba5a1d39323705d2e35ea63caa57213e2",
+      "citedHash": "0x1ae7981fd8bb48181b2cc27be39f8a0ba5a1d39323705d2e35ea63caa57213e2",
+      "feedbackUri": "x402:eip155:10143:0x1ae7981fd8bb48181b2cc27be39f8a0ba5a1d39323705d2e35ea63caa57213e2",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69780090",
+      "blockTime": "2026-10-10T08:41:03.000Z"
+    },
+    {
+      "agentId": "2101",
+      "service": {
+        "id": "0xFD436350e6D54d366a8AFa8c0622390ab9DE49Fb:monad-network-stats",
+        "name": "monad-network-stats"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0x068a257f80647c0e7591498e5bbbd0daf955effe8f54aea2110994cf0ac6a48a",
+      "receiptTxHash": "0x201196c2105cd21c606b27eabe1ba5eb40d7b9706c9600e05ec785e9671c4fbc",
+      "citedHash": "0x201196c2105cd21c606b27eabe1ba5eb40d7b9706c9600e05ec785e9671c4fbc",
+      "feedbackUri": "x402:eip155:10143:0x201196c2105cd21c606b27eabe1ba5eb40d7b9706c9600e05ec785e9671c4fbc",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69780088",
+      "blockTime": "2026-10-10T08:41:02.000Z"
+    },
+    {
+      "agentId": "2104",
+      "service": {
+        "id": "0xF383E3F3f8B54cc139fa1545146F84a94B533d4e:agent-trust-report",
+        "name": "agent-trust-report"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.005",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0x163a0d62226360726c7d6eb4a29d40798538efa642cb00538ca2806a698daffc",
+      "receiptTxHash": "0xc8c159165aea749bedf3cf5a98c0e926ff1cd1796c0fce85bb9c5350e90ddba6",
+      "citedHash": "0xc8c159165aea749bedf3cf5a98c0e926ff1cd1796c0fce85bb9c5350e90ddba6",
+      "feedbackUri": "x402:eip155:10143:0xc8c159165aea749bedf3cf5a98c0e926ff1cd1796c0fce85bb9c5350e90ddba6",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69780085",
+      "blockTime": "2026-10-10T08:41:01.000Z"
+    },
+    {
+      "agentId": "2103",
+      "service": {
+        "id": "0xad87dABfef335653c5b93F7882aA8ACF98135D8b:monad-ecosystem-digest",
+        "name": "monad-ecosystem-digest"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.002",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0xb67bd7362235b23a8eef56d6a5588bccb03fa67afc30f30378b2989867502c78",
+      "receiptTxHash": "0x83016840dd19702f2fcb2ce01bb249ba1ce9c261560747f3f93be46c2d4eea7d",
+      "citedHash": "0x83016840dd19702f2fcb2ce01bb249ba1ce9c261560747f3f93be46c2d4eea7d",
+      "feedbackUri": "x402:eip155:10143:0x83016840dd19702f2fcb2ce01bb249ba1ce9c261560747f3f93be46c2d4eea7d",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69780082",
+      "blockTime": "2026-10-10T08:41:00.000Z"
+    },
+    {
+      "agentId": "2102",
+      "service": {
+        "id": "0x47433e9423b6CC897A002Ac605B829fe06401E1D:mon-price-quote",
+        "name": "mon-price-quote"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0x6c3cdc200a9b85aaa6ba37d322b5ededcfb6c3e1b10252f336481292d83292c4",
+      "receiptTxHash": "0x16c8da9c0c89fff0132b122b34673f9c8a5b166d63d4916e2ecedb54067daa5d",
+      "citedHash": "0x16c8da9c0c89fff0132b122b34673f9c8a5b166d63d4916e2ecedb54067daa5d",
+      "feedbackUri": "x402:eip155:10143:0x16c8da9c0c89fff0132b122b34673f9c8a5b166d63d4916e2ecedb54067daa5d",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69780077",
+      "blockTime": "2026-10-10T08:40:59.000Z"
+    },
+    {
+      "agentId": "2101",
+      "service": {
+        "id": "0xFD436350e6D54d366a8AFa8c0622390ab9DE49Fb:monad-network-stats",
+        "name": "monad-network-stats"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0xffd67b4ae2ea2fa225a6d13b121d3ba4d17f655aa39d5a0bd7180bf3edc27fbe",
+      "receiptTxHash": "0xdad12ea77bd47855a57d41f6979398a937888ee015ccc4f5b3d6833ccc6ac0e7",
+      "citedHash": "0xdad12ea77bd47855a57d41f6979398a937888ee015ccc4f5b3d6833ccc6ac0e7",
+      "feedbackUri": "x402:eip155:10143:0xdad12ea77bd47855a57d41f6979398a937888ee015ccc4f5b3d6833ccc6ac0e7",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69780075",
+      "blockTime": "2026-10-10T08:40:58.000Z"
+    },
+    {
+      "agentId": "2104",
+      "service": {
+        "id": "0xF383E3F3f8B54cc139fa1545146F84a94B533d4e:agent-trust-report",
+        "name": "agent-trust-report"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.005",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0xf2d61442214169769423f5e28a892aface13de5a1c2fc9ce7468cb00fef83dd9",
+      "receiptTxHash": "0x0689eb9cd92135c799905e24dbb9d04af4c54a4589e82d8ecac8efc75dd027b2",
+      "citedHash": "0x0689eb9cd92135c799905e24dbb9d04af4c54a4589e82d8ecac8efc75dd027b2",
+      "feedbackUri": "x402:eip155:10143:0x0689eb9cd92135c799905e24dbb9d04af4c54a4589e82d8ecac8efc75dd027b2",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69779958",
+      "blockTime": "2026-10-10T08:40:23.000Z"
+    },
+    {
+      "agentId": "2103",
+      "service": {
+        "id": "0xad87dABfef335653c5b93F7882aA8ACF98135D8b:monad-ecosystem-digest",
+        "name": "monad-ecosystem-digest"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.002",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0x2ef33c3cfd7bdcf4e9608564db3df9c3e2fb22dd04c91d9cccdf771c8e7a430f",
+      "receiptTxHash": "0xb35d2487d975c5427b3085f6526eaa707b6605bcc56208c09fb01222b6600832",
+      "citedHash": "0xb35d2487d975c5427b3085f6526eaa707b6605bcc56208c09fb01222b6600832",
+      "feedbackUri": "x402:eip155:10143:0xb35d2487d975c5427b3085f6526eaa707b6605bcc56208c09fb01222b6600832",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69779955",
+      "blockTime": "2026-10-10T08:40:22.000Z"
+    },
+    {
+      "agentId": "2101",
+      "service": {
+        "id": "0xFD436350e6D54d366a8AFa8c0622390ab9DE49Fb:monad-network-stats",
+        "name": "monad-network-stats"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0x5724ec3a7e54c19b2bbe1eca4e7547b00c416ad453e54546212582316c63f6cb",
+      "receiptTxHash": "0x245b7038d6eeb5f512c4d866bd940577b0c4e30f3aafbc239101ae1c89ada6bd",
+      "citedHash": "0x245b7038d6eeb5f512c4d866bd940577b0c4e30f3aafbc239101ae1c89ada6bd",
+      "feedbackUri": "x402:eip155:10143:0x245b7038d6eeb5f512c4d866bd940577b0c4e30f3aafbc239101ae1c89ada6bd",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69779951",
+      "blockTime": "2026-10-10T08:40:21.000Z"
+    },
+    {
+      "agentId": "2104",
+      "service": {
+        "id": "0xF383E3F3f8B54cc139fa1545146F84a94B533d4e:agent-trust-report",
+        "name": "agent-trust-report"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.005",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0x137266d590d4672a8fd4fbadaf6b18898eb2e24b836e1d3a401deed7e3536553",
+      "receiptTxHash": "0x7fc0748dc7060117bfb7b14cf9fa16b46526cf16bbd426915931999ad05f3628",
+      "citedHash": "0x7fc0748dc7060117bfb7b14cf9fa16b46526cf16bbd426915931999ad05f3628",
+      "feedbackUri": "x402:eip155:10143:0x7fc0748dc7060117bfb7b14cf9fa16b46526cf16bbd426915931999ad05f3628",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69779948",
+      "blockTime": "2026-10-10T08:40:20.000Z"
+    },
+    {
+      "agentId": "2103",
+      "service": {
+        "id": "0xad87dABfef335653c5b93F7882aA8ACF98135D8b:monad-ecosystem-digest",
+        "name": "monad-ecosystem-digest"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.002",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0x5da42d98fab5e641408614d3a71feac43d6dc68bfb19fa869644147809cdc105",
+      "receiptTxHash": "0x31a2f57a5a46fb44dfb59cb5da65aa6c4c9da63c78183fd6d6f34442e3322d1a",
+      "citedHash": "0x31a2f57a5a46fb44dfb59cb5da65aa6c4c9da63c78183fd6d6f34442e3322d1a",
+      "feedbackUri": "x402:eip155:10143:0x31a2f57a5a46fb44dfb59cb5da65aa6c4c9da63c78183fd6d6f34442e3322d1a",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69779946",
+      "blockTime": "2026-10-10T08:40:19.000Z"
+    },
+    {
+      "agentId": "2101",
+      "service": {
+        "id": "0xFD436350e6D54d366a8AFa8c0622390ab9DE49Fb:monad-network-stats",
+        "name": "monad-network-stats"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0x8f96b7b34d291cacd5bb13f289899d330f4010d67555c0d376e7953ff6d4ac17",
+      "receiptTxHash": "0x6270c3e50659d4f346d3ba214e5716cadb6712ad37ec8cf9eb2ebc555a354d44",
+      "citedHash": "0x6270c3e50659d4f346d3ba214e5716cadb6712ad37ec8cf9eb2ebc555a354d44",
+      "feedbackUri": "x402:eip155:10143:0x6270c3e50659d4f346d3ba214e5716cadb6712ad37ec8cf9eb2ebc555a354d44",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69779943",
+      "blockTime": "2026-10-10T08:40:18.000Z"
+    },
+    {
+      "agentId": "2104",
+      "service": {
+        "id": "0xF383E3F3f8B54cc139fa1545146F84a94B533d4e:agent-trust-report",
+        "name": "agent-trust-report"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.005",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0xe1d6581662845dd9403e65d2241eda0de9bbd556cf415a745bba21a7684e584b",
+      "receiptTxHash": "0xd58040b3cf9fbe45d178081256aed1942d294c49f4e4667087ba086bebbe9042",
+      "citedHash": "0xd58040b3cf9fbe45d178081256aed1942d294c49f4e4667087ba086bebbe9042",
+      "feedbackUri": "x402:eip155:10143:0xd58040b3cf9fbe45d178081256aed1942d294c49f4e4667087ba086bebbe9042",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69779941",
+      "blockTime": "2026-10-10T08:40:18.000Z"
+    },
+    {
+      "agentId": "2103",
+      "service": {
+        "id": "0xad87dABfef335653c5b93F7882aA8ACF98135D8b:monad-ecosystem-digest",
+        "name": "monad-ecosystem-digest"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.002",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0xcf1f8815a6d8196ac5b51ee9a50274b2ff14b2c8f24d02b898813cf169b6ea3e",
+      "receiptTxHash": "0x68d4c47ebd15ae06cfa6fd35841c0d294bd6b3ba1b9d81c9d3b27ce370d0c93e",
+      "citedHash": "0x68d4c47ebd15ae06cfa6fd35841c0d294bd6b3ba1b9d81c9d3b27ce370d0c93e",
+      "feedbackUri": "x402:eip155:10143:0x68d4c47ebd15ae06cfa6fd35841c0d294bd6b3ba1b9d81c9d3b27ce370d0c93e",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69779939",
+      "blockTime": "2026-10-10T08:40:17.000Z"
+    },
+    {
+      "agentId": "2101",
+      "service": {
+        "id": "0xFD436350e6D54d366a8AFa8c0622390ab9DE49Fb:monad-network-stats",
+        "name": "monad-network-stats"
+      },
+      "rater": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "value": 90,
+      "rawValue": "90",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x2f972c59c2336b79f7792875a00c8a07fa4c6470",
+      "feedbackTxHash": "0x3dc19da14b4315b79edcb44dd219da0f6f2ed9d744c0972104d59d1ab8f9b841",
+      "receiptTxHash": "0x951ac76288041ccac5ba18674006e4bce58189899ce5a66bb93c00d9314a05d3",
+      "citedHash": "0x951ac76288041ccac5ba18674006e4bce58189899ce5a66bb93c00d9314a05d3",
+      "feedbackUri": "x402:eip155:10143:0x951ac76288041ccac5ba18674006e4bce58189899ce5a66bb93c00d9314a05d3",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69779935",
+      "blockTime": "2026-10-10T08:40:16.000Z"
+    },
+    {
+      "agentId": "2099",
+      "service": {
+        "id": "0x5e45B6025Dc9621ed3eef4BFEAD2041D7E475227:monad-weather-demo",
+        "name": "monad-weather-demo"
+      },
+      "rater": "0xf045a36d9daf8855135ba4ff4320741aa25e3c09",
+      "value": 100,
+      "rawValue": "100",
+      "valueDecimals": 0,
+      "status": "unpaid",
+      "paid": false,
+      "unpaidReason": "receipt_reused",
+      "revoked": false,
+      "paidAmount": null,
+      "payer": null,
+      "feedbackTxHash": "0xaef3c81607df676da47a94e8f02b8a6497a4cda48f6c765291a56edc0584b3ab",
+      "receiptTxHash": null,
+      "citedHash": "0x4356b717ba033858ed9ceb88ef02c9fabb42051b5496707f03f2d9e76a3ea943",
+      "feedbackUri": "x402:eip155:10143:0x4356b717ba033858ed9ceb88ef02c9fabb42051b5496707f03f2d9e76a3ea943",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69664669",
+      "blockTime": "2026-10-09T22:59:59.000Z"
+    },
+    {
+      "agentId": "2099",
+      "service": {
+        "id": "0x5e45B6025Dc9621ed3eef4BFEAD2041D7E475227:monad-weather-demo",
+        "name": "monad-weather-demo"
+      },
+      "rater": "0xf045a36d9daf8855135ba4ff4320741aa25e3c09",
+      "value": 100,
+      "rawValue": "100",
+      "valueDecimals": 0,
+      "status": "unpaid",
+      "paid": false,
+      "unpaidReason": "no_receipt",
+      "revoked": false,
+      "paidAmount": null,
+      "payer": null,
+      "feedbackTxHash": "0x773b414437afe9d0629b711642146e460f388bab26dfe2e33dfd91a78fb1da12",
+      "receiptTxHash": null,
+      "citedHash": null,
+      "feedbackUri": null,
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "69664667",
+      "blockTime": "2026-10-09T22:59:59.000Z"
+    },
+    {
+      "agentId": "2099",
+      "service": {
+        "id": "0x5e45B6025Dc9621ed3eef4BFEAD2041D7E475227:monad-weather-demo",
+        "name": "monad-weather-demo"
+      },
+      "rater": "0xb7fd722846d0373203cc90c734c62256dba91a83",
+      "value": 95,
+      "rawValue": "95",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.01",
+      "payer": "0xb7fd722846d0373203cc90c734c62256dba91a83",
+      "feedbackTxHash": "0x9d3b4bddc6197ad5825d6e46324f049ac6b6e4f77ad7c4a1c7308cc67273432c",
+      "receiptTxHash": "0x4356b717ba033858ed9ceb88ef02c9fabb42051b5496707f03f2d9e76a3ea943",
+      "citedHash": "0x4356b717ba033858ed9ceb88ef02c9fabb42051b5496707f03f2d9e76a3ea943",
+      "feedbackUri": "x402:eip155:10143:0x4356b717ba033858ed9ceb88ef02c9fabb42051b5496707f03f2d9e76a3ea943",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": "http://127.0.0.1:42707/hello",
+      "block": "69664649",
+      "blockTime": "2026-10-09T22:59:53.000Z"
+    }
+  ]
+}
