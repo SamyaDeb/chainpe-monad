@@ -318,6 +318,8 @@ persisted client-side budget from Phase 3.
 6. **Benchmark** (`examples/monad-bench`): N paid calls, report p50/p95 of
    402 → settled → 200.
 
+**Status (2026-10-10):** owner chose to stay on **testnet** for now. Steps 3 and 6 code ported (`examples/seller-agents`, `examples/monad-bench`); funded testnet runs, steps 2/4/5 and all mainnet work pending.
+
 **Done when:** ≥10 real mainnet paid calls with receipts (labelled demo traffic), ≥1
 external x402 service paid, latency measured.
 
