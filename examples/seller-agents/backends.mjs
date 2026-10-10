@@ -29,18 +29,28 @@ export function priceApp() {
   let cache
   const spot = async () => {
     if (cache && Date.now() - cache.t < 30_000) return cache
-    const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=monad&vs_currencies=usd')
-    const usd = (await r.json())?.monad?.usd
+    const sources = [
+      ['coingecko', 'https://api.coingecko.com/api/v3/simple/price?ids=monad&vs_currencies=usd', j => j?.monad?.usd],
+      ['coinbase', 'https://api.coinbase.com/v2/prices/MON-USD/spot', j => Number(j?.data?.amount)]
+    ]
+    let usd, source
+    for (const [name, url, pick] of sources) {
+      try {
+        const r = await fetch(url, { signal: AbortSignal.timeout(8000) })
+        const v = r.ok ? pick(await r.json()) : undefined
+        if (v > 0) { usd = v; source = name; break }
+      } catch { /* try the next source */ }
+    }
     if (!usd) throw new Error('price source unavailable')
-    return (cache = { usd, t: Date.now() })
+    return (cache = { usd, source, t: Date.now() })
   }
   app.get('/quote', async (req, res) => {
     const amountUsdc = Number(req.query.amountUsdc ?? 10)
     if (!(amountUsdc > 0 && amountUsdc <= 1e6)) return res.status(400).json({ error: 'bad amountUsdc' })
     try {
-      const { usd, t } = await spot()
+      const { usd, t, source } = await spot()
       res.json({ pair: 'MON/USD', priceUsd: usd, amountUsdc, indicativeMon: amountUsdc / usd,
-        source: 'coingecko', kind: 'reference price (not an on-chain swap quote)', asOf: new Date(t).toISOString() })
+        source, kind: 'reference price (not an on-chain swap quote)', asOf: new Date(t).toISOString() })
     } catch (e) { res.status(502).json({ error: String(e.message ?? e) }) }
   })
   return app

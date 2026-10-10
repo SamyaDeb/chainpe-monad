@@ -17,3 +17,5 @@ CHAINPE_FACILITATOR_URL=… node run-sellers.mjs  # defaults to Monad's public t
 ROUNDS=3 node orchestrator.mjs                  # pay + receipt-backed feedback → receipts-<network>.json
 ```
 `NETWORK=monad` for mainnet (needs `CHAINPE_FACILITATOR_URL`; payTo must be registered).
+
+Notes: a brand-new wallet's first contract call can be rejected with "insufficient balance" until it has sent one plain transaction (seen on Monad testnet); `setup.mjs` retries and accepts `ONLY=PRICE,DIGEST`. Monad's 10 MON reserve can also make a wallet below 10 MON fail when it sends MON value — fund the wallets from the faucet or a >10 MON wallet.
