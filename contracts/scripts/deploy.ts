@@ -102,6 +102,8 @@ async function main() {
   const proxy = await Proxy.deploy(implAddr, initData);
   await proxy.waitForDeployment();
   const proxyAddr = await proxy.getAddress();
+  // Block of the proxy deployment (indexer START_BLOCK).
+  const deployBlock = (await proxy.deploymentTransaction()?.wait())?.blockNumber;
   console.log("  Proxy (use this address):", proxyAddr);
 
   // 4. Sanity-check owner.
@@ -131,6 +133,7 @@ async function main() {
     identityRegistry,
     owner: onChainOwner,
     deployer: deployer.address,
+    deployBlock,
     deployedAt: new Date().toISOString(),
     upgradeable: true,
   };

@@ -96,6 +96,13 @@ export function loadConfig(env: Env = process.env): IndexerConfig {
   const share = Number(env.PAYER_SHARE_CAP ?? '0.25')
   if (!(share > 0 && share <= 1)) throw new Error('PAYER_SHARE_CAP must be in (0, 1]')
 
+  // Without a start block the poller would walk the chain from genesis in LOG_CHUNK
+  // spans (tens of millions of getLogs calls on mainnet) — refuse instead.
+  const startRaw = env.START_BLOCK?.trim()
+  if (!startRaw && d.registryDeployBlock === undefined) {
+    throw new Error(`START_BLOCK is required on "${network}" (set it to the ChainPeRegistry deploy block).`)
+  }
+
   return {
     network,
     chain: d.chain,
@@ -113,7 +120,7 @@ export function loadConfig(env: Env = process.env): IndexerConfig {
     databaseUrl: env.DATABASE_URL ?? '',
     port: Number(env.PORT ?? 4600),
     trustProxy: parseTrustProxy(env.TRUST_PROXY),
-    startBlock: BigInt(env.START_BLOCK?.trim() || (d.registryDeployBlock ?? 0n)),
+    startBlock: BigInt(startRaw || d.registryDeployBlock!),
     pollIntervalMs: Number(env.POLL_INTERVAL_MS ?? 2000),
     logChunk: BigInt(env.LOG_CHUNK ?? '100'),
     minPaidAtomic: BigInt(env.MIN_PAID_AMOUNT ?? '1000'), // 0.001 USDC

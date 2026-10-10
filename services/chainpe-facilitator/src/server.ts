@@ -26,6 +26,20 @@ import { POLICY_VAULT_ABI, VAULT_SCHEME, createVaultScheme } from './vault.js'
 
 const log = pino({ level: process.env.LOG_LEVEL ?? 'info' })
 
+/** Retries a startup RPC read (2, 4, 8, 16 s) so a brief RPC outage doesn't crash-loop the service. */
+async function withRetry<T>(what: string, fn: () => Promise<T>, attempts = 5): Promise<T> {
+  for (let i = 1; ; i++) {
+    try {
+      return await fn()
+    } catch (err) {
+      if (i >= attempts) throw err
+      const ms = 2 ** i * 1000
+      log.warn({ err: String(err).split('\n')[0] }, `${what} failed (attempt ${i}/${attempts}), retrying in ${ms / 1000}s`)
+      await new Promise(r => setTimeout(r, ms))
+    }
+  }
+}
+
 async function main() {
   const cfg = loadConfig()
   const settlement = createSettlementSigner(cfg)
@@ -35,7 +49,9 @@ async function main() {
   const schemes = ['exact']
   if (cfg.policyVault) {
     const vault = cfg.policyVault
-    const token = (await publicClient.readContract({ address: vault, abi: POLICY_VAULT_ABI, functionName: 'token' })) as string
+    const token = (await withRetry('PolicyVault.token()', () =>
+      publicClient.readContract({ address: vault, abi: POLICY_VAULT_ABI, functionName: 'token' })
+    )) as string
     if (token.toLowerCase() !== cfg.usdc.toLowerCase()) {
       throw new Error(`PolicyVault ${vault} holds ${token}, not USDC ${cfg.usdc}`)
     }

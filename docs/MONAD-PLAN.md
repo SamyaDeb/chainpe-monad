@@ -320,6 +320,12 @@ persisted client-side budget from Phase 3.
 
 **Status (2026-10-10):** owner chose to stay on **testnet** for now. Steps 3, 4, 6 done on **testnet**: 4 seller agents (#2101–2104), 17 paid calls with receipt-backed ratings, p50/p95 benchmark (see `docs/METROPOLIS.md`). Step 5: external target found (Nansen accepts Monad mainnet), outreach drafts written, not paid/sent. Step 2 (own facilitator + indexer hosting) and all mainnet work pending.
 
+**Status (2026-10-10, later):** mainnet prep done, no mainnet funds spent yet. Step-by-step mainnet runbook in `docs/MAINNET-RUNBOOK.md`.
+- [x] Step 2 hosting: `deploy/docker-compose.yml` (Postgres + indexer + facilitator) from the same Dockerfiles Railway builds. Both images build, and the stack starts and serves `/health` and `/supported`. Indexer Railway config switched to the Dockerfile.
+- [x] Mainnet hazards fixed: a blank `REQUIRE_REGISTERED_PAYTO` no longer turns off the facilitator's strict mainnet payTo policy; the indexer refuses mainnet without `START_BLOCK` (it would scan from genesis); deploy records now save `deployBlock`; the facilitator retries its startup vault check instead of crash-looping on an RPC blip.
+- [x] Step 5 tooling: `e2e/pay-external.mjs` pays any x402 v2 service (default Nansen on `eip155:143`) through the SDK and verifies the settlement on-chain. `DRY_RUN=1` only decodes and checks the offer.
+- [ ] Still needs mainnet funds + keys: step 1 deploy, step 2 Railway deploy, steps 3–6 on mainnet.
+
 **Done when:** ≥10 real mainnet paid calls with receipts (labelled demo traffic), ≥1
 external x402 service paid, latency measured.
 

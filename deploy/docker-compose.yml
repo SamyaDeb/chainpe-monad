@@ -1,0 +1,65 @@
+# ChainPe backend for one Monad network: Postgres + indexer + facilitator.
+# Same images Railway builds (each service's Dockerfile).
+#
+#   cp deploy/.env.example deploy/.env    # fill FACILITATOR_PRIVATE_KEY (+ mainnet vars)
+#   docker compose -f deploy/docker-compose.yml --env-file deploy/.env up -d --build
+#
+# Indexer:     http://localhost:4600  (GET /health, /services?rank=paid)
+# Facilitator: http://localhost:4500  (GET /health, /supported; POST /verify, /settle)
+name: chainpe-${NETWORK:-monad-testnet}
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: chainpe
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-chainpe}
+      POSTGRES_DB: chainpe_indexer
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chainpe -d chainpe_indexer"]
+      interval: 5s
+      retries: 10
+    restart: unless-stopped
+
+  indexer:
+    build: ../services/chainpe-indexer
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NETWORK: ${NETWORK:-monad-testnet}
+      DATABASE_URL: postgres://chainpe:${POSTGRES_PASSWORD:-chainpe}@postgres:5432/chainpe_indexer
+      RPC_URL: ${RPC_URL:-}
+      CHAINPE_REGISTRY_ADDRESS: ${CHAINPE_REGISTRY_ADDRESS:-}
+      POLICY_VAULT_ADDRESS: ${POLICY_VAULT_ADDRESS:-}
+      START_BLOCK: ${START_BLOCK:-}
+      LOG_CHUNK: ${LOG_CHUNK:-100}
+      TRUST_PROXY: "false"
+    ports:
+      - "${INDEXER_PORT:-4600}:4600"
+    restart: unless-stopped
+
+  facilitator:
+    build: ../services/chainpe-facilitator
+    depends_on:
+      - indexer
+    environment:
+      NETWORK: ${NETWORK:-monad-testnet}
+      FACILITATOR_PRIVATE_KEY: ${FACILITATOR_PRIVATE_KEY:?set FACILITATOR_PRIVATE_KEY in deploy/.env}
+      RPC_URL: ${RPC_URL:-}
+      # payTo policy: services registered in ChainPeRegistry (read from the indexer) + allowlist
+      CHAINPE_INDEXER_URL: http://indexer:4600
+      PAYTO_ALLOWLIST: ${PAYTO_ALLOWLIST:-}
+      REQUIRE_REGISTERED_PAYTO: ${REQUIRE_REGISTERED_PAYTO:-}
+      POLICY_VAULT_ADDRESS: ${POLICY_VAULT_ADDRESS:-}
+      MIN_AMOUNT_ATOMIC: ${MIN_AMOUNT_ATOMIC:-1000}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-}
+      TRUST_PROXY: "false"
+    ports:
+      - "${FACILITATOR_PORT:-4500}:4500"
+    restart: unless-stopped
+
+volumes:
+  pgdata:

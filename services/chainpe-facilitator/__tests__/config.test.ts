@@ -22,6 +22,8 @@ describe('loadConfig', () => {
     expect(cfg.caip2).toBe('eip155:143')
     expect(cfg.requireRegisteredPayTo).toBe(true)
     expect(loadConfig({ FACILITATOR_PRIVATE_KEY: KEY, NETWORK: 'monad', REQUIRE_REGISTERED_PAYTO: 'false' }).requireRegisteredPayTo).toBe(false)
+    // A blank variable (docker compose / Railway) must not switch the mainnet policy off.
+    expect(loadConfig({ FACILITATOR_PRIVATE_KEY: KEY, NETWORK: 'monad', REQUIRE_REGISTERED_PAYTO: '' }).requireRegisteredPayTo).toBe(true)
   })
 
   it('supports a local chain for end-to-end tests', () => {

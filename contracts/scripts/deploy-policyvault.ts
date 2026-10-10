@@ -76,6 +76,8 @@ async function main() {
   const proxy = await Proxy.deploy(implAddr, initData);
   await proxy.waitForDeployment();
   const proxyAddr = await proxy.getAddress();
+  // Block of the proxy deployment (first block with Spent events).
+  const deployBlock = (await proxy.deploymentTransaction()?.wait())?.blockNumber;
   console.log("  Proxy (use this address): ", proxyAddr);
 
   // 4. Sanity-check: confirm owner is set correctly.
@@ -102,6 +104,7 @@ async function main() {
     token,
     owner: onChainOwner,
     deployer: deployer.address,
+    deployBlock,
     deployedAt: new Date().toISOString(),
     upgradeable: true,
   };

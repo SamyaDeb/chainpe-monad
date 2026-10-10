@@ -127,10 +127,11 @@ export function loadConfig(env: Env = process.env): FacilitatorConfig {
       .map(s => s.trim().toLowerCase())
       .filter(Boolean)
   )
-  const requireRegisteredPayTo =
-    env.REQUIRE_REGISTERED_PAYTO !== undefined
-      ? env.REQUIRE_REGISTERED_PAYTO === 'true'
-      : network === 'monad' // strict by default on mainnet
+  // Empty counts as unset (compose / Railway pass blank variables through).
+  const strictRaw = env.REQUIRE_REGISTERED_PAYTO?.trim()
+  const requireRegisteredPayTo = strictRaw
+    ? strictRaw === 'true'
+    : network === 'monad' // strict by default on mainnet
 
   return {
     network,
