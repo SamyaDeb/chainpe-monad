@@ -189,5 +189,156 @@
     "link": "https://testnet.monadvision.com/tx/0x9df2fabef422c52808447008213497b38551b97e3a02ed31dc7f4507090a69e6",
     "label": "demo traffic (team wallets), not traction",
     "feedbackTx": "0x5600f2cc1efba843adbf06f1ecd1b3c85af9aca08468f7552474723237331e50"
+  },
+  {
+    "service": "monad-network-stats",
+    "status": 200,
+    "ms": 2287,
+    "amount": "0.001",
+    "tx": "0x0e20c24595d8af1ff590fd73e77babb2fd84ffc9915f73489220cf5b1e0c5e28",
+    "link": "https://testnet.monadvision.com/tx/0x0e20c24595d8af1ff590fd73e77babb2fd84ffc9915f73489220cf5b1e0c5e28",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0x318684ecff4de8bac1700a43e8871cdf163e6b08a47f1d61da47db60e78c2e90"
+  },
+  {
+    "service": "mon-price-quote",
+    "status": 200,
+    "ms": 1366,
+    "amount": "0.001",
+    "tx": "0x27b1d0a9ae2eedc96c411639a0f660e902c1df10097b4129a96785534f1a4d5d",
+    "link": "https://testnet.monadvision.com/tx/0x27b1d0a9ae2eedc96c411639a0f660e902c1df10097b4129a96785534f1a4d5d",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0xde0b11620da13422b7d9537eb91c2cef65cc08cdc64dd3f9ce8413f3c9d8e634"
+  },
+  {
+    "service": "monad-ecosystem-digest",
+    "status": 200,
+    "ms": 1711,
+    "amount": "0.002",
+    "tx": "0x6b7a4f17d1128f995b129bc13d7b6b845e1929ec99b610478c01c993dbdba157",
+    "link": "https://testnet.monadvision.com/tx/0x6b7a4f17d1128f995b129bc13d7b6b845e1929ec99b610478c01c993dbdba157",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0xd15e264145476c5cbba8b954798f1d1076b4995a882cbcfaa3127ea0b75358f0"
+  },
+  {
+    "service": "agent-trust-report",
+    "status": 200,
+    "ms": 722,
+    "amount": "0.005",
+    "tx": "0xc81a02f1a231d25a53f2c427ab67ba801306255198e4764299d8fe157bf8d025",
+    "link": "https://testnet.monadvision.com/tx/0xc81a02f1a231d25a53f2c427ab67ba801306255198e4764299d8fe157bf8d025",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0xb50213365106bdd3f130099efe6ff29d7b5c2f62a1bcb6c466570db1458907cc"
+  },
+  {
+    "service": "monad-network-stats",
+    "status": 200,
+    "ms": 1083,
+    "amount": "0.001",
+    "tx": "0xf7e2a0af7ea0ee145700349e4ab17e1559c7ca79b3120efcff3cdf51fcf9ce7b",
+    "link": "https://testnet.monadvision.com/tx/0xf7e2a0af7ea0ee145700349e4ab17e1559c7ca79b3120efcff3cdf51fcf9ce7b",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0x0bebf6c67316f22ccf3af5a8ee388e42e639475022fe9e7e3eb0495b1aee76eb"
+  },
+  {
+    "service": "mon-price-quote",
+    "status": 200,
+    "ms": 904,
+    "amount": "0.001",
+    "tx": "0xcec37e607079d4e53e28427cc890cc738273ceb5bd111a6967a265465cfad309",
+    "link": "https://testnet.monadvision.com/tx/0xcec37e607079d4e53e28427cc890cc738273ceb5bd111a6967a265465cfad309",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0x3a26ed400a97a3a7339487f58c539bfcbfbb1a4b29e223a98a38ae209ffdacde"
+  },
+  {
+    "service": "monad-ecosystem-digest",
+    "status": 200,
+    "ms": 1587,
+    "amount": "0.002",
+    "tx": "0xfe6828990b691a417997dc477d10348f5b3067409784c196bd9107db7adc9b29",
+    "link": "https://testnet.monadvision.com/tx/0xfe6828990b691a417997dc477d10348f5b3067409784c196bd9107db7adc9b29",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0x102b932ecd5c471edafe51976e6f59776fef6385fe39b810c575fb7c60425781"
+  },
+  {
+    "service": "agent-trust-report",
+    "status": 200,
+    "ms": 1452,
+    "amount": "0.005",
+    "tx": "0xb9d958ac8794d4d797365ccc1958b1b60ccd833d630df736339aec1e62efdfd0",
+    "link": "https://testnet.monadvision.com/tx/0xb9d958ac8794d4d797365ccc1958b1b60ccd833d630df736339aec1e62efdfd0",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0x75ddf2078db84c352d72b468bb9b8bd210049f971a1c4429f7bfad8f65545bf2"
+  },
+  {
+    "service": "monad-network-stats",
+    "status": 200,
+    "ms": 1078,
+    "amount": "0.001",
+    "tx": "0x60223cc30e5c2dc6bc179cb54df01cfcf7852ff8a109233450ca18b0ac6e4b88",
+    "link": "https://testnet.monadvision.com/tx/0x60223cc30e5c2dc6bc179cb54df01cfcf7852ff8a109233450ca18b0ac6e4b88",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0xab7770a094809d85977103963a0e282c01f311c2d00d8dac8385dacafe3dff71"
+  },
+  {
+    "service": "mon-price-quote",
+    "status": 200,
+    "ms": 667,
+    "amount": "0.001",
+    "tx": "0x8d45c2bea7e6eda7bc1c4f8dfe4fce86d747e125aa196d2d62a7b17077c90107",
+    "link": "https://testnet.monadvision.com/tx/0x8d45c2bea7e6eda7bc1c4f8dfe4fce86d747e125aa196d2d62a7b17077c90107",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0x59330f98e802963279dbed063c9143b5bf2ca8742b0027e7eb4a32a2e149c125"
+  },
+  {
+    "service": "monad-ecosystem-digest",
+    "status": 200,
+    "ms": 1664,
+    "amount": "0.002",
+    "tx": "0xf290e5aa3f04e36b7170049803c05537f29d8774468648141356a4f3dc3d4d50",
+    "link": "https://testnet.monadvision.com/tx/0xf290e5aa3f04e36b7170049803c05537f29d8774468648141356a4f3dc3d4d50",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0x46be2251b2797bfb758c01c4faaa361fd09587f66177d69b78ccecb4c0d7bb3b"
+  },
+  {
+    "service": "agent-trust-report",
+    "status": 200,
+    "ms": 998,
+    "amount": "0.005",
+    "tx": "0x8c5b040822fa4f8495908ebc4a35006eaa96ef0088f94bd6b240e7ac1038b0df",
+    "link": "https://testnet.monadvision.com/tx/0x8c5b040822fa4f8495908ebc4a35006eaa96ef0088f94bd6b240e7ac1038b0df",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0x2fcaf6b7bc05d0320d071283c0ea0f4a0b84a6bee0dfeae0e2ef6cf208041fd7"
+  },
+  {
+    "via": "mcp-wallet",
+    "service": "monad-network-stats",
+    "status": 200,
+    "ms": 1475,
+    "amount": "0.001 USDC",
+    "tx": "0xc5e5280f95d8e4c66e7e534f4b8f5fb21974964855d12725be238d879853b137",
+    "link": "https://testnet.monadvision.com/tx/0xc5e5280f95d8e4c66e7e534f4b8f5fb21974964855d12725be238d879853b137",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0xaca4946c4eda5fb62518722e7a342634d78bbc112a9e0202b15b997fc29d6829"
+  },
+  {
+    "via": "mcp-wallet",
+    "service": "agent-trust-report",
+    "status": 200,
+    "ms": 975,
+    "amount": "0.005 USDC",
+    "tx": "0x3c1459156161416cc4446d2be407ef93a657378a48b27d228208cd5ee41a88ca",
+    "link": "https://testnet.monadvision.com/tx/0x3c1459156161416cc4446d2be407ef93a657378a48b27d228208cd5ee41a88ca",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0xa9b495031c06b0e5aa8a6521b32027b35624709322366dfff20caa418ff8309f"
+  },
+  {
+    "via": "stock @x402/fetch client",
+    "service": "monad-network-stats",
+    "status": 200,
+    "ms": 1933,
+    "tx": "0x5aa874d8f00406f143963ec2d9a048c7d1bb5533ebe7368a8d20fc411d4e98f0",
+    "link": "https://testnet.monadvision.com/tx/0x5aa874d8f00406f143963ec2d9a048c7d1bb5533ebe7368a8d20fc411d4e98f0",
+    "label": "demo traffic (team wallets), not traction"
   }
 ]
