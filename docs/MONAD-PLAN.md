@@ -336,12 +336,12 @@ external x402 service paid, latency measured.
 - [x] Hosting artefacts: compose stack + Dockerfiles verified locally.
 - [x] **Our indexer live on testnet** (2026-10-10): caught up from the registry deploy block to the head with no RPC errors. It ranks all 5 registered agents by payment-backed reputation from on-chain data (82 ratings indexed, 18 receipt-backed; #2099 paid 95 vs raw 98.33). Snapshot: `examples/seller-agents/indexer-snapshot-monad-testnet.json`.
 - [x] **Our facilitator live on testnet, strict policy** (2026-10-10): it loaded the 5 registered payTo addresses from our indexer and confirmed the PolicyVault on-chain. A payment to a registered seller passed the payTo policy and reached the on-chain balance check; one to a random address was refused with `payto_not_registered` before any gas.
-- [ ] **Sellers settle through our facilitator with real USDC** (needs a funded facilitator gas key + buyer).
-- [ ] **Claude MCP wallet pays + rates live** (step 4).
-- [ ] **A stock x402 client pays a ChainPe seller** (`@x402/fetch`, no ChainPe SDK). This is the testnet stand-in for step 5, since Nansen only accepts mainnet.
-- [ ] Latency measured through our own facilitator (needs funds).
+- [x] **Sellers settle through our facilitator with real testnet USDC** (2026-10-10): agents #2107–#2110, 12 SDK paid calls with receipt-backed ratings, all settled by our facilitator's key.
+- [x] **Claude MCP wallet pays + rates live** (step 4): 2 paid calls + 2 receipt-backed ratings via the real MCP server; over-cap offer refused before signing.
+- [x] **A stock x402 client pays a ChainPe seller** (`@x402/fetch`, no ChainPe SDK): HTTP 200, settled on-chain. This is the testnet stand-in for step 5, since Nansen only accepts mainnet.
+- [x] Latency through our own facilitator: 20 calls, 402 → settled → 200 p50 897 ms (one 3.98 s outlier = p95/max); request → 402 p50 2 ms.
 
-The remaining open boxes all need funded wallets and are one command: `bash e2e/testnet-phase6.sh`. It is built and smoke-tested offline: the MCP buyer and the stock client paid a real ChainPe proxy backed by a stub facilitator, and the runner starts Postgres + indexer and cleans up. It needs Monad testnet RPC access plus the seller wallets (`examples/seller-agents/.env.sellers`, or `DEPLOYER_PRIVATE_KEY` to recreate them). Hosting on Railway stays optional on testnet.
+**Phase 6 (testnet scope): DONE 2026-10-10.** Run with `bash e2e/testnet-phase6.sh`; all 35 settlements were verified on-chain as sent by our facilitator's key with a USDC transfer. Mainnet steps remain deferred by the owner. It is built and smoke-tested offline: the MCP buyer and the stock client paid a real ChainPe proxy backed by a stub facilitator, and the runner starts Postgres + indexer and cleans up. It needs Monad testnet RPC access plus the seller wallets (`examples/seller-agents/.env.sellers`, or `DEPLOYER_PRIVATE_KEY` to recreate them). Hosting on Railway stays optional on testnet.
 
 ---
 
