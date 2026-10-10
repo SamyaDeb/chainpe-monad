@@ -104,7 +104,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ r
               return (
                 <tr key={s.key}>
                   <td className="num">{i + 1}</td>
-                  <td>
+                  <td className="svc-cell">
                     <Link href={`/services/${encodeURIComponent(s.id)}`} className="svc-name">
                       {s.name}
                     </Link>
