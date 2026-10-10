@@ -31,6 +31,7 @@ for (let i = 0; i < N; i++) {
   total.push(performance.now() - t)
   if (r.status !== 200 || !r.payment?.txHash) throw new Error(`call ${i} failed: ${r.status}`)
   txs.push(r.payment.txHash)
+  console.log(`#${i + 1} 402 ${Math.round(t402.at(-1))} ms · paid ${Math.round(total.at(-1))} ms · ${r.payment.txHash}`)
 }
 const f = a => `p50 ${Math.round(q(a, 0.5))} ms · p95 ${Math.round(q(a, 0.95))} ms · max ${Math.round(Math.max(...a))} ms`
 console.log(`\n${N} paid calls on ${network}`)
@@ -38,3 +39,4 @@ console.log(`  request → 402:                 ${f(t402)}`)
 console.log(`  402 → settled → 200 (paid):    ${f(total)}`)
 console.log('  first/last settlement:', explorerTxUrl(network, txs[0]), explorerTxUrl(network, txs.at(-1)))
 console.log(JSON.stringify({ network, n: N, t402Ms: { p50: q(t402, .5), p95: q(t402, .95) }, paidMs: { p50: q(total, .5), p95: q(total, .95) }, txs }))
+process.exit(0)
