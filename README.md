@@ -173,6 +173,11 @@ hackathon. Pre-existing code is brought in module by module as it is ported to M
 Development is assisted by Claude Code (Anthropic); commits it co-authored carry a
 `Co-Authored-By: Claude` trailer.
 
+## Contributors
+
+- **Samya Deb** ([@SamyaDeb](https://github.com/SamyaDeb))
+- **saxux2** ([@saxux2](https://github.com/saxux2))
+
 ## License
 
 [MIT](LICENSE)
