@@ -1,13 +1,13 @@
 {
-  "at": "2026-10-10T14:12:19.306Z",
+  "at": "2026-10-11T21:59:45.514Z",
   "network": "monad-testnet",
   "label": "demo traffic from team wallets, not traction",
-  "lastIndexedBlock": "69845886",
+  "lastIndexedBlock": "70224903",
   "stats": {
-    "services": 9,
-    "ratings": 34,
-    "paid": 32,
-    "otherAgents": 75
+    "services": 13,
+    "ratings": 37,
+    "paid": 35,
+    "otherAgents": 176
   },
   "services": {
     "paid": [
@@ -40,6 +40,72 @@
           "raw": {
             "score": 98.33,
             "count": 2
+          }
+        }
+      },
+      {
+        "id": "0xE6C26A9DefCf997Bd6Fc60462bcd0daB6ec39e53:monad-network-stats",
+        "key": "0x219839a6f511b258a55cf24af78cee18a575ef5b8189af987129dee136fb68ea",
+        "name": "monad-network-stats",
+        "description": "Live Monad network stats: head block, block time, gas price, recent tx throughput. [demo seller]",
+        "tags": [
+          "monad",
+          "stats",
+          "data"
+        ],
+        "endpoint": "https://seller-production-ea9b.up.railway.app",
+        "pricePerRequest": "0.001",
+        "paymentToken": "USDC",
+        "walletAddress": "0xE6C26A9DefCf997Bd6Fc60462bcd0daB6ec39e53",
+        "developer": "0xE6C26A9DefCf997Bd6Fc60462bcd0daB6ec39e53",
+        "network": "monad-testnet",
+        "agentId": "2133",
+        "reputation": {
+          "count": 1,
+          "score": 92.5
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 92.5,
+            "count": 1,
+            "volume": "0.002"
+          },
+          "raw": {
+            "score": 92.5,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0x2b7e235199C8eBa081bAdDaE1d28653e6cf41280:agent-trust-report",
+        "key": "0x0407ee2815ce2eafc5aff2eb0649a0083ba559d2acb495b80aaefd216b98deee",
+        "name": "agent-trust-report",
+        "description": "ERC-8004 agent trust report: raw vs payment-backed reputation (paid-reputation data from ChainPe). [demo seller]",
+        "tags": [
+          "erc-8004",
+          "reputation",
+          "trust"
+        ],
+        "endpoint": "https://seller-production-ea9b.up.railway.app",
+        "pricePerRequest": "0.005",
+        "paymentToken": "USDC",
+        "walletAddress": "0x2b7e235199C8eBa081bAdDaE1d28653e6cf41280",
+        "developer": "0x2b7e235199C8eBa081bAdDaE1d28653e6cf41280",
+        "network": "monad-testnet",
+        "agentId": "2136",
+        "reputation": {
+          "count": 1,
+          "score": 92
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 92,
+            "count": 1,
+            "volume": "0.005"
+          },
+          "raw": {
+            "score": 92,
+            "count": 1
           }
         }
       },
@@ -304,6 +370,72 @@
           "raw": {
             "score": 90,
             "count": 1
+          }
+        }
+      },
+      {
+        "id": "0xB048Af06A5912C5Aca19fDCCf42Fdb2c4944a21e:mon-price-quote",
+        "key": "0x7aabc40cdcd4a4eae9d6eff63a1e45501c779864c9c48c7487a1decea1839f8e",
+        "name": "mon-price-quote",
+        "description": "MON/USD spot price and an indicative USDC→MON quote (reference price, not an on-chain swap). [demo seller]",
+        "tags": [
+          "monad",
+          "price",
+          "dex"
+        ],
+        "endpoint": "https://seller-production-ea9b.up.railway.app",
+        "pricePerRequest": "0.001",
+        "paymentToken": "USDC",
+        "walletAddress": "0xB048Af06A5912C5Aca19fDCCf42Fdb2c4944a21e",
+        "developer": "0xB048Af06A5912C5Aca19fDCCf42Fdb2c4944a21e",
+        "network": "monad-testnet",
+        "agentId": "2134",
+        "reputation": {
+          "count": 0,
+          "score": null
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": null,
+            "count": 0,
+            "volume": "0"
+          },
+          "raw": {
+            "score": null,
+            "count": 0
+          }
+        }
+      },
+      {
+        "id": "0xe2EfC6eEc47cafA03dFd22b029ca3fe87BAcD7C3:monad-ecosystem-digest",
+        "key": "0x43c9df069d9c3718ea284d9e6da3476aee024248c09ac5f1fcdff477e40e1b09",
+        "name": "monad-ecosystem-digest",
+        "description": "Digest of what is live on Monad: x402 services registered in ChainPe, ranked by paid reputation. [demo seller]",
+        "tags": [
+          "monad",
+          "ecosystem",
+          "news"
+        ],
+        "endpoint": "https://seller-production-ea9b.up.railway.app",
+        "pricePerRequest": "0.002",
+        "paymentToken": "USDC",
+        "walletAddress": "0xe2EfC6eEc47cafA03dFd22b029ca3fe87BAcD7C3",
+        "developer": "0xe2EfC6eEc47cafA03dFd22b029ca3fe87BAcD7C3",
+        "network": "monad-testnet",
+        "agentId": "2135",
+        "reputation": {
+          "count": 0,
+          "score": null
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": null,
+            "count": 0,
+            "volume": "0"
+          },
+          "raw": {
+            "score": null,
+            "count": 0
           }
         }
       }
@@ -342,6 +474,72 @@
         }
       },
       {
+        "id": "0xE6C26A9DefCf997Bd6Fc60462bcd0daB6ec39e53:monad-network-stats",
+        "key": "0x219839a6f511b258a55cf24af78cee18a575ef5b8189af987129dee136fb68ea",
+        "name": "monad-network-stats",
+        "description": "Live Monad network stats: head block, block time, gas price, recent tx throughput. [demo seller]",
+        "tags": [
+          "monad",
+          "stats",
+          "data"
+        ],
+        "endpoint": "https://seller-production-ea9b.up.railway.app",
+        "pricePerRequest": "0.001",
+        "paymentToken": "USDC",
+        "walletAddress": "0xE6C26A9DefCf997Bd6Fc60462bcd0daB6ec39e53",
+        "developer": "0xE6C26A9DefCf997Bd6Fc60462bcd0daB6ec39e53",
+        "network": "monad-testnet",
+        "agentId": "2133",
+        "reputation": {
+          "count": 1,
+          "score": 92.5
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 92.5,
+            "count": 1,
+            "volume": "0.002"
+          },
+          "raw": {
+            "score": 92.5,
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "0x2b7e235199C8eBa081bAdDaE1d28653e6cf41280:agent-trust-report",
+        "key": "0x0407ee2815ce2eafc5aff2eb0649a0083ba559d2acb495b80aaefd216b98deee",
+        "name": "agent-trust-report",
+        "description": "ERC-8004 agent trust report: raw vs payment-backed reputation (paid-reputation data from ChainPe). [demo seller]",
+        "tags": [
+          "erc-8004",
+          "reputation",
+          "trust"
+        ],
+        "endpoint": "https://seller-production-ea9b.up.railway.app",
+        "pricePerRequest": "0.005",
+        "paymentToken": "USDC",
+        "walletAddress": "0x2b7e235199C8eBa081bAdDaE1d28653e6cf41280",
+        "developer": "0x2b7e235199C8eBa081bAdDaE1d28653e6cf41280",
+        "network": "monad-testnet",
+        "agentId": "2136",
+        "reputation": {
+          "count": 1,
+          "score": 92
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": 92,
+            "count": 1,
+            "volume": "0.005"
+          },
+          "raw": {
+            "score": 92,
+            "count": 1
+          }
+        }
+      },
+      {
         "id": "0x5eA6f4b950D006Ebe3c26A6BB606B65C54f0CFaE:monad-network-stats",
         "key": "0x95d0b1fab8697b214194243ab3760ee53f77cb2a7fa64a295897f43f577398c7",
         "name": "monad-network-stats",
@@ -604,10 +802,160 @@
             "count": 1
           }
         }
+      },
+      {
+        "id": "0xB048Af06A5912C5Aca19fDCCf42Fdb2c4944a21e:mon-price-quote",
+        "key": "0x7aabc40cdcd4a4eae9d6eff63a1e45501c779864c9c48c7487a1decea1839f8e",
+        "name": "mon-price-quote",
+        "description": "MON/USD spot price and an indicative USDC→MON quote (reference price, not an on-chain swap). [demo seller]",
+        "tags": [
+          "monad",
+          "price",
+          "dex"
+        ],
+        "endpoint": "https://seller-production-ea9b.up.railway.app",
+        "pricePerRequest": "0.001",
+        "paymentToken": "USDC",
+        "walletAddress": "0xB048Af06A5912C5Aca19fDCCf42Fdb2c4944a21e",
+        "developer": "0xB048Af06A5912C5Aca19fDCCf42Fdb2c4944a21e",
+        "network": "monad-testnet",
+        "agentId": "2134",
+        "reputation": {
+          "count": 0,
+          "score": null
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": null,
+            "count": 0,
+            "volume": "0"
+          },
+          "raw": {
+            "score": null,
+            "count": 0
+          }
+        }
+      },
+      {
+        "id": "0xe2EfC6eEc47cafA03dFd22b029ca3fe87BAcD7C3:monad-ecosystem-digest",
+        "key": "0x43c9df069d9c3718ea284d9e6da3476aee024248c09ac5f1fcdff477e40e1b09",
+        "name": "monad-ecosystem-digest",
+        "description": "Digest of what is live on Monad: x402 services registered in ChainPe, ranked by paid reputation. [demo seller]",
+        "tags": [
+          "monad",
+          "ecosystem",
+          "news"
+        ],
+        "endpoint": "https://seller-production-ea9b.up.railway.app",
+        "pricePerRequest": "0.002",
+        "paymentToken": "USDC",
+        "walletAddress": "0xe2EfC6eEc47cafA03dFd22b029ca3fe87BAcD7C3",
+        "developer": "0xe2EfC6eEc47cafA03dFd22b029ca3fe87BAcD7C3",
+        "network": "monad-testnet",
+        "agentId": "2135",
+        "reputation": {
+          "count": 0,
+          "score": null
+        },
+        "reputationDetail": {
+          "paid": {
+            "score": null,
+            "count": 0,
+            "volume": "0"
+          },
+          "raw": {
+            "score": null,
+            "count": 0
+          }
+        }
       }
     ]
   },
   "feedback": [
+    {
+      "agentId": "2133",
+      "service": {
+        "id": "0xE6C26A9DefCf997Bd6Fc60462bcd0daB6ec39e53:monad-network-stats",
+        "name": "monad-network-stats"
+      },
+      "rater": "0x180097654c990895ae8c5249c1220277527028d2",
+      "value": 93,
+      "rawValue": "93",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x180097654c990895ae8c5249c1220277527028d2",
+      "feedbackTxHash": "0x215beb26ae9e1b2df0ff008c980b2bb7e45106cb907cc536cf84523e679275ba",
+      "receiptTxHash": "0x8096d31353ee9e7f731ba82502bb9e55c5aac16da1f276ba24eac0a2237c49cb",
+      "citedHash": "0x8096d31353ee9e7f731ba82502bb9e55c5aac16da1f276ba24eac0a2237c49cb",
+      "feedbackUri": "x402:eip155:10143:0x8096d31353ee9e7f731ba82502bb9e55c5aac16da1f276ba24eac0a2237c49cb",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": null,
+      "block": "70185263",
+      "blockTime": "2026-10-11T18:40:14.000Z"
+    },
+    {
+      "agentId": "2136",
+      "service": {
+        "id": "0x2b7e235199C8eBa081bAdDaE1d28653e6cf41280:agent-trust-report",
+        "name": "agent-trust-report"
+      },
+      "rater": "0x180097654c990895ae8c5249c1220277527028d2",
+      "value": 92,
+      "rawValue": "92",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.005",
+      "payer": "0x180097654c990895ae8c5249c1220277527028d2",
+      "feedbackTxHash": "0xec3cebbd0190700576e4aa3c3b6cc9b5660cd407be15339c1d30af5d20e862ba",
+      "receiptTxHash": "0x57e16f2ae8cb2307fc778d15c5a4db0347b56d14ebffe8d780089cfc3c3bd01a",
+      "citedHash": "0x57e16f2ae8cb2307fc778d15c5a4db0347b56d14ebffe8d780089cfc3c3bd01a",
+      "feedbackUri": "x402:eip155:10143:0x57e16f2ae8cb2307fc778d15c5a4db0347b56d14ebffe8d780089cfc3c3bd01a",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": "http://localhost:4604/report?agentId=1",
+      "block": "70021489",
+      "blockTime": "2026-10-11T04:55:59.000Z"
+    },
+    {
+      "agentId": "2133",
+      "service": {
+        "id": "0xE6C26A9DefCf997Bd6Fc60462bcd0daB6ec39e53:monad-network-stats",
+        "name": "monad-network-stats"
+      },
+      "rater": "0x180097654c990895ae8c5249c1220277527028d2",
+      "value": 92,
+      "rawValue": "92",
+      "valueDecimals": 0,
+      "status": "paid",
+      "paid": true,
+      "unpaidReason": null,
+      "revoked": false,
+      "paidAmount": "0.001",
+      "payer": "0x180097654c990895ae8c5249c1220277527028d2",
+      "feedbackTxHash": "0x775efad2079f2524986fcbb7ea5de49dda55fbb246faa3095c412b1404c6ac2c",
+      "receiptTxHash": "0xbfc861871743c431d47fc3a2dab732702c06ae60a90f95df0987102cc92c7218",
+      "citedHash": "0xbfc861871743c431d47fc3a2dab732702c06ae60a90f95df0987102cc92c7218",
+      "feedbackUri": "x402:eip155:10143:0xbfc861871743c431d47fc3a2dab732702c06ae60a90f95df0987102cc92c7218",
+      "tags": [
+        "x402",
+        "paid-call"
+      ],
+      "endpoint": "http://localhost:4601/stats",
+      "block": "70021485",
+      "blockTime": "2026-10-11T04:55:58.000Z"
+    },
     {
       "agentId": "2110",
       "service": {

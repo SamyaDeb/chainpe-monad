@@ -98,10 +98,36 @@ export interface HomeData {
   stats: Stats
   rank: RankMode
   services: Service[]
+  /** Registered services left out of `services` because nobody outside the build session can call them. */
+  hidden: number
+}
+
+/**
+ * True when a judge or agent could actually call the endpoint: https on a public host.
+ * Old demo entries registered `http://localhost:<port>` and only ever ran inside a build session.
+ */
+export function isCallable(endpoint: string | null | undefined): boolean {
+  if (!endpoint) return false
+  let u: URL
+  try {
+    u = new URL(endpoint)
+  } catch {
+    return false
+  }
+  if (u.protocol !== 'https:') return false
+  const h = u.hostname.toLowerCase()
+  if (h === 'localhost' || h.endsWith('.local') || h.endsWith('.internal') || h.endsWith('.example')) return false
+  if (/^(127\.|10\.|192\.168\.|169\.254\.|0\.0\.0\.0)/.test(h) || /^172\.(1[6-9]|2\d|3[01])\./.test(h)) return false
+  return h.includes('.') || h.includes(':')
+}
+
+const split = (services: Service[], showAll: boolean) => {
+  const kept = showAll ? services : services.filter(s => isCallable(s.endpoint))
+  return { services: kept, hidden: services.length - kept.length }
 }
 
 /** Services ranked by paid (default) or raw reputation, plus totals. */
-export function getHome(rank: RankMode, deps?: DataDeps) {
+export function getHome(rank: RankMode, deps?: DataDeps, showAll = false) {
   return withSource<HomeData>(
     deps,
     async ctx => {
@@ -109,9 +135,9 @@ export function getHome(rank: RankMode, deps?: DataDeps) {
         liveStats(ctx),
         get<{ items: Service[] }>(ctx, `/services?rank=${rank}&limit=100`)
       ])
-      return { stats: stats!, rank, services: list!.items }
+      return { stats: stats!, rank, ...split(list!.items, showAll) }
     },
-    snap => ({ stats: snap.stats, rank, services: snap.services[rank] })
+    snap => ({ stats: snap.stats, rank, ...split(snap.services[rank], showAll) })
   )
 }
 

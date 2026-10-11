@@ -3,7 +3,7 @@
  * snapshot (labelled with its date and the reason) when it is unset or down.
  */
 import { describe, expect, it } from 'vitest'
-import { getFeed, getHome, getService } from '../src/lib/data'
+import { getFeed, getHome, getService, isCallable } from '../src/lib/data'
 import snapshotJson from '../data/snapshot-monad-testnet.json'
 import type { Snapshot } from '../src/lib/types'
 
@@ -24,7 +24,7 @@ function stub(routes: Record<string, unknown>) {
   return { fetchImpl, calls }
 }
 
-const svc = snapshot.services.paid[0]
+const svc = { ...snapshot.services.paid[0], endpoint: 'https://seller.example.com' } // a callable endpoint
 const health = { status: 'ok', network: 'monad-testnet', lastIndexedBlock: '123', chainHead: '123' }
 const counts = {
   '/stats': { services: 1, feedback: 10, paidFeedback: 2 },
@@ -58,7 +58,9 @@ describe('fallback', () => {
       at: snapshot.at,
       reason: 'NEXT_PUBLIC_CHAINPE_INDEXER_URL is not set'
     })
-    expect(home.services).toEqual(snapshot.services.paid)
+    expect(home.services).toEqual(snapshot.services.paid.filter(s => isCallable(s.endpoint)))
+    expect(home.hidden).toBe(snapshot.services.paid.length - home.services.length)
+    expect((await getHome('paid', { indexerUrl: '', fetchImpl }, true)).services).toEqual(snapshot.services.paid)
     expect(home.stats).toEqual(snapshot.stats)
   })
 
@@ -68,7 +70,7 @@ describe('fallback', () => {
     }) as unknown as typeof fetch
     const a = await getHome('raw', { indexerUrl: URL_, fetchImpl: down })
     expect(a.source).toMatchObject({ kind: 'snapshot', reason: 'indexer unreachable (fetch failed)' })
-    expect(a.services).toEqual(snapshot.services.raw)
+    expect(a.services).toEqual(snapshot.services.raw.filter(s => isCallable(s.endpoint)))
 
     const { fetchImpl } = stub({
       '/health': health,
@@ -135,5 +137,17 @@ describe('live', () => {
     const r = await getFeed('excluded', 20, { indexerUrl: URL_, fetchImpl })
     expect(r.source.kind).toBe('live')
     expect(calls).toContain('/feedback?registered=true&limit=20&paid=false')
+  })
+})
+
+describe('isCallable', () => {
+  it('accepts public https endpoints', () => {
+    expect(isCallable('https://seller-production-ea9b.up.railway.app')).toBe(true)
+    expect(isCallable('https://api.example.com/x')).toBe(true)
+  })
+  it('rejects localhost, private, plain-http and placeholder endpoints', () => {
+    for (const e of ['http://localhost:4601', 'https://localhost', 'http://127.0.0.1:4604', 'https://10.0.0.5', 'https://192.168.1.2', 'https://172.20.0.1', 'https://chainpe.example/monad-weather', 'http://seller.up.railway.app', '', 'not a url', 'https://intranet'])
+      expect(isCallable(e), e).toBe(false)
+    expect(isCallable(null)).toBe(false)
   })
 })

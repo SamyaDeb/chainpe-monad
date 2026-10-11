@@ -14,9 +14,12 @@ function gap(s: Service): number | null {
   return g === 0 ? null : g
 }
 
-export default async function Home({ searchParams }: { searchParams: Promise<{ rank?: string }> }) {
-  const rank: RankMode = (await searchParams).rank === 'raw' ? 'raw' : 'paid'
-  const { source, stats, services } = await getHome(rank)
+export default async function Home({ searchParams }: { searchParams: Promise<{ rank?: string; all?: string }> }) {
+  const q = await searchParams
+  const rank: RankMode = q.rank === 'raw' ? 'raw' : 'paid'
+  const showAll = q.all === '1'
+  const { source, stats, services, hidden } = await getHome(rank, undefined, showAll)
+  const keep = showAll ? '&all=1' : ''
 
   // The service whose raw score is furthest from its paid score: the clearest example of what "paid" removes.
   const example = services
@@ -67,10 +70,10 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ r
 
       <div className="filters">
         <div className="toggle" role="tablist" aria-label="Ranking">
-          <Link href="/services?rank=paid" className={rank === 'paid' ? 'on' : undefined} aria-selected={rank === 'paid'} role="tab">
+          <Link href={`/services?rank=paid${keep}`} className={rank === 'paid' ? 'on' : undefined} aria-selected={rank === 'paid'} role="tab">
             Paid reputation
           </Link>
-          <Link href="/services?rank=raw" className={rank === 'raw' ? 'on' : undefined} aria-selected={rank === 'raw'} role="tab">
+          <Link href={`/services?rank=raw${keep}`} className={rank === 'raw' ? 'on' : undefined} aria-selected={rank === 'raw'} role="tab">
             Raw (every rating)
           </Link>
         </div>
@@ -135,6 +138,23 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ r
         settlements their ratings cite. The canonical ERC-8004 Reputation Registry is shared by every agent; the{' '}
         {stats.otherAgents} ratings it holds for agents not registered with ChainPe are not counted here.
       </p>
+      {(hidden > 0 || showAll) && (
+        <p className="small muted" style={{ marginTop: 10 }}>
+          {showAll ? (
+            <>
+              Showing every registered service, including older demo entries whose endpoints only ran inside our build
+              session (<code>localhost</code>), which you cannot call.{' '}
+              <Link href={`/services?rank=${rank}`}>Show only callable services</Link>
+            </>
+          ) : (
+            <>
+              {hidden} older demo {hidden === 1 ? 'entry is' : 'entries are'} hidden: their endpoints only ran inside our
+              build session (<code>localhost</code>), so nobody else can call them. Their ratings still count in the
+              totals above. <Link href={`/services?rank=${rank}&all=1`}>Show them</Link>
+            </>
+          )}
+        </p>
+      )}
     </>
   )
 }
