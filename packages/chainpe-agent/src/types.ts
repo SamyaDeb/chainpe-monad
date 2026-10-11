@@ -22,7 +22,7 @@ export interface LLMConfig {
 // Network / Payment Configuration
 // ============================================================================
 
-import type { ChainPeNetwork } from "@chainpeavax/sdk";
+import type { ChainPeNetwork } from "@chainpemonad/sdk";
 
 /** Monad network (`monad` | `monad-testnet`) — defined once, in the SDK. */
 export type { ChainPeNetwork };
@@ -169,10 +169,10 @@ export interface HttpResponse<T = unknown> {
 }
 
 // ============================================================================
-// Constants — chain ids, RPCs, USDC and explorers live in @chainpeavax/sdk
+// Constants — chain ids, RPCs, USDC and explorers live in @chainpemonad/sdk
 // ============================================================================
 
-export { USDC_DECIMALS } from "@chainpeavax/sdk";
+export { USDC_DECIMALS } from "@chainpemonad/sdk";
 
 export const DEFAULT_REGISTRY_PATH = "~/.chainpe/registry.json";
 export const CONFIG_PATH = "~/.chainpe/agent.json";

@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import type { Server } from 'node:http'
 import express from 'express'
-import { ChainPe, NETWORKS } from '@chainpeavax/sdk'
+import { ChainPe, NETWORKS } from '@chainpemonad/sdk'
 import { privateKeyToAccount } from 'viem/accounts'
 import { createProxyServer, priceToAtomic, createRoutesConfig } from '../src/index.js'
 import type { ChainPeConfig, PaymentEvent } from '../src/index.js'
@@ -123,7 +123,7 @@ describe('proxy + SDK end to end', () => {
   })
 
   it('exposes the agent id the SDK reads for payment-backed feedback', async () => {
-    const { paidFetch } = await import('@chainpeavax/sdk')
+    const { paidFetch } = await import('@chainpemonad/sdk')
     const r = await paidFetch({
       url: `${base}/weather`,
       network: 'monad-testnet',

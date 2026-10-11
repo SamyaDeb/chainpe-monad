@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import type { ChainPe } from '@chainpeavax/sdk'
+import type { ChainPe } from '@chainpemonad/sdk'
 import {
   getClient,
   runFetch,

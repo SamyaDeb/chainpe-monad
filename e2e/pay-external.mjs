@@ -38,7 +38,7 @@ import {
   getNetwork,
   explorerTxUrl,
   isChainPeNetwork
-} from '@chainpeavax/sdk'
+} from '@chainpemonad/sdk'
 
 const NANSEN = 'https://api.nansen.ai/api/v1/smart-money/holdings'
 const target = process.env.TARGET_URL ?? NANSEN

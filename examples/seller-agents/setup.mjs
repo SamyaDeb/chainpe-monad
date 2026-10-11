@@ -3,7 +3,7 @@
 //   ENDPOINT_BASE=http://localhost node setup.mjs
 import { createWalletClient, http, parseEventLogs } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { RegistryWriter, chainFor, explorerTxUrl, publicClientFor, resolveIdentityRegistry, resolveRegistryAddress, rpcUrlFor } from '@chainpeavax/sdk'
+import { RegistryWriter, chainFor, explorerTxUrl, publicClientFor, resolveIdentityRegistry, resolveRegistryAddress, rpcUrlFor } from '@chainpemonad/sdk'
 import { network, loadEnv, saveVar, SERVICES } from './lib.mjs'
 
 const ABI = [

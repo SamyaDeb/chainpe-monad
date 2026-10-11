@@ -11,7 +11,7 @@ Avalanche C-Chain in June 2026, before the **Monad Metropolis** hackathon
 | Source repository | `SamyaDeb/ChainPeAvax` |
 | Source commit | `cb3904ead82e6e5442e9bda53b49f9ca8d9dfe2c` (2026-06-18) |
 | Built | 2026-06-13 → 2026-06-18, on Avalanche C-Chain (Fuji + mainnet) |
-| Published packages | `@chainpeavax/sdk`, `@chainpeavax/cli`, `@chainpeavax/agent`, `@chainpeavax/ai-tools` (npm) |
+| Published packages | `@chainpemonad/sdk`, `@chainpemonad/cli`, `@chainpemonad/agent`, `@chainpemonad/ai-tools` (npm) |
 
 That codebase contains the Avalanche versions of: the service registry and PolicyVault
 contracts, an x402 **v1** facilitator, the event indexer, the SDK, the CLI/payment proxy,

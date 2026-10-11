@@ -4,7 +4,7 @@ import express from 'express'
 import { paymentMiddleware } from '@x402/express'
 import { x402ResourceServer } from '@x402/core/server'
 import { ExactEvmScheme as ExactServerScheme } from '@x402/evm/exact/server'
-import { NETWORKS } from '@chainpeavax/sdk'
+import { NETWORKS } from '@chainpemonad/sdk'
 import { privateKeyToAccount } from 'viem/accounts'
 
 vi.mock('../src/keychain.js', () => ({ getPrivateKey: vi.fn(async () => null) }))

@@ -5,7 +5,7 @@
 import { z } from 'zod'
 import { createWalletClient, http, getAddress, parseEther } from 'viem'
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { chainFor, explorerTxUrl, publicClientFor, rpcUrlFor } from '@chainpeavax/sdk'
+import { chainFor, explorerTxUrl, publicClientFor, rpcUrlFor } from '@chainpemonad/sdk'
 import type { AppConfig } from '../types.js'
 import { getAccount, NO_WALLET_MESSAGE, tightGas } from '../clients.js'
 import { errMsg, fail, text } from './util.js'

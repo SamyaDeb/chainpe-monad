@@ -17,7 +17,7 @@ import {
   filterServices as sdkFilterServices,
   resolveRegistryAddress,
   type ChainPeService,
-} from "@chainpeavax/sdk";
+} from "@chainpemonad/sdk";
 import type { Registry, ServiceInfo, PaymentToken, AgentConfig, ChainPeNetwork } from "./types.js";
 
 function readAddressFromConfig(): string | undefined {

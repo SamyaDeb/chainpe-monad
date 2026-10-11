@@ -7,7 +7,7 @@ import {
   normalizeKey,
   resolveReputationRegistry,
   verifyPaymentReceipt
-} from '@chainpeavax/sdk'
+} from '@chainpemonad/sdk'
 import type { AppConfig } from '../types.js'
 import { NO_WALLET_MESSAGE } from '../clients.js'
 import { errMsg, fail, text } from './util.js'

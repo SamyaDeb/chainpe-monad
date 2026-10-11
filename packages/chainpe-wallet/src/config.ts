@@ -1,4 +1,4 @@
-import { DEFAULT_NETWORK, isChainPeNetwork, type ChainPeNetwork } from '@chainpeavax/sdk'
+import { DEFAULT_NETWORK, isChainPeNetwork, type ChainPeNetwork } from '@chainpemonad/sdk'
 import type { AppConfig } from './types.js'
 import { loadWalletConfig } from './wallet-store.js'
 

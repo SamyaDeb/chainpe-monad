@@ -2,8 +2,8 @@
 //   BUYER_PRIVATE_KEY=0x… SELLER_ADDRESS=0x… N=20 NETWORK=monad-testnet node bench.mjs
 // Demo traffic between team-controlled wallets. Reports the 402 leg and the pay+settle+200 leg separately.
 import express from 'express'
-import { ChainPe, explorerTxUrl } from '@chainpeavax/sdk'
-import { createProxyServer, resolveFacilitatorUrl } from '@chainpeavax/cli'
+import { ChainPe, explorerTxUrl } from '@chainpemonad/sdk'
+import { createProxyServer, resolveFacilitatorUrl } from '@chainpemonad/cli'
 
 const need = n => process.env[n] || (console.error(`Missing ${n}`), process.exit(1))
 const network = process.env.NETWORK ?? 'monad-testnet'

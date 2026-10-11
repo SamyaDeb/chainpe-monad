@@ -1,5 +1,5 @@
 {
-  "name": "@chainpeavax/sdk",
+  "name": "@chainpemonad/sdk",
   "version": "0.3.0-monad.0",
   "description": "ChainPe SDK for Monad — x402 USDC payments + payment-backed ERC-8004 reputation for AI agents.",
   "type": "module",

@@ -22,8 +22,8 @@
  * Build first:  npm run build
  */
 import express from 'express'
-import { ChainPe, explorerTxUrl, isChainPeNetwork } from '@chainpeavax/sdk'
-import { createProxyServer, resolveFacilitatorUrl } from '@chainpeavax/cli'
+import { ChainPe, explorerTxUrl, isChainPeNetwork } from '@chainpemonad/sdk'
+import { createProxyServer, resolveFacilitatorUrl } from '@chainpemonad/cli'
 
 const need = name => process.env[name] || (console.error(`Missing ${name}`), process.exit(1))
 const key = need('BUYER_PRIVATE_KEY')

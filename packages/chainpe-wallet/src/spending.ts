@@ -10,7 +10,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { formatUnits, parseUnits } from 'viem'
-import { USDC_DECIMALS } from '@chainpeavax/sdk'
+import { USDC_DECIMALS } from '@chainpemonad/sdk'
 import type { BudgetConfig, SpendingRecord } from './types.js'
 import { chainpeDir } from './wallet-store.js'
 

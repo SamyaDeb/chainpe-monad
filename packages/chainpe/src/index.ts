@@ -1,5 +1,5 @@
 /**
- * @chainpeavax/cli — programmatic API for the ChainPe provider proxy on Monad.
+ * @chainpemonad/cli — programmatic API for the ChainPe provider proxy on Monad.
  */
 export * from "./types.js";
 export { NETWORKS, getNetwork, explorerTxUrl, USDC_DECIMALS } from "./chains.js";

@@ -7,7 +7,7 @@ USDC (https://faucet.circle.com, choose Monad Testnet).
 ## Three lines
 
 ```ts
-import { ChainPe } from '@chainpeavax/sdk'
+import { ChainPe } from '@chainpemonad/sdk'
 const cp = new ChainPe({ privateKey: process.env.CHAINPE_PRIVATE_KEY!, network: 'monad-testnet' })
 const res = await cp.pay('http://localhost:4402/')   // 402 → sign USDC → settled → 200
 ```

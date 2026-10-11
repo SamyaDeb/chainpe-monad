@@ -7,7 +7,7 @@ export const metadata = { title: 'Try it · ChainPe on Monad testnet' }
 const CLONE = `git clone https://github.com/SamyaDeb/chainpe-monad && cd chainpe-monad
 npm ci && npm run build`
 
-const CONSUMER = `import { ChainPe } from '@chainpeavax/sdk'
+const CONSUMER = `import { ChainPe } from '@chainpemonad/sdk'
 const cp = new ChainPe({ privateKey: process.env.CHAINPE_PRIVATE_KEY, network: 'monad-testnet' })
 const res = await cp.pay('http://localhost:4402/')   // 402 → signs USDC → settled → 200`
 
@@ -41,7 +41,7 @@ docker run -d --name chainpe-pg -e POSTGRES_PASSWORD=pg -p 5432:5432 postgres:16
 npm ci --prefix services/chainpe-indexer
 NETWORK=monad-testnet DATABASE_URL=postgres://postgres:pg@localhost:5432/postgres \\
   npm run dev --prefix services/chainpe-indexer            # :4600, catches up from the registry deploy block
-NEXT_PUBLIC_CHAINPE_INDEXER_URL=http://localhost:4600 npm run dev -w @chainpeavax/marketplace   # :3000`
+NEXT_PUBLIC_CHAINPE_INDEXER_URL=http://localhost:4600 npm run dev -w @chainpemonad/marketplace   # :3000`
 
 export default function Try() {
   const c = contracts('monad-testnet')
@@ -71,8 +71,8 @@ export default function Try() {
         <li>
           <h3>Build ChainPe</h3>
           <p>
-            The Monad builds of the SDK, CLI and MCP wallet run from this repository; the <code>@chainpeavax</code>{' '}
-            packages on npm are older, pre-Monad releases.
+            The Monad builds of the SDK, CLI and MCP wallet run from this repository; the Monad packages are named{' '}
+            <code>@chainpemonad/*</code> and are not on npm yet (the older <code>@chainpeavax</code> releases are Avalanche-only).
           </p>
           <CodeBlock lang="sh" code={CLONE} />
         </li>

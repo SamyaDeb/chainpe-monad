@@ -1,5 +1,5 @@
 {
-  "name": "@chainpeavax/cli",
+  "name": "@chainpemonad/cli",
   "version": "3.0.0-monad.0",
   "description": "ChainPe provider CLI — put any API behind x402 v2 USDC payments on Monad with one command",
   "type": "module",
@@ -37,7 +37,7 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@chainpeavax/sdk": "*",
+    "@chainpemonad/sdk": "*",
     "@clack/prompts": "^0.9.1",
     "@x402/core": "2.28.0",
     "@x402/evm": "2.28.0",

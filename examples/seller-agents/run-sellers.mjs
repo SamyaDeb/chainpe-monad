@@ -1,7 +1,7 @@
 // Start the 4 Monad services, each behind a ChainPe x402 proxy (same gateway as `chainpe start`).
 //   node run-sellers.mjs        (needs gen-wallets + setup first; CHAINPE_FACILITATOR_URL on mainnet)
-import { ChainPe } from '@chainpeavax/sdk'
-import { startProxyServer } from '@chainpeavax/cli'
+import { ChainPe } from '@chainpemonad/sdk'
+import { startProxyServer } from '@chainpemonad/cli'
 import { privateKeyToAccount } from 'viem/accounts'
 import { network, loadEnv, SERVICES } from './lib.mjs'
 import { statsApp, priceApp, digestApp, trustApp } from './backends.mjs'

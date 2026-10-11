@@ -10,7 +10,7 @@ export default defineConfig({
   target: 'node18',
   // The .mcpb bundle installs only production deps from npm, where the
   // workspace SDK does not exist — so inline it.
-  noExternal: ['@chainpeavax/sdk'],
+  noExternal: ['@chainpemonad/sdk'],
   banner: {
     js: '#!/usr/bin/env node'
   }

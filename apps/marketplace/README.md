@@ -29,8 +29,8 @@ NEXT_PUBLIC_CHAINPE_INDEXER_URL=http://localhost:4600 npm run snapshot
 ```bash
 npm ci && npm run build                     # repo root (builds the SDK this app uses)
 cp apps/marketplace/.env.example apps/marketplace/.env.local
-npm run dev -w @chainpeavax/marketplace     # http://localhost:3000
-npm test -w @chainpeavax/marketplace        # data layer: live vs snapshot fallback
+npm run dev -w @chainpemonad/marketplace     # http://localhost:3000
+npm test -w @chainpemonad/marketplace        # data layer: live vs snapshot fallback
 ```
 
 The indexer is `services/chainpe-indexer` (see its README, or `docs/DEPLOYMENTS.md`).

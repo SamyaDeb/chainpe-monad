@@ -1,10 +1,10 @@
 /**
- * Thin helpers over @chainpeavax/sdk's network module — the single source of
+ * Thin helpers over @chainpemonad/sdk's network module — the single source of
  * truth for Monad chain ids, RPCs, USDC and explorers. Nothing is duplicated here.
  */
 import { erc20Abi, formatUnits, getAddress } from 'viem'
 import { privateKeyToAccount, type PrivateKeyAccount } from 'viem/accounts'
-import { getUsdcAddress, normalizeKey, publicClientFor, USDC_DECIMALS } from '@chainpeavax/sdk'
+import { getUsdcAddress, normalizeKey, publicClientFor, USDC_DECIMALS } from '@chainpemonad/sdk'
 import type { AppConfig, ChainPeNetwork } from './types.js'
 
 export { USDC_DECIMALS }

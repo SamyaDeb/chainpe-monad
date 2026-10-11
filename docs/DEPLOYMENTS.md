@@ -73,7 +73,7 @@ the public RPC (100-block `eth_getLogs` chunks). Behind an HTTP proxy, Node need
 
 ```bash
 npm ci && npm run build      # repo root
-NEXT_PUBLIC_CHAINPE_INDEXER_URL=http://localhost:4600 npm run start -w @chainpeavax/marketplace   # :3000
+NEXT_PUBLIC_CHAINPE_INDEXER_URL=http://localhost:4600 npm run start -w @chainpemonad/marketplace   # :3000
 ```
 
 Without a reachable indexer it serves the committed snapshot and says so on every page.

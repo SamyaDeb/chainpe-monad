@@ -1,10 +1,10 @@
-# @chainpeavax/ai-tools
+# @chainpemonad/ai-tools
 
-[![npm](https://img.shields.io/npm/v/@chainpeavax/ai-tools.svg)](https://www.npmjs.com/package/@chainpeavax/ai-tools)
+[![npm](https://img.shields.io/npm/v/@chainpemonad/ai-tools.svg)](https://www.npmjs.com/package/@chainpemonad/ai-tools)
 
 **Drop-in ChainPe tools for AI agents**: let any Vercel AI SDK or LangChain agent
 **discover, pay for and rate** HTTP APIs and other agents, per request, in USDC on
-**Monad** (x402 v2). Thin adapters over [`@chainpeavax/sdk`](../chainpe-sdk).
+**Monad** (x402 v2). Thin adapters over [`@chainpemonad/sdk`](../chainpe-sdk).
 
 Two tools per framework:
 
@@ -16,7 +16,7 @@ Two tools per framework:
   ranked by ERC-8004 reputation.
 
 ```bash
-npm install @chainpeavax/ai-tools @chainpeavax/sdk
+npm install @chainpemonad/ai-tools @chainpemonad/sdk
 # plus your framework: `ai` (Vercel AI SDK) or `@langchain/core`
 ```
 
@@ -25,7 +25,7 @@ npm install @chainpeavax/ai-tools @chainpeavax/sdk
 ```ts
 import { generateText, stepCountIs } from 'ai'
 import { anthropic } from '@ai-sdk/anthropic'
-import { createChainPeTools } from '@chainpeavax/ai-tools/vercel'
+import { createChainPeTools } from '@chainpemonad/ai-tools/vercel'
 
 const tools = createChainPeTools({
   privateKey: process.env.PRIVATE_KEY!,
@@ -47,7 +47,7 @@ const { text } = await generateText({
 ```ts
 import { ChatAnthropic } from '@langchain/anthropic'
 import { createReactAgent } from '@langchain/langgraph/prebuilt'
-import { createChainPeLangChainTools } from '@chainpeavax/ai-tools/langchain'
+import { createChainPeLangChainTools } from '@chainpemonad/ai-tools/langchain'
 
 const { chainpeFetchTool, discoverServiceTool } = createChainPeLangChainTools({
   privateKey: process.env.PRIVATE_KEY!,
@@ -70,7 +70,7 @@ options as [`new ChainPe(...)`](../chainpe-sdk#api): `privateKey`, `network`
 client via `{ client }`:
 
 ```ts
-import { ChainPe } from '@chainpeavax/sdk'
+import { ChainPe } from '@chainpemonad/sdk'
 const client = new ChainPe({ privateKey, network: 'monad' })
 const tools = createChainPeTools({ client })
 ```
@@ -81,7 +81,7 @@ The framework-agnostic core is exported from the package root, so you can wire t
 same logic into any tool-calling runtime:
 
 ```ts
-import { fetchInputSchema, runFetch, getClient } from '@chainpeavax/ai-tools'
+import { fetchInputSchema, runFetch, getClient } from '@chainpemonad/ai-tools'
 
 const client = getClient({ privateKey, network: 'monad-testnet' })
 const result = await runFetch(client, { url: 'https://api.example.com/paid' })

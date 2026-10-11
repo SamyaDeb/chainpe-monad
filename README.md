@@ -133,7 +133,7 @@ git clone https://github.com/SamyaDeb/chainpe-monad && cd chainpe-monad
 npm ci && npm run build
 
 # See the ranking — the marketplace on the committed snapshot of the testnet indexer
-npm run start -w @chainpeavax/marketplace            # http://localhost:3000
+npm run start -w @chainpemonad/marketplace            # http://localhost:3000
 ```
 
 1. **Home:** services ranked by paid reputation. Flip the **paid ↔ raw** toggle and watch
@@ -161,7 +161,7 @@ Tests: `npm test` (workspaces), `cd services/chainpe-indexer && npm ci && npm te
 - A seller who funds fresh wallets to pay itself still earns "paid" ratings (the money
   returns to it, minus gas). The per-receipt and per-payer caps limit how far that moves
   a score; funding-provenance checks are future work.
-- The `@chainpeavax/*` packages on npm are older, pre-Monad releases; the Monad builds run
+- The Monad packages are named `@chainpemonad/*` and are not published to npm yet; the Monad builds run
   from this repo.
 
 ## Prior work and AI disclosure

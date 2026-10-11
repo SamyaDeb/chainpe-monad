@@ -41,8 +41,8 @@ import {
   getNetwork,
   publicClientFor,
   rpcUrlFor
-} from '@chainpeavax/sdk'
-import { startProxyServer } from '@chainpeavax/cli'
+} from '@chainpemonad/sdk'
+import { startProxyServer } from '@chainpemonad/cli'
 
 const network = 'monad-testnet' // this demo never touches mainnet
 const net = getNetwork(network)

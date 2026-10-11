@@ -91,10 +91,12 @@ If two people: **Builder A** — Phases 1, 2 (facilitator), 4, 5 (contracts/back
    (`0x534b…43A3`; find the faucet — Circle's faucet may list Monad testnet).
 5. Plan mainnet funding for Phase 6: ~25 MON for DEPLOYER + FACILITATOR (keep each
    gas key **above the 10 MON reserve balance**) and ~10 USDC for BUYER.
-6. Decide: npm scope for the Monad packages (keep `@chainpeavax/*` or publish a new
+6. ✅ Decided (2026-10-11): npm scope for the Monad packages is `@chainpemonad/*` (was: keep `@chainpeavax/*` or publish a new
    scope) and the product name (default: ChainPe).
 7. Monorepo skeleton: root `package.json` (workspaces `packages/*`), `tsconfig.json`,
    `.env.example` with Monad variables, `.nvmrc` (Node 22).
+
+**Status (2026-10-11):** steps 1, 3–5 (testnet funding plan), 6 (scope `@chainpemonad/*`) and 7 done; see `docs/SUBMISSION-CHECKLIST.md`. Open (owner, login-gated): step 2 — portal registration, Track 4, confirming the rules wording.
 
 **Done when:** repo pushed with docs + skeleton; portal registration done.
 

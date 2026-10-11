@@ -1,7 +1,7 @@
 /**
  * ERC-8004 Reputation on Monad — read scores + post feedback.
  *
- * Thin adapters over @chainpeavax/sdk (which targets the canonical ERC-8004
+ * Thin adapters over @chainpemonad/sdk (which targets the canonical ERC-8004
  * Reputation Registry for each Monad network), keeping this package's
  * call signatures. Self-feedback is rejected on-chain.
  */
@@ -10,7 +10,7 @@ import {
   giveFeedback as sdkGiveFeedback,
   resolveReputationRegistry as sdkResolveReputationRegistry,
   type ReputationSummary,
-} from "@chainpeavax/sdk";
+} from "@chainpemonad/sdk";
 import type { ChainPeNetwork } from "./types.js";
 
 export type { ReputationSummary };

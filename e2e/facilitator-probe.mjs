@@ -10,7 +10,7 @@
 import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
 import { x402Client, x402HTTPClient } from '@x402/core/client'
 import { ExactEvmScheme } from '@x402/evm/exact/client'
-import { NETWORKS, isChainPeNetwork } from '@chainpeavax/sdk'
+import { NETWORKS, isChainPeNetwork } from '@chainpemonad/sdk'
 
 const url = (process.env.FACILITATOR_URL ?? 'https://x402-facilitator.molandak.org').replace(/\/$/, '')
 const network = process.env.NETWORK ?? 'monad-testnet'

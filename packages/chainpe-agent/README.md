@@ -1,4 +1,4 @@
-# @chainpeavax/agent
+# @chainpemonad/agent
 
 **A ready-made AI agent that finds paid APIs in the ChainPe registry and pays for them
 with x402 v2 USDC on Monad.**
@@ -10,8 +10,8 @@ comes back with its settlement transaction on MonadVision.
 ## Install
 
 ```bash
-npm install -g @chainpeavax/agent   # CLI
-npm install @chainpeavax/agent      # library
+npm install -g @chainpemonad/agent   # CLI
+npm install @chainpemonad/agent      # library
 ```
 
 ## Set up
@@ -43,7 +43,7 @@ chainpe-agent status                                          # config + MON/USD
 ```
 
 ```ts
-import { ChainPeAgent } from "@chainpeavax/agent";
+import { ChainPeAgent } from "@chainpemonad/agent";
 
 const agent = await ChainPeAgent.fromConfig();          // reads ~/.chainpe/agent.json + keychain
 const result = await agent.run("What's the weather in London?", {
@@ -55,7 +55,7 @@ console.log("spent:", result.payments.totalSpent.USDC, "USDC");
 
 ## How payment works
 
-Payments go through `@chainpeavax/sdk` (`paidFetch`). The agent signs an offer only when
+Payments go through `@chainpemonad/sdk` (`paidFetch`). The agent signs an offer only when
 it is `exact`, on the configured Monad network, in that network's Circle USDC, and no more
 than `payment.maxPricePerRequest` (default 1 USDC). Any other offer is refused before
 signing.

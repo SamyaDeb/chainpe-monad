@@ -2,14 +2,14 @@
  * Wallet Module (Monad)
  *
  * Derives an EVM account from a private key and reads balances. Network
- * constants come from @chainpeavax/sdk; payments are signed by the SDK.
+ * constants come from @chainpemonad/sdk; payments are signed by the SDK.
  *
  * SECURITY: Private keys are retrieved from the OS keychain, never stored in files.
  */
 
 import { erc20Abi, formatUnits, parseUnits, getAddress, type PublicClient } from "viem";
 import { privateKeyToAccount, type PrivateKeyAccount } from "viem/accounts";
-import { DEFAULT_NETWORK, getUsdcAddress, normalizeKey, publicClientFor, USDC_DECIMALS } from "@chainpeavax/sdk";
+import { DEFAULT_NETWORK, getUsdcAddress, normalizeKey, publicClientFor, USDC_DECIMALS } from "@chainpemonad/sdk";
 
 import type { ChainPeNetwork } from "./types.js";
 import { getPrivateKey } from "./keychain.js";

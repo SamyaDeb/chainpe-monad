@@ -16,7 +16,7 @@ ERC-8004 Rep ─────┘        │                          ├─ GET /
 
 ChainPe clients post feedback with `feedbackHash` = the x402 **settlement tx
 hash**, tags `x402` / `paid-call`, `feedbackURI` = `x402:eip155:<chainId>:<txHash>`
-(see `giveFeedback` in `@chainpeavax/sdk`).
+(see `giveFeedback` in `@chainpemonad/sdk`).
 
 **Verification** (`verifyFeedbackPayment` in `src/core.ts`, worker in `src/verify.ts`):
 a feedback is *paid* only if its `feedbackHash` is a successful tx whose receipt holds

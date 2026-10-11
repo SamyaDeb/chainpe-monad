@@ -29,7 +29,7 @@ Set-Content "$BUILD_DIR/server/index.js" -Value $content -NoNewline
 Write-Host "Installing production dependencies..." -ForegroundColor Yellow
 # The workspace SDK is bundled into dist/index.js (tsup noExternal), so drop it here.
 $pkg = Get-Content "$ROOT_DIR/package.json" -Raw | ConvertFrom-Json
-$pkg.dependencies.PSObject.Properties.Remove('@chainpeavax/sdk')
+$pkg.dependencies.PSObject.Properties.Remove('@chainpemonad/sdk')
 $pkg.PSObject.Properties.Remove('devDependencies')
 $pkg | ConvertTo-Json -Depth 10 | Set-Content "$BUILD_DIR/server/package.json"
 Set-Location "$BUILD_DIR/server"

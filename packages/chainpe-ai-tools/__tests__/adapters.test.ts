@@ -5,7 +5,7 @@ import { paymentMiddleware } from '@x402/express'
 import { x402ResourceServer } from '@x402/core/server'
 import { ExactEvmScheme as ExactServerScheme } from '@x402/evm/exact/server'
 import { privateKeyToAccount } from 'viem/accounts'
-import { ChainPe, NETWORKS } from '@chainpeavax/sdk'
+import { ChainPe, NETWORKS } from '@chainpemonad/sdk'
 import { createChainPeTools } from '../src/vercel.js'
 import { createChainPeLangChainTools } from '../src/langchain.js'
 

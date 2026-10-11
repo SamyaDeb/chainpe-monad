@@ -9,7 +9,7 @@
     "apps/*"
   ],
   "scripts": {
-    "bootstrap": "npm run build -w @chainpeavax/sdk",
+    "bootstrap": "npm run build -w @chainpemonad/sdk",
     "prebuild": "npm run bootstrap",
     "build": "npm run build --workspaces --if-present",
     "pretypecheck": "npm run bootstrap",

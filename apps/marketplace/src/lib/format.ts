@@ -1,4 +1,4 @@
-import { explorerAddressUrl, explorerTxUrl, getNetwork, isChainPeNetwork, type ChainPeNetwork } from '@chainpeavax/sdk'
+import { explorerAddressUrl, explorerTxUrl, getNetwork, isChainPeNetwork, type ChainPeNetwork } from '@chainpemonad/sdk'
 
 const net = (network: string): ChainPeNetwork => (isChainPeNetwork(network) ? network : 'monad-testnet')
 

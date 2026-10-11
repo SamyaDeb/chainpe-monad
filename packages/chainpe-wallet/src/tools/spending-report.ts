@@ -4,7 +4,7 @@
  */
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { formatUnits } from 'viem'
-import { USDC_DECIMALS } from '@chainpeavax/sdk'
+import { USDC_DECIMALS } from '@chainpemonad/sdk'
 import type { SpendingTracker } from '../spending.js'
 import { errMsg, fail, text } from './util.js'
 

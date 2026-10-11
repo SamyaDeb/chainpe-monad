@@ -27,7 +27,7 @@ rm -f "$BUILD_DIR/server/index.js.bak"
 # 5. Install production dependencies
 echo "Installing production dependencies..."
 # The workspace SDK is bundled into dist/index.js (tsup noExternal), so drop it here.
-node -e "const p=require('$ROOT_DIR/package.json'); delete p.dependencies['@chainpeavax/sdk']; delete p.devDependencies; require('fs').writeFileSync('$BUILD_DIR/server/package.json', JSON.stringify(p,null,2))"
+node -e "const p=require('$ROOT_DIR/package.json'); delete p.dependencies['@chainpemonad/sdk']; delete p.devDependencies; require('fs').writeFileSync('$BUILD_DIR/server/package.json', JSON.stringify(p,null,2))"
 cd "$BUILD_DIR/server"
 npm install --omit=dev --ignore-scripts --legacy-peer-deps
 rm -f package.json package-lock.json

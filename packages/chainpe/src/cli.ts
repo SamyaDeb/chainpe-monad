@@ -26,7 +26,7 @@ import {
   resolveRegistryAddress,
   explorerTxUrl,
   explorerAddressUrl,
-} from "@chainpeavax/sdk";
+} from "@chainpemonad/sdk";
 
 import type { ChainPeConfig, ChainPeNetwork } from "./types.js";
 import { startProxyServer, resolveFacilitatorUrl } from "./proxy/index.js";

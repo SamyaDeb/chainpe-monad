@@ -1,6 +1,6 @@
 // The four LLM-free, data-backed Monad services (express apps on private ports).
 import express from 'express'
-import { ChainPe, RegistryClient, publicClientFor, resolveRegistryAddress } from '@chainpeavax/sdk'
+import { ChainPe, RegistryClient, publicClientFor, resolveRegistryAddress } from '@chainpemonad/sdk'
 import { formatGwei } from 'viem'
 import { network } from './lib.mjs'
 

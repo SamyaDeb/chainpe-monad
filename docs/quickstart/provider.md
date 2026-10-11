@@ -11,7 +11,7 @@ git clone https://github.com/SamyaDeb/chainpe-monad && cd chainpe-monad
 npm ci && npm run build
 ```
 
-The `@chainpeavax/*` packages on npm are older, pre-Monad releases; use the workspace
+The Monad packages are named `@chainpemonad/*` (not published to npm yet; the older `@chainpeavax/*` npm releases are Avalanche-only). Use the workspace
 build (`npx chainpe …` from the repo root).
 
 ## 2. Configure once

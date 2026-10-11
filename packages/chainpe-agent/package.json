@@ -1,5 +1,5 @@
 {
-  "name": "@chainpeavax/agent",
+  "name": "@chainpemonad/agent",
   "version": "3.0.0-monad.0",
   "description": "ChainPe Agent \u2014 pre-built AI agent that discovers and pays for x402 v2 services in USDC on Monad",
   "type": "module",
@@ -59,7 +59,7 @@
     "@ai-sdk/google": "^2.0.62",
     "@ai-sdk/openai": "^2.0.100",
     "@ai-sdk/openai-compatible": "^2.0.35",
-    "@chainpeavax/sdk": "*",
+    "@chainpemonad/sdk": "*",
     "@clack/prompts": "^0.9.1",
     "ai": "^6.0.116",
     "chalk": "^5.4.1",

@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import type { Server } from 'node:http'
 import express from 'express'
-import { ChainPe, NETWORKS, VAULT_SCHEME, resetVaultNonces } from '@chainpeavax/sdk'
+import { ChainPe, NETWORKS, VAULT_SCHEME, resetVaultNonces } from '@chainpemonad/sdk'
 import { generatePrivateKey } from 'viem/accounts'
 import {
   createProxyServer,

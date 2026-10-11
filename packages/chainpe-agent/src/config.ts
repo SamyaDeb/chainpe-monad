@@ -12,7 +12,7 @@ import path from "path";
 import os from "os";
 import { isAddress, getAddress } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { DEFAULT_NETWORK, isChainPeNetwork } from "@chainpeavax/sdk";
+import { DEFAULT_NETWORK, isChainPeNetwork } from "@chainpemonad/sdk";
 
 import type { AgentConfig, LLMProvider, PaymentToken, LLMMode, ChainPeNetwork } from "./types.js";
 import { savePrivateKey, getPrivateKey } from "./keychain.js";

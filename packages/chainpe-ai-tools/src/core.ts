@@ -3,11 +3,11 @@
  *
  * Both the Vercel AI SDK adapter (`./vercel`) and the LangChain adapter
  * (`./langchain`) are thin wrappers over the `runFetch` / `runDiscover`
- * functions here, which in turn wrap `@chainpeavax/sdk`. The input schemas and
+ * functions here, which in turn wrap `@chainpemonad/sdk`. The input schemas and
  * serializable return shapes live here so the two adapters stay identical.
  */
 import { z } from 'zod'
-import { ChainPe, explorerTxUrl, type ChainPeOptions } from '@chainpeavax/sdk'
+import { ChainPe, explorerTxUrl, type ChainPeOptions } from '@chainpemonad/sdk'
 
 /** Either SDK constructor options, or a pre-built {@link ChainPe} instance. */
 export type ChainPeToolOptions = ChainPeOptions | { client: ChainPe }

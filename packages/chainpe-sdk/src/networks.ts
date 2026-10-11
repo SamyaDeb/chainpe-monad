@@ -1,7 +1,7 @@
 /**
  * Monad network constants — the single source of truth for ChainPe.
  *
- * Every other package imports these from `@chainpeavax/sdk`. Services that
+ * Every other package imports these from `@chainpemonad/sdk`. Services that
  * deploy on their own (facilitator, indexer) and the contract scripts keep a
  * copy that must match this file (see CLAUDE.md).
  */

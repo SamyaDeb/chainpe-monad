@@ -1,5 +1,5 @@
 {
-  "name": "@chainpeavax/ai-tools",
+  "name": "@chainpemonad/ai-tools",
   "version": "0.3.0-monad.0",
   "description": "ChainPe agent tools \u2014 drop-in x402 v2 pay + discover tools for the Vercel AI SDK and LangChain, paying USDC on Monad.",
   "type": "module",
@@ -34,7 +34,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@chainpeavax/sdk": "*"
+    "@chainpemonad/sdk": "*"
   },
   "peerDependencies": {
     "@langchain/core": ">=0.3.0",

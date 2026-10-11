@@ -29,7 +29,7 @@ import {
   getWalletPrivateKey,
 } from "./config.js";
 import { getWalletBalance, formatBalance } from "./wallet.js";
-import { DEFAULT_NETWORK } from "@chainpeavax/sdk";
+import { DEFAULT_NETWORK } from "@chainpemonad/sdk";
 import { RegistryClient } from "./registry.js";
 import { ChainPeAgent } from "./agent.js";
 import { isKeychainAvailable, hasPrivateKey, getCredentialInfo } from "./keychain.js";

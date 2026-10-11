@@ -3,7 +3,7 @@
 // Demo traffic between team-controlled wallets — labelled in receipts.json, not traction.
 import fs from 'node:fs'
 import path from 'node:path'
-import { ChainPe, explorerTxUrl } from '@chainpeavax/sdk'
+import { ChainPe, explorerTxUrl } from '@chainpemonad/sdk'
 import { dir, network, loadEnv, SERVICES } from './lib.mjs'
 
 const env = loadEnv()

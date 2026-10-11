@@ -1,10 +1,10 @@
 /**
- * @chainpeavax/sdk — ChainPe for Monad: x402 v2 USDC payments + ERC-8004
+ * @chainpemonad/sdk — ChainPe for Monad: x402 v2 USDC payments + ERC-8004
  * reputation for AI agents.
  *
  * @example
  * ```ts
- * import { ChainPe } from '@chainpeavax/sdk'
+ * import { ChainPe } from '@chainpemonad/sdk'
  *
  * const cp = new ChainPe({ privateKey: process.env.PRIVATE_KEY!, network: 'monad-testnet' })
  * const res = await cp.fetch('https://api.example.com/paid')   // auto-pays the 402

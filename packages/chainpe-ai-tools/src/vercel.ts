@@ -5,7 +5,7 @@
  * ```ts
  * import { generateText } from 'ai'
  * import { anthropic } from '@ai-sdk/anthropic'
- * import { createChainPeTools } from '@chainpeavax/ai-tools/vercel'
+ * import { createChainPeTools } from '@chainpemonad/ai-tools/vercel'
  *
  * const tools = createChainPeTools({ privateKey, network: 'monad-testnet', autoFeedback: true })
  *

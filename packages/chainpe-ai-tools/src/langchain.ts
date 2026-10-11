@@ -5,7 +5,7 @@
  * ```ts
  * import { ChatAnthropic } from '@langchain/anthropic'
  * import { createReactAgent } from '@langchain/langgraph/prebuilt'
- * import { createChainPeLangChainTools } from '@chainpeavax/ai-tools/langchain'
+ * import { createChainPeLangChainTools } from '@chainpemonad/ai-tools/langchain'
  *
  * const { chainpeFetchTool, discoverServiceTool } = createChainPeLangChainTools({
  *   privateKey, network: 'monad-testnet', autoFeedback: true

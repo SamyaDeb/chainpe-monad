@@ -33,7 +33,7 @@ import {
   resolveRegistryAddress,
   resolveReputationRegistry,
   rpcUrlFor
-} from '@chainpeavax/sdk'
+} from '@chainpemonad/sdk'
 
 const network = 'monad-testnet' // this demo never touches mainnet
 const envFile = path.join(path.dirname(fileURLToPath(import.meta.url)), '.env.demo')

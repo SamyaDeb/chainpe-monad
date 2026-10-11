@@ -1,5 +1,5 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { explorerAddressUrl } from '@chainpeavax/sdk'
+import { explorerAddressUrl } from '@chainpemonad/sdk'
 import type { AppConfig } from '../types.js'
 import { getMonBalance, getUsdcBalance, getWalletAddress, NO_WALLET_MESSAGE } from '../clients.js'
 import { errMsg, fail, text } from './util.js'

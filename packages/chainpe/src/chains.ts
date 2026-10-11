@@ -9,7 +9,7 @@ import {
   explorerTxUrl as sdkExplorerTxUrl,
   type ChainPeNetwork,
   type NetworkInfo
-} from "@chainpeavax/sdk";
+} from "@chainpemonad/sdk";
 
 export type { ChainPeNetwork, NetworkInfo };
 export { NETWORKS, USDC_DECIMALS };

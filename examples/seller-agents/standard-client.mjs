@@ -7,7 +7,7 @@ import path from 'node:path'
 import { wrapFetchWithPayment, x402Client } from '@x402/fetch'
 import { ExactEvmScheme } from '@x402/evm/exact/client'
 import { privateKeyToAccount } from 'viem/accounts'
-import { getCaip2, explorerTxUrl } from '@chainpeavax/sdk'
+import { getCaip2, explorerTxUrl } from '@chainpemonad/sdk'
 import { dir, network, loadEnv, SERVICES } from './lib.mjs'
 
 const env = loadEnv()

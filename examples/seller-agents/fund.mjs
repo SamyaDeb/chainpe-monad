@@ -3,7 +3,7 @@
 //   AMOUNT_BUYER=0.5 AMOUNT_FACILITATOR=1 AMOUNT_SELLER=0.2 AMOUNT_BUYER_USDC=1 node fund.mjs
 import { createWalletClient, http, parseEther, formatEther, parseUnits, formatUnits, erc20Abi } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { chainFor, explorerTxUrl, getUsdcAddress, publicClientFor, rpcUrlFor } from '@chainpeavax/sdk'
+import { chainFor, explorerTxUrl, getUsdcAddress, publicClientFor, rpcUrlFor } from '@chainpemonad/sdk'
 import { network, loadEnv, SERVICES } from './lib.mjs'
 
 if (network !== 'monad-testnet') throw new Error('fund.mjs is testnet only')

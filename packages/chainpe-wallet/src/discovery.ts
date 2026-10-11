@@ -12,7 +12,7 @@ import {
   resolveReputationRegistry,
   type DiscoverOptions,
   type RankedService
-} from '@chainpeavax/sdk'
+} from '@chainpemonad/sdk'
 import type { AppConfig } from './types.js'
 
 export interface DiscoveryResult {

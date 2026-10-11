@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { createWalletClient, http, erc20Abi, getAddress, parseUnits } from 'viem'
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { chainFor, explorerTxUrl, getUsdcAddress, publicClientFor, rpcUrlFor } from '@chainpeavax/sdk'
+import { chainFor, explorerTxUrl, getUsdcAddress, publicClientFor, rpcUrlFor } from '@chainpemonad/sdk'
 import type { AppConfig } from '../types.js'
 import type { SpendingTracker } from '../spending.js'
 import { getAccount, NO_WALLET_MESSAGE, tightGas, USDC_DECIMALS } from '../clients.js'

@@ -8,7 +8,7 @@
  */
 
 import { privateKeyToAccount, type PrivateKeyAccount } from "viem/accounts";
-import { DEFAULT_NETWORK, explorerTxUrl, normalizeKey, paidFetch } from "@chainpeavax/sdk";
+import { DEFAULT_NETWORK, explorerTxUrl, normalizeKey, paidFetch } from "@chainpemonad/sdk";
 
 import type {
   PaymentReceipt,

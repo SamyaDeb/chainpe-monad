@@ -1,4 +1,4 @@
-import type { ChainPeNetwork } from '@chainpeavax/sdk'
+import type { ChainPeNetwork } from '@chainpemonad/sdk'
 
 export type { ChainPeNetwork }
 

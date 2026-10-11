@@ -3,7 +3,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { isChainPeNetwork } from '@chainpeavax/sdk'
+import { isChainPeNetwork } from '@chainpemonad/sdk'
 
 export const dir = path.dirname(fileURLToPath(import.meta.url))
 export const envFile = path.join(dir, '.env.sellers') // git-ignored (.env.*)

@@ -8,7 +8,7 @@
  * buyer's PolicyVault pays; its caps and allowlist are enforced on-chain).
  */
 import type { RoutesConfig } from "@x402/core/server";
-import { VAULT_SCHEME } from "@chainpeavax/sdk";
+import { VAULT_SCHEME } from "@chainpemonad/sdk";
 import { parseUnits } from "viem";
 import { getNetwork, USDC_DECIMALS } from "../chains.js";
 import type { ChainPeConfig, RouteConfig as ChainPeRouteConfig } from "../types.js";

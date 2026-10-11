@@ -17,7 +17,7 @@ import { x402ResourceServer, HTTPFacilitatorClient } from "@x402/core/server";
 import type { FacilitatorClient } from "@x402/core/server";
 import { decodePaymentResponseHeader } from "@x402/core/http";
 import { ExactEvmScheme } from "@x402/evm/exact/server";
-import { VAULT_SCHEME, VaultEvmServerScheme } from "@chainpeavax/sdk";
+import { VAULT_SCHEME, VaultEvmServerScheme } from "@chainpemonad/sdk";
 
 import type { ChainPeConfig, PaymentEvent, RouteConfig } from "../types.js";
 import { getNetwork } from "../chains.js";

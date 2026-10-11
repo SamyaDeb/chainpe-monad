@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { ChainPePaymentError } from '@chainpeavax/sdk'
+import { ChainPePaymentError } from '@chainpemonad/sdk'
 import type { AppConfig } from '../types.js'
 import type { SpendingTracker } from '../spending.js'
 import { NO_WALLET_MESSAGE } from '../clients.js'

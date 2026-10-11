@@ -1,11 +1,11 @@
 /**
- * @chainpeavax/ai-tools — ChainPe x402 v2 pay + discover tools for AI agents on Monad.
+ * @chainpemonad/ai-tools — ChainPe x402 v2 pay + discover tools for AI agents on Monad.
  *
  * Framework adapters live behind subpath exports so you only pull in the
  * framework you use:
  *
- *   import { createChainPeTools } from '@chainpeavax/ai-tools/vercel'
- *   import { createChainPeLangChainTools } from '@chainpeavax/ai-tools/langchain'
+ *   import { createChainPeTools } from '@chainpemonad/ai-tools/vercel'
+ *   import { createChainPeLangChainTools } from '@chainpemonad/ai-tools/langchain'
  *
  * This entry exposes the shared, framework-agnostic core (schemas + the
  * `runFetch` / `runDiscover` executors) for custom integrations.

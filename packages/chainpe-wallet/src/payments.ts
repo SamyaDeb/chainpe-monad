@@ -6,7 +6,7 @@
  * break the budget is refused before anything is signed.
  */
 import { formatUnits, parseUnits } from 'viem'
-import { paidFetch, explorerTxUrl, USDC_DECIMALS, type PaidRequest } from '@chainpeavax/sdk'
+import { paidFetch, explorerTxUrl, USDC_DECIMALS, type PaidRequest } from '@chainpemonad/sdk'
 import type { AppConfig } from './types.js'
 import type { SpendingTracker } from './spending.js'
 import { getAccount } from './clients.js'

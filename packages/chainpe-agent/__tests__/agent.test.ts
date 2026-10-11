@@ -5,7 +5,7 @@ vi.mock('../src/keychain.js', () => ({ getPrivateKey: vi.fn(async () => null), s
 const { ChainPeAgent, QWEN_BASE_URL } = await import('../src/agent.js')
 const { searchServices, getAllTags, findServiceByName } = await import('../src/registry.js')
 const { resolveReputationRegistry } = await import('../src/reputation.js')
-const { NETWORKS } = await import('@chainpeavax/sdk')
+const { NETWORKS } = await import('@chainpemonad/sdk')
 
 const llm = (provider: string, extra: Record<string, unknown> = {}) =>
   new ChainPeAgent({

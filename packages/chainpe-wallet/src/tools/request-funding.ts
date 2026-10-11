@@ -7,7 +7,7 @@
 import { z } from 'zod'
 import { parseEther, parseUnits } from 'viem'
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { getNetwork, getUsdcAddress } from '@chainpeavax/sdk'
+import { getNetwork, getUsdcAddress } from '@chainpemonad/sdk'
 import type { AppConfig } from '../types.js'
 import { getWalletAddress, NO_WALLET_MESSAGE, USDC_DECIMALS } from '../clients.js'
 import { errMsg, fail, text } from './util.js'
