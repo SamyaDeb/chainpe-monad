@@ -1,7 +1,19 @@
 # Deployments
 
 Monad **testnet** only. Mainnet is not deployed (runbook: `docs/MAINNET-RUNBOOK.md`).
-No public hosted indexer or facilitator yet: both run locally or on your own host (below).
+## Hosted services (Railway, Monad testnet) — live 2026-10-11
+
+| Service | URL |
+|---|---|
+| Indexer (paid-reputation API) | https://indexer-production-50cd.up.railway.app |
+| Facilitator (x402 v2: `exact` + `chainpe-vault`, strict payTo policy) | https://facilitator-production-8cc9.up.railway.app |
+| Seller `monad-network-stats` (agent #2133, 0.001 USDC/call) | https://seller-production-ea9b.up.railway.app/stats |
+
+The seller was verified through the hosted stack: a paid call returned HTTP 200 and was settled
+on-chain by the hosted facilitator ([0x8096d313…](https://testnet.monadvision.com/tx/0x8096d31353ee9e7f731ba82502bb9e55c5aac16da1f276ba24eac0a2237c49cb)).
+Its registry entry points at the public URL ([tx](https://testnet.monadvision.com/tx/0xc9dc5d78778e402e2d1b4f85b607efb2d37f2d59f5befb390306eb93d78ac807)).
+Demo traffic between team-controlled wallets — not traction. Re-deploy with `Dockerfile.seller`
+(seller, repo-root context) and each service's own Dockerfile.
 
 ## Contracts — Monad testnet (`eip155:10143`)
 
