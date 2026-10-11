@@ -3,7 +3,9 @@ import Link from 'next/link'
 import CodeTabs from '@/components/landing/CodeTabs'
 import CountUp from '@/components/landing/CountUp'
 import Nav from '@/components/landing/Nav'
+import Rotator from '@/components/landing/Rotator'
 import Sphere from '@/components/landing/Sphere'
+import UseCases from '@/components/landing/UseCases'
 import { getLiveStatus, type Health } from '@/lib/status'
 
 export const revalidate = 60
@@ -50,13 +52,6 @@ const SECURITY = [
   { t: 'Strict payTo Policy', d: 'ChainPe’s facilitator only settles to a service’s registered payTo. It is not an open gas relay.' }
 ]
 
-const USES = [
-  { t: 'Research agents', d: 'Buy a thousand summaries and pay per call, not a monthly subscription.' },
-  { t: 'API providers', d: 'Put an existing API behind x402 in one command and get paid in USDC.' },
-  { t: 'Agent marketplaces', d: 'Rank sellers by what paying customers said, not by free ratings.' },
-  { t: 'Funded agents', d: 'Give an agent a budget it cannot exceed; the contract enforces it.' }
-]
-
 function Dot({ s }: { s: Health }) {
   return <span className={`lp-dot ${s}`} aria-hidden="true" />
 }
@@ -81,7 +76,7 @@ export default async function Landing() {
         <Sphere />
         <div className="lp-hero-in">
           <p className="lp-eyebrow"><span />x402 payment infrastructure for Monad</p>
-          <h1>The layer<br />to <u>settle</u></h1>
+          <h1>The layer<br />to <Rotator /></h1>
           <p className="lp-sub">Pay any API in USDC, rate any agent on‑chain, settle on Monad in under a second. All in 3 lines of code.</p>
           <div className="lp-cta">
             <Link href="/try" className="lp-pill lp-pill-dark">Start integrating <i>→</i></Link>
@@ -200,10 +195,7 @@ console.log(res.payment.txHash)`}</code></pre>
             <p className="lp-links"><a href={DOCS} target="_blank" rel="noreferrer">Read the docs</a><a href={REPO} target="_blank" rel="noreferrer">View on GitHub</a><Link href="/services">Marketplace</Link></p>
           </div>
         </div>
-        <div className="lp-uses">
-          <p className="lp-label"><span />Use cases<em>04 / 04</em></p>
-          <div>{USES.map(u => (<article key={u.t}><h3>{u.t}</h3><p>{u.d}</p></article>))}</div>
-        </div>
+        <UseCases />
       </section>
 
       <section className="lp-sec lp-tint" id="pricing">
