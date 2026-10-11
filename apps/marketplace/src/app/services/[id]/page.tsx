@@ -16,7 +16,7 @@ export default async function ServicePage({ params }: { params: Promise<{ id: st
         <h1>Service not found</h1>
         <SourceBadge source={source} />
         <p>
-          No active service <code>{id}</code> in the ChainPe registry. <Link href="/">Back to all services</Link>
+          No active service <code>{id}</code> in the ChainPe registry. <Link href="/services">Back to all services</Link>
         </p>
       </>
     )
@@ -30,7 +30,7 @@ export default async function ServicePage({ params }: { params: Promise<{ id: st
   return (
     <>
       <p className="small">
-        <Link href="/">← all services</Link>
+        <Link href="/services">← all services</Link>
       </p>
       <h1>{service.name}</h1>
       <p className="lead">{service.description || <span className="muted">No description registered.</span>}</p>

@@ -1,0 +1,49 @@
+/* Landing page (Monad port of the legacy marketing page). Scoped to .landing; uses the shared tokens. */
+.landing { padding-bottom: 24px; }
+.landing .hero { padding: 64px 0 40px; text-align: left; }
+.landing .hero-badge { display: inline-flex; gap: 10px; align-items: center; font-size: 12px; color: var(--text-2); border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px 4px 4px; margin-bottom: 20px; }
+.landing .badge-new { background: var(--accent); color: var(--on-accent); border-radius: 999px; padding: 1px 9px; font-weight: 700; font-size: 11px; }
+.landing .hero-title { font-size: clamp(28px, 6vw, 46px); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 18px; }
+.landing .highlight { background: linear-gradient(transparent 62%, var(--paid-bg) 62%); }
+.landing .hero-subtitle { font-size: 15px; color: var(--text-2); max-width: 640px; margin-bottom: 24px; }
+.landing .hero-subtitle strong { color: var(--text); }
+.landing .hero-cta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+.landing .btn { display: inline-block; border: 1px solid var(--border); border-radius: 6px; padding: 8px 16px; font-size: 13px; font-weight: 600; color: var(--text); background: var(--bg); }
+.landing .btn:hover { background: var(--surface); text-decoration: none; }
+.landing .btn-primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.landing .btn-primary:hover { background: var(--accent); opacity: .88; }
+.landing .hero-install { max-width: 680px; }
+.landing .install-tabs { display: flex; gap: 2px; }
+.landing .install-tab { font: inherit; font-size: 12px; background: none; border: 1px solid transparent; border-bottom: none; padding: 5px 12px; color: var(--muted); cursor: pointer; border-radius: 6px 6px 0 0; }
+.landing .install-tab.active { color: var(--text); background: var(--surface); border-color: var(--border); }
+.landing .install-code { display: flex; align-items: center; gap: 10px; justify-content: space-between; background: var(--surface); border: 1px solid var(--border); border-radius: 0 6px 6px 6px; padding: 12px 14px; }
+.landing .install-code code { font-size: 12px; overflow-x: auto; white-space: nowrap; }
+.landing .copy-btn { font: inherit; font-size: 11px; background: none; border: 1px solid var(--border); color: var(--text-2); border-radius: 4px; padding: 3px 8px; cursor: pointer; flex: none; }
+.landing .section { padding: 44px 0; border-top: 1px solid var(--border); }
+.landing .section h2 { font-size: 22px; margin-bottom: 10px; }
+.landing .section-description { color: var(--text-2); max-width: 720px; margin-bottom: 22px; }
+.landing .loop { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.landing .loop li { display: flex; gap: 12px; border: 1px solid var(--border); border-radius: 8px; padding: 14px; background: var(--surface); }
+.landing .loop-n { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+.landing .loop strong, .landing .feature-item strong { display: block; margin-bottom: 2px; }
+.landing .loop span:not(.loop-n) { color: var(--text-2); font-size: 13px; }
+.landing .features-list { display: grid; gap: 14px; }
+.landing .feature-item { display: flex; gap: 12px; align-items: baseline; }
+.landing .feature-star { color: var(--paid); flex: none; }
+.landing .feature-desc { display: block; color: var(--text-2); font-size: 13px; }
+.landing .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 16px; }
+.landing .stat-card { border: 1px solid var(--border); border-radius: 8px; padding: 18px; background: var(--surface); display: flex; flex-direction: column; gap: 4px; }
+.landing .stat-number { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
+.landing .stat-label { font-weight: 600; font-size: 13px; }
+.landing .stat-sub { color: var(--muted); font-size: 12px; }
+.landing .use-cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.landing .use-case-card { border: 1px solid var(--border); border-radius: 8px; padding: 16px; transition: background .2s; }
+.landing .use-case-card:hover { background: var(--surface); }
+.landing .use-case-card h3 { font-size: 14px; margin-bottom: 4px; }
+.landing .use-case-card p { color: var(--text-2); font-size: 13px; }
+.landing .faq-list { display: grid; gap: 8px; }
+.landing .faq-item { border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+.landing .faq-question { cursor: pointer; font-weight: 600; }
+.landing .faq-answer { margin-top: 8px; color: var(--text-2); font-size: 13px; }
+.landing .section-cta { text-align: left; }
+@media (max-width: 560px) { .landing .hero { padding-top: 40px; } }

@@ -5,7 +5,7 @@ export default function NotFound() {
     <>
       <h1>Not found</h1>
       <p>
-        <Link href="/">Back to services</Link>
+        <Link href="/services">Back to services</Link>
       </p>
     </>
   )

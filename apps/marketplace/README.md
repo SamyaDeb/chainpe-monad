@@ -5,7 +5,8 @@ Next.js (App Router) front end for the ChainPe indexer: x402 services ranked by
 
 | Page | What it shows |
 |---|---|
-| `/` (`?rank=paid\|raw`) | registered services ranked by paid reputation, with a paid ↔ raw toggle; score, distinct payers, paid volume, and the gap when unpaid ratings inflate the raw score |
+| `/` | landing page: pitch, how the loop works, numbers, use cases, FAQ |
+| `/services` (`?rank=paid\|raw`) | registered services ranked by paid reputation, with a paid ↔ raw toggle; score, distinct payers, paid volume, and the gap when unpaid ratings inflate the raw score |
 | `/services/<developer:name>` | description, price, endpoint, ERC-8004 agentId, both scores, and every rating marked **paid** (settlement on MonadVision) or **excluded** (with the reason) |
 | `/receipts` (`?show=paid\|excluded\|all`) | latest paid calls and ratings, linked to `testnet.monadvision.com/tx/…` |
 | `/try` | judge path: faucets, provider in one command, consumer in three lines, MCP wallet |

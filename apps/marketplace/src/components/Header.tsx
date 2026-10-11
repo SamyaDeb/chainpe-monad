@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const NAV = [
-  { href: '/', label: 'Services' },
+  { href: '/services', label: 'Services' },
   { href: '/receipts', label: 'Receipts' },
   { href: '/try', label: 'Try it' }
 ]
@@ -34,7 +34,7 @@ export default function Header() {
         </Link>
         <nav className="nav">
           {NAV.map(n => {
-            const active = n.href === '/' ? path === '/' || path.startsWith('/services') : path.startsWith(n.href)
+            const active = path.startsWith(n.href)
             return (
               <Link key={n.href} href={n.href} className={active ? 'active' : undefined}>
                 {n.label}
