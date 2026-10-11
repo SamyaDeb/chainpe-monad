@@ -64,7 +64,9 @@ Write-Host "Packing .mcpb bundle..." -ForegroundColor Yellow
 # Compress-Archive writes backslash paths that some unzip tools reject.
 $tempZip = Join-Path $ROOT_DIR "chainpe.zip"
 if (Test-Path $tempZip) { Remove-Item -Force $tempZip }
-tar.exe -a -c -f $tempZip -C $BUILD_DIR .
+# list the top-level entries explicitly so zip paths are 'manifest.json', 'server/...' (no './' prefix)
+$entries = Get-ChildItem -Name $BUILD_DIR
+tar.exe -a -c -f $tempZip -C $BUILD_DIR $entries
 if ($LASTEXITCODE -ne 0) { throw "tar failed (exit $LASTEXITCODE)" }
 Move-Item $tempZip $OUTPUT -Force
 
