@@ -15,15 +15,17 @@ New-Item -ItemType Directory -Path "$BUILD_DIR/server" -Force | Out-Null
 # 2. Build TypeScript
 Write-Host "Compiling TypeScript..." -ForegroundColor Yellow
 Set-Location $ROOT_DIR
-& node_modules/.bin/tsup
+# Run the package's own build script: in an npm workspace the tsup binary lives in the repo root's
+# node_modules, not in this package's, so a hardcoded node_modules/.bin/tsup path does not exist.
+npm run build
+if ($LASTEXITCODE -ne 0) { throw "npm run build failed (exit $LASTEXITCODE)" }
 
 # 3. Copy server bundle
 Copy-Item "$ROOT_DIR/dist/index.js" "$BUILD_DIR/server/index.js"
 
 # 4. Remove shebang from index.js
-$content = Get-Content "$BUILD_DIR/server/index.js" -Raw
-$content = $content -replace '^#!/usr/bin/env node\r?\n?', ''
-Set-Content "$BUILD_DIR/server/index.js" -Value $content -NoNewline
+node (Join-Path $PSScriptRoot "strip-shebang.mjs") "$BUILD_DIR/server/index.js"
+if ($LASTEXITCODE -ne 0) { throw "strip-shebang failed" }
 
 # 5. Install production dependencies
 Write-Host "Installing production dependencies..." -ForegroundColor Yellow
@@ -34,6 +36,7 @@ $pkg.PSObject.Properties.Remove('devDependencies')
 $pkg | ConvertTo-Json -Depth 10 | Set-Content "$BUILD_DIR/server/package.json"
 Set-Location "$BUILD_DIR/server"
 npm install --omit=dev --ignore-scripts --legacy-peer-deps
+if ($LASTEXITCODE -ne 0) { throw "npm install failed (exit $LASTEXITCODE)" }
 Remove-Item "package.json", "package-lock.json" -ErrorAction SilentlyContinue
 
 # 6. Prune node_modules
@@ -57,8 +60,12 @@ if (Test-Path "$ROOT_DIR/chainpe-logo.png") {
 
 # 8. Pack
 Write-Host "Packing .mcpb bundle..." -ForegroundColor Yellow
+# tar.exe (built into Windows 10+) writes a standard zip with forward-slash paths; Windows PowerShell 5's
+# Compress-Archive writes backslash paths that some unzip tools reject.
 $tempZip = Join-Path $ROOT_DIR "chainpe.zip"
-Compress-Archive -Path "$BUILD_DIR/*" -DestinationPath $tempZip -Force
+if (Test-Path $tempZip) { Remove-Item -Force $tempZip }
+tar.exe -a -c -f $tempZip -C $BUILD_DIR .
+if ($LASTEXITCODE -ne 0) { throw "tar failed (exit $LASTEXITCODE)" }
 Move-Item $tempZip $OUTPUT -Force
 
 # 9. Clean up
