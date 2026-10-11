@@ -166,7 +166,7 @@ fails. Transaction links are in [`docs/METROPOLIS.md`](docs/METROPOLIS.md).
 | `packages/chainpe` | CLI + x402 payment proxy (`chainpe init / start / register / fetch / discover`) |
 | `packages/chainpe-wallet` | Claude MCP wallet (`.mcpb`) with persisted spending caps |
 | `packages/chainpe-agent`, `packages/chainpe-ai-tools` | LLM agent CLI; Vercel AI SDK + LangChain tools |
-| `apps/marketplace` | landing page, ranking with paid ↔ raw toggle, ratings with receipts, try-it page (Next.js) |
+| `apps/marketplace` | landing page (the team's Claude Design export, see `design/`), ranking with paid ↔ raw toggle, ratings with receipts, try-it page (Next.js) |
 | `examples/` | Monad demo sellers and buyers, latency bench |
 | `e2e/` | testnet end-to-end scripts (paid call, reputation demo, mandate demo, full run) |
 | `deploy/`, `Dockerfile.seller` | Docker Compose for Postgres + indexer + facilitator; hosted seller image |
