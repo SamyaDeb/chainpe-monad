@@ -7,7 +7,7 @@ Monad **testnet** only. Mainnet is not deployed (runbook: `docs/MAINNET-RUNBOOK.
 |---|---|
 | Indexer (paid-reputation API) | https://indexer-production-50cd.up.railway.app |
 | Facilitator (x402 v2: `exact` + `chainpe-vault`, strict payTo policy) | https://facilitator-production-8cc9.up.railway.app |
-| Marketplace (Vercel, reads the hosted indexer live) | https://chainpe-monad-marketplace.vercel.app |
+| Marketplace (Vercel, reads the hosted indexer live) | https://chainpemonad.vercel.app |
 | Demo sellers, one host, routed by path: `/stats` (#2133, 0.001 USDC) · `/quote?amountUsdc=10` (#2134, 0.001) · `/digest` (#2135, 0.002) · `/report?agentId=2133` (#2136, 0.005) | https://seller-production-ea9b.up.railway.app |
 
 The seller was verified through the hosted stack: a paid call returned HTTP 200 and was settled

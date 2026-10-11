@@ -51,4 +51,4 @@ for (let i = 0; i < 20; i++) {
   }
   await pause(3000)
 }
-console.log('\nNo receipt, no rating. See it ranked: https://chainpe-monad-marketplace.vercel.app/services\n')
+console.log('\nNo receipt, no rating. See it ranked: https://chainpemonad.vercel.app/services\n')

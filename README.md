@@ -15,7 +15,7 @@ not traction**.
 
 | | |
 |---|---|
-| **Marketplace + landing** | https://chainpe-monad-marketplace.vercel.app |
+| **Marketplace + landing** | https://chainpemonad.vercel.app |
 | Indexer (paid-reputation API) | https://indexer-production-50cd.up.railway.app |
 | Facilitator (x402 v2, `exact` + `chainpe-vault`) | https://facilitator-production-8cc9.up.railway.app |
 | Demo sellers (4 services, one host) | https://seller-production-ea9b.up.railway.app: `/stats` · `/quote?amountUsdc=10` · `/digest` · `/report?agentId=2133` |
@@ -86,7 +86,7 @@ own rating.
 Pick any depth. Each step says what you should see.
 
 **1. Two minutes, nothing to install**
-1. Open https://chainpe-monad-marketplace.vercel.app. The landing page's *Network Status*
+1. Open https://chainpemonad.vercel.app. The landing page's *Network Status*
    table reads the hosted indexer and facilitator live.
 2. Open **Services**: the four callable demo sellers, ranked by paid reputation. Flip the
    **paid ↔ raw** toggle. The note under the table says how many older demo entries are
