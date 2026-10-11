@@ -340,5 +340,27 @@
     "tx": "0x5aa874d8f00406f143963ec2d9a048c7d1bb5533ebe7368a8d20fc411d4e98f0",
     "link": "https://testnet.monadvision.com/tx/0x5aa874d8f00406f143963ec2d9a048c7d1bb5533ebe7368a8d20fc411d4e98f0",
     "label": "demo traffic (team wallets), not traction"
+  },
+  {
+    "via": "mcp-wallet",
+    "service": "monad-network-stats",
+    "status": 200,
+    "ms": 1761,
+    "amount": "0.001 USDC",
+    "tx": "0xbfc861871743c431d47fc3a2dab732702c06ae60a90f95df0987102cc92c7218",
+    "link": "https://testnet.monadvision.com/tx/0xbfc861871743c431d47fc3a2dab732702c06ae60a90f95df0987102cc92c7218",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0x775efad2079f2524986fcbb7ea5de49dda55fbb246faa3095c412b1404c6ac2c"
+  },
+  {
+    "via": "mcp-wallet",
+    "service": "agent-trust-report",
+    "status": 200,
+    "ms": 572,
+    "amount": "0.005 USDC",
+    "tx": "0x57e16f2ae8cb2307fc778d15c5a4db0347b56d14ebffe8d780089cfc3c3bd01a",
+    "link": "https://testnet.monadvision.com/tx/0x57e16f2ae8cb2307fc778d15c5a4db0347b56d14ebffe8d780089cfc3c3bd01a",
+    "label": "demo traffic (team wallets), not traction",
+    "feedbackTx": "0xec3cebbd0190700576e4aa3c3b6cc9b5660cd407be15339c1d30af5d20e862ba"
   }
 ]

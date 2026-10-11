@@ -203,6 +203,8 @@ receipt requirement on `give_feedback` (Phase 4). The done-criterion (Claude Des
 **testnet** service) needs the Phase 1 step 7 registry deploy, a funded wallet and a running
 facilitator + seller.
 
+**Status (2026-10-11):** MCP server re-verified live on testnet; `.mcpb` builds; the on-screen Claude Desktop run is a manual step — see `docs/DESKTOP-DEMO.md`.
+
 **Done when:** Claude Desktop (MCP) pays a testnet ChainPe service and shows the tx link.
 **Commits:** one `port … to Monad` commit per package.
 
