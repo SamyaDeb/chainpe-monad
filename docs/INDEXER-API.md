@@ -63,7 +63,7 @@ Ranking: services with a score first, then higher score, more payers/raters, che
 
 ## `GET /services/:id`
 
-One service, `:id` = `key` or `developer:name` (case-insensitive). Same shape as an item
+One service, `:id` = `key`, `developer:name` (case-insensitive) or the numeric ERC-8004 `agentId` linked to it (e.g. `/services/2133`). Same shape as an item
 above, ranked fields for `paid`. 404 if unknown or deregistered.
 
 ## `GET /services/:id/reputation`

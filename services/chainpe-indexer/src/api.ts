@@ -220,7 +220,10 @@ export function createApi(db: Db, opts: ApiOptions) {
   async function findService(id: string): Promise<ServiceRecord | undefined> {
     const records = await listActiveServices(db)
     const lower = id.toLowerCase()
-    return records.find(s => s.key.toLowerCase() === lower || `${s.developer}:${s.name}`.toLowerCase() === lower)
+    const byKey = records.find(s => s.key.toLowerCase() === lower || `${s.developer}:${s.name}`.toLowerCase() === lower)
+    if (byKey || !/^\d{1,12}$/.test(id)) return byKey
+    // A bare ERC-8004 agent id also resolves to the service linked to it (first registered wins).
+    return records.find(s => s.agentId === id)
   }
 
   app.get(

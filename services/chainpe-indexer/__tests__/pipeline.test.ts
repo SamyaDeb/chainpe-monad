@@ -165,6 +165,10 @@ describe('API', () => {
   it('serves the paid/raw breakdown', async () => {
     const r = await (await fetch(`${base}/services/0x01/reputation`)).json()
     expect(r).toEqual({ agentId: '5', paid: { score: 80, count: 1, volume: '0.01' }, raw: { score: 66.67, count: 3 } })
+    // a bare ERC-8004 agent id resolves to the service linked to it
+    expect(await (await fetch(`${base}/services/5/reputation`)).json()).toEqual(r)
+    expect((await (await fetch(`${base}/services/5`)).json()).name).toBe('honest')
+    expect((await fetch(`${base}/services/99999/reputation`)).status).toBe(404)
     expect((await fetch(`${base}/services/nope/reputation`)).status).toBe(404)
     expect((await fetch(`${base}/services?rank=bogus`)).status).toBe(400)
   })

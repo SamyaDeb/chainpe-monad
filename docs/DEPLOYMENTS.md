@@ -8,7 +8,7 @@ Monad **testnet** only. Mainnet is not deployed (runbook: `docs/MAINNET-RUNBOOK.
 | Indexer (paid-reputation API) | https://indexer-production-50cd.up.railway.app |
 | Facilitator (x402 v2: `exact` + `chainpe-vault`, strict payTo policy) | https://facilitator-production-8cc9.up.railway.app |
 | Marketplace (Vercel, reads the hosted indexer live) | https://chainpe-monad-marketplace.vercel.app |
-| Seller `monad-network-stats` (agent #2133, 0.001 USDC/call) | https://seller-production-ea9b.up.railway.app/stats |
+| Demo sellers, one host, routed by path: `/stats` (#2133, 0.001 USDC) · `/quote?amountUsdc=10` (#2134, 0.001) · `/digest` (#2135, 0.002) · `/report?agentId=2133` (#2136, 0.005) | https://seller-production-ea9b.up.railway.app |
 
 The seller was verified through the hosted stack: a paid call returned HTTP 200 and was settled
 on-chain by the hosted facilitator ([0x8096d313…](https://testnet.monadvision.com/tx/0x8096d31353ee9e7f731ba82502bb9e55c5aac16da1f276ba24eac0a2237c49cb)).
@@ -47,7 +47,7 @@ not traction**.
 | #2109 | monad-ecosystem-digest | 〃 |
 | #2110 | agent-trust-report | 〃 |
 
-Except #2133 (hosted, above), their endpoints ran inside our build session and are not publicly reachable. Every
+Except #2133–#2136 (hosted, above), their endpoints ran inside our build session and are not publicly reachable. Every
 settlement and rating hash: `examples/seller-agents/receipts-monad-testnet.json`; the
 indexer's view: `apps/marketplace/data/snapshot-monad-testnet.json`.
 
