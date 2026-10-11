@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { discoverServices } from '../src/discovery.js'
+import { discoverServices, isReachableEndpoint } from '../src/discovery.js'
 import type { AppConfig } from '../src/types.js'
 
 const config = (over: Partial<AppConfig> = {}): AppConfig => ({
@@ -16,7 +16,7 @@ const svc = (name: string, price: string, tags: string[], score: number | null, 
   name,
   description: `${name} service`,
   tags,
-  endpoint: `https://${name}.example`,
+  endpoint: `https://${name}.example.com`,
   pricePerRequest: price,
   paymentToken: 'USDC',
   walletAddress: '0x1111111111111111111111111111111111111111',
@@ -67,5 +67,26 @@ describe('discoverServices', () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch')
     await expect(discoverServices(config({ network: 'monad' }), {})).rejects.toThrow(/CHAINPE_REGISTRY_ADDRESS/)
     expect(fetchSpy).not.toHaveBeenCalled()
+  })
+})
+
+describe('unreachable endpoints', () => {
+  it('classifies endpoints a remote caller can and cannot reach', () => {
+    for (const ok of ['https://seller-production-ea9b.up.railway.app', 'https://api.example.com/x']) expect(isReachableEndpoint(ok), ok).toBe(true)
+    for (const bad of ['http://localhost:4602', 'https://localhost', 'http://127.0.0.1:4604', 'https://10.0.0.5', 'https://192.168.1.2', 'https://172.20.0.1', 'https://chainpe.example/monad-weather', 'http://seller.up.railway.app', '', 'not a url', 'https://intranet'])
+      expect(isReachableEndpoint(bad), bad).toBe(false)
+    expect(isReachableEndpoint(null)).toBe(false)
+  })
+
+  it('hides localhost services by default, says how many, and can include them', async () => {
+    const items = [{ ...svc('local', '0.001', ['price'], 90), endpoint: 'http://localhost:4602' }, svc('live', '0.001', ['price'], null)]
+    vi.spyOn(globalThis, 'fetch').mockImplementation(async () => new Response(JSON.stringify({ total: 2, items })))
+    const cfg = config({ indexerUrl: 'https://idx.example' })
+    const hiddenRun = await discoverServices(cfg, {})
+    expect(hiddenRun.services.map(s => s.name)).toEqual(['live'])
+    expect(hiddenRun.hidden).toBe(1)
+    const all = await discoverServices(cfg, {}, true)
+    expect(all.services.map(s => s.name).sort()).toEqual(['live', 'local'])
+    expect(all.hidden).toBe(0)
   })
 })

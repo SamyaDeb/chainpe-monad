@@ -19,6 +19,33 @@ export interface DiscoveryResult {
   services: RankedService[]
   source: string
   note?: string
+  /** Registered services left out because their endpoint is not a public https URL (e.g. localhost). */
+  hidden: number
+}
+
+/**
+ * True when a remote caller could reach the endpoint: https on a public host. Old demo entries registered
+ * `http://localhost:<port>`, which only ever ran on their owner's machine, so paying them always fails.
+ */
+export function isReachableEndpoint(endpoint: string | null | undefined): boolean {
+  if (!endpoint) return false
+  let u: URL
+  try {
+    u = new URL(endpoint)
+  } catch {
+    return false
+  }
+  if (u.protocol !== 'https:') return false
+  const h = u.hostname.toLowerCase()
+  if (h === 'localhost' || h.endsWith('.local') || h.endsWith('.internal') || h.endsWith('.example')) return false
+  if (/^(127\.|10\.|192\.168\.|169\.254\.|0\.0\.0\.0)/.test(h) || /^172\.(1[6-9]|2\d|3[01])\./.test(h)) return false
+  return h.includes('.') || h.includes(':')
+}
+
+function split(services: RankedService[], includeUnreachable: boolean): { services: RankedService[]; hidden: number } {
+  if (includeUnreachable) return { services, hidden: 0 }
+  const kept = services.filter(s => isReachableEndpoint(s.endpoint))
+  return { services: kept, hidden: services.length - kept.length }
 }
 
 async function fromIndexer(config: AppConfig, options: DiscoverOptions): Promise<RankedService[]> {
@@ -50,21 +77,25 @@ async function fromChain(config: AppConfig, options: DiscoverOptions): Promise<R
   return rankByReputation(ranked)
 }
 
-export async function discoverServices(config: AppConfig, options: DiscoverOptions): Promise<DiscoveryResult> {
+export async function discoverServices(
+  config: AppConfig,
+  options: DiscoverOptions,
+  includeUnreachable = false
+): Promise<DiscoveryResult> {
   if (config.indexerUrl) {
     try {
-      return { services: await fromIndexer(config, options), source: `indexer ${config.indexerUrl}` }
+      return { ...split(await fromIndexer(config, options), includeUnreachable), source: `indexer ${config.indexerUrl}` }
     } catch (err) {
       // Fall through to the chain, and say so — never hide that the indexer was down.
       const reason = err instanceof Error ? err.message : String(err)
-      const services = await fromChain(config, options)
+      const found = split(await fromChain(config, options), includeUnreachable)
       return {
-        services,
+        ...found,
         source: `on-chain registry ${resolveRegistryAddress(config.network, config.registryAddress)}`,
         note: `Indexer ${config.indexerUrl} failed (${reason}); used the on-chain registry instead.`
       }
     }
   }
   const address = resolveRegistryAddress(config.network, config.registryAddress)
-  return { services: await fromChain(config, options), source: `on-chain registry ${address}` }
+  return { ...split(await fromChain(config, options), includeUnreachable), source: `on-chain registry ${address}` }
 }

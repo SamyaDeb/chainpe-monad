@@ -18,15 +18,26 @@ export function registerBazaarSearch(server: McpServer, config: AppConfig): void
     {
       query: z.string().optional().describe('Optional keyword to filter by name, description, or tag (e.g. "weather")'),
       tags: z.array(z.string()).optional().describe('Optional list of tags to filter by (matches any)'),
-      maxPrice: z.string().optional().describe('Optional maximum price per request as a decimal string, e.g. "0.05"')
+      maxPrice: z.string().optional().describe('Optional maximum price per request as a decimal string, e.g. "0.05"'),
+      includeUnreachable: z
+        .boolean()
+        .optional()
+        .describe('Also list services whose endpoint is localhost or not https (only for local development; default false)')
     },
-    async ({ query, tags, maxPrice }) => {
+    async ({ query, tags, maxPrice, includeUnreachable }) => {
       try {
-        const { services, source, note } = await discoverServices(config, { query, tags, maxPrice })
+        const { services, source, note, hidden } = await discoverServices(
+          config,
+          { query, tags, maxPrice },
+          includeUnreachable === true
+        )
 
         if (services.length === 0) {
           const where = query ? ` matching "${query}"` : ''
-          return text(`No ChainPe services found${where} on ${config.network} (source: ${source}).${note ? `\n${note}` : ''}`)
+          return text(
+            `No ChainPe services found${where} on ${config.network} (source: ${source}).${note ? `\n${note}` : ''}` +
+              (hidden > 0 ? `\n${hidden} registered service(s) are hidden because their endpoint is not publicly reachable.` : '')
+          )
         }
 
         const list = services
@@ -56,6 +67,9 @@ export function registerBazaarSearch(server: McpServer, config: AppConfig): void
         const footer =
           `\n\nNetwork: ${config.network}  ·  Source: ${source}` +
           (note ? `\n${note}` : '') +
+          (hidden > 0
+            ? `\n${hidden} registered service(s) are hidden because their endpoint is localhost or not a public https URL, so nobody can call them. Pass includeUnreachable: true to list them.`
+            : '') +
           `\nHint: call x402_fetch (or pay) with a service's Endpoint to pay and fetch its result.`
         return text(`${header}\n\n${list}${footer}`)
       } catch (err) {

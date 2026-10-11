@@ -29,11 +29,11 @@ export function saveVar(name, value) {
 // The four Monad-themed services. `port` is the public x402 proxy port, backend is port+100.
 export const SERVICES = [
   { id: 'STATS', name: 'monad-network-stats', port: 4601, price: '0.001', path: '/stats', tags: ['monad', 'stats', 'data'],
-    description: 'Live Monad network stats: head block, block time, gas price, recent tx throughput.' },
+    description: 'Live Monad network stats: head block, block time, gas price, recent tx throughput. Call: GET {endpoint}/stats' },
   { id: 'PRICE', name: 'mon-price-quote', port: 4602, price: '0.001', path: '/quote?amountUsdc=10', tags: ['monad', 'price', 'dex'],
-    description: 'MON/USD spot price and an indicative USDC→MON quote (reference price, not an on-chain swap).' },
+    description: 'MON/USD spot price and an indicative USDC→MON quote (reference price, not an on-chain swap). Call: GET {endpoint}/quote?amountUsdc=10' },
   { id: 'DIGEST', name: 'monad-ecosystem-digest', port: 4603, price: '0.002', path: '/digest', tags: ['monad', 'ecosystem', 'news'],
-    description: 'Digest of what is live on Monad: x402 services registered in ChainPe, ranked by paid reputation.' },
+    description: 'Digest of what is live on Monad: x402 services registered in ChainPe, ranked by paid reputation. Call: GET {endpoint}/digest' },
   { id: 'TRUST', name: 'agent-trust-report', port: 4604, price: '0.005', path: '/report?agentId=1', tags: ['erc-8004', 'reputation', 'trust'],
-    description: 'ERC-8004 agent trust report: raw vs payment-backed reputation (paid-reputation data from ChainPe).' }
+    description: 'ERC-8004 agent trust report: raw vs payment-backed reputation (paid-reputation data from ChainPe). Call: GET {endpoint}/report?agentId=<id>' }
 ]
