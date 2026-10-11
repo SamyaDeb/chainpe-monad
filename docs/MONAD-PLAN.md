@@ -369,8 +369,8 @@ external x402 service paid, latency measured.
 - [x] Indexer ratings feed: `GET /feedback`, `GET /services/:id/feedback` (paid / excluded with reason, settlement + rating tx, block time; `registered=true` for ChainPe agents only). Tested on pg-mem + Postgres 16.
 - [x] `apps/marketplace`: paid ↔ raw ranking, service pages with marked ratings, receipts feed, try-it page. Runs locally against our indexer live on Monad testnet; falls back to a dated snapshot of it when the indexer is unset or down (both checked with Playwright screenshots).
 - [x] Docs: `README.md`, `docs/WHY-MONAD.md`, `docs/DEPLOYMENTS.md`, `docs/INDEXER-API.md`, `docs/quickstart/` (provider, consumer, MCP).
-- [ ] **Public hosting** of the marketplace + indexer (+ facilitator): not done. Judges can run everything locally (README judge guide); a public URL needs Railway/Vercel or similar (`docs/MAINNET-RUNBOOK.md` §2).
-- [ ] The demo sellers' endpoints are local to the build session, so the try-it path has the judge start their own provider rather than pay a hosted one.
+- [x] **Public hosting (2026-10-11):** marketplace on Vercel, indexer + facilitator + one demo seller on Railway (URLs in `docs/DEPLOYMENTS.md`). Old note: not done. Judges can run everything locally (README judge guide); a public URL needs Railway/Vercel or similar (`docs/MAINNET-RUNBOOK.md` §2).
+- [x] One demo seller (agent #2133) is hosted; the try-it page pays it. The other three stay local.
 - [ ] Mainnet: deferred by the owner; nothing in the UI or docs claims it.
 - Note: on today's data the paid ↔ raw toggle changes #2099's score (95 ↔ 98.33) but not the order of the 9 services.
 

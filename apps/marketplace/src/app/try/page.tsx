@@ -9,10 +9,11 @@ npm ci && npm run build`
 
 const CONSUMER = `import { ChainPe } from '@chainpemonad/sdk'
 const cp = new ChainPe({ privateKey: process.env.CHAINPE_PRIVATE_KEY, network: 'monad-testnet' })
-const res = await cp.pay('http://localhost:4402/')   // 402 → signs USDC → settled → 200`
+// a live demo seller (monad-network-stats, agent #2133, 0.001 USDC per call)
+const res = await cp.pay('https://seller-production-ea9b.up.railway.app/stats')   // 402 → signs USDC → settled → 200`
 
 const RATE = `// optional: rate it. The settlement tx is the receipt, so this rating counts as paid.
-await cp.giveFeedback({ agentId: '<your agentId>', value: 90, paymentTxHash: res.payment.txHash })`
+await cp.giveFeedback({ agentId: '2133', value: 90, paymentTxHash: res.payment.txHash })`
 
 const PROVIDER_INIT = `npx chainpe init     # once: backend URL, price in USDC, payTo wallet, monad-testnet`
 

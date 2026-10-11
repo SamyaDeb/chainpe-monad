@@ -157,7 +157,7 @@ Tests: `npm test` (workspaces), `cd services/chainpe-indexer && npm ci && npm te
 
 - Testnet only. Mainnet contracts, real-USDC calls and paying an external Monad x402
   service are prepared (`docs/MAINNET-RUNBOOK.md`, `e2e/pay-external.mjs`) but not done.
-- The indexer, facilitator and one demo seller are hosted on Railway (testnet, URLs in `docs/DEPLOYMENTS.md`); the marketplace is not hosted yet.
+- The indexer, facilitator and one demo seller are hosted on Railway (testnet, URLs in `docs/DEPLOYMENTS.md`); the marketplace is at https://chainpe-monad-marketplace.vercel.app.
 - A seller who funds fresh wallets to pay itself still earns "paid" ratings (the money
   returns to it, minus gas). The per-receipt and per-payer caps limit how far that moves
   a score; funding-provenance checks are future work.
