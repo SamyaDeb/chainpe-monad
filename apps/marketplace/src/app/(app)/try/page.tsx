@@ -19,7 +19,9 @@ const PROVIDER_INIT = `npx chainpe init     # once: backend URL, price in USDC, 
 
 const PROVIDER = `CHAINPE_FACILITATOR_URL=https://x402-facilitator.molandak.org npx chainpe start`
 
-const MCP_BUILD = `npm run build:mcpb -w chainpe-wallet-mcp   # → packages/chainpe-wallet/chainpe.mcpb`
+const MCP_BUILD = `npm run build:mcpb -w chainpe-wallet-mcp   # macOS / Linux → packages/chainpe-wallet/chainpe.mcpb
+# Windows (PowerShell):
+powershell -ExecutionPolicy Bypass -File packages\\chainpe-wallet\\scripts\\build-mcpb.ps1`
 
 const MCP_JSON = `{
   "mcpServers": {

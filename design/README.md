@@ -10,7 +10,9 @@ The landing page at `/` is the team's **Claude Design** export, used as designed
 
 `next.config.mjs` rewrites `/` to `/landing.html`, with a CSP that allows the bundle's `blob:` scripts and fonts.
 
-## Patches applied to the export (text only, the design is otherwise untouched)
+## Patches applied to the export
+
+`python3 design/patch-landing.py` regenerates `apps/marketplace/public/landing.html` from the export; every patch asserts that it matched. They are text-only, except the code windows' padding, which is reduced on phones.
 
 - Removed the **X (Twitter)** and **Discord** links and the **Privacy Policy / Terms of Service** links: those accounts and pages do not exist. The Legal column links to the MIT license and the prior-work disclosure instead.
 - Replaced **MetaMask** (not integrated) with **Sourcify** in the ecosystem grid.

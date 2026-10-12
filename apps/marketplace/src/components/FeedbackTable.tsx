@@ -31,7 +31,7 @@ export default function FeedbackTable({
   if (items.length === 0) return <p className="muted">No ratings indexed yet.</p>
   return (
     <div className="table-wrap">
-      <table>
+      <table className="stack-sm">
         <thead>
           <tr>
             <th>Time (block)</th>
@@ -46,12 +46,12 @@ export default function FeedbackTable({
         <tbody>
           {items.map(f => (
             <tr key={`${f.agentId}:${f.rater}:${f.feedbackTxHash ?? f.block}:${f.value}`}>
-              <td>
+              <td data-label="Time">
                 {when(f.blockTime)}
                 <div className="muted small">#{Number(f.block).toLocaleString('en-US')}</div>
               </td>
               {showService && (
-                <td>
+                <td data-label="Service">
                   {f.service ? (
                     <Link href={`/services/${encodeURIComponent(f.service.id)}`}>{f.service.name}</Link>
                   ) : (
@@ -60,16 +60,16 @@ export default function FeedbackTable({
                   <div className="muted small">agent #{f.agentId}</div>
                 </td>
               )}
-              <td>
+              <td data-label="Rater">
                 <a href={addressUrl(network, f.rater)} target="_blank" rel="noreferrer">
                   {short(f.rater)}
                 </a>
               </td>
-              <td className="num">{f.value}</td>
-              <td>
+              <td className="num" data-label="Rating">{f.value}</td>
+              <td data-label="Counts?">
                 <Status f={f} />
               </td>
-              <td>
+              <td data-label="Receipt / reason">
                 {f.paid && f.receiptTxHash ? (
                   <>
                     {usdc(f.paidAmount)} settled{' '}
@@ -91,7 +91,7 @@ export default function FeedbackTable({
                   </>
                 )}
               </td>
-              <td className="hide-sm">
+              <td className="hide-sm" data-label="Rating tx">
                 {f.feedbackTxHash ? (
                   <a href={txUrl(network, f.feedbackTxHash)} target="_blank" rel="noreferrer">
                     {short(f.feedbackTxHash, 10, 6)}

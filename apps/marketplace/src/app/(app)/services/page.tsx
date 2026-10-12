@@ -85,7 +85,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ r
       </div>
 
       <div className="table-wrap">
-        <table>
+        <table className="stack-sm">
           <thead>
             <tr>
               <th className="num">#</th>
@@ -106,8 +106,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ r
               const g = gap(s)
               return (
                 <tr key={s.key}>
-                  <td className="num">{i + 1}</td>
-                  <td className="svc-cell">
+                  <td className="num" data-label="Rank">{i + 1}</td>
+                  <td className="svc-cell" data-label="">
                     <Link href={`/services/${encodeURIComponent(s.id)}`} className="svc-name">
                       {s.name}
                     </Link>
@@ -121,12 +121,12 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ r
                       </div>
                     )}
                   </td>
-                  <td className="num score-main">{score(main)}</td>
-                  <td className="num">{score(other)}</td>
-                  <td className="num">{d?.paid.count ?? 0}</td>
-                  <td className="num">{usdc(d?.paid.volume ?? '0')}</td>
-                  <td className="num hide-sm">{d?.raw.count ?? 0}</td>
-                  <td className="num hide-sm">{usdc(s.pricePerRequest)}</td>
+                  <td className="num score-main" data-label={rank === 'paid' ? 'Paid score' : 'Raw score'}>{score(main)}</td>
+                  <td className="num" data-label={rank === 'paid' ? 'Raw score' : 'Paid score'}>{score(other)}</td>
+                  <td className="num" data-label="Distinct payers">{d?.paid.count ?? 0}</td>
+                  <td className="num" data-label="Paid volume">{usdc(d?.paid.volume ?? '0')}</td>
+                  <td className="num hide-sm" data-label="Raters">{d?.raw.count ?? 0}</td>
+                  <td className="num hide-sm" data-label="Price / call">{usdc(s.pricePerRequest)}</td>
                 </tr>
               )
             })}
